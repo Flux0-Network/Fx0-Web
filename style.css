@@ -377,25 +377,31 @@ body {
 .footer-socials svg, .socials svg { width: 16px; height: 16px; fill: var(--muted); }
 .footer-socials a:hover svg, .socials a:hover svg { fill: var(--accent); }
 
-/* ── BETA MITTEILUNG ── */
-.mitteilung {
+/* ── COOKIE NOTICE ── */
+.cookie-notice {
   position: fixed;
   bottom: 16px; left: 16px;
   background: var(--bg);
   border: 1px solid var(--border);
   color: var(--text);
-  padding: 8px 14px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-  font-weight: 600;
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-size: 0.78rem;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 14px;
   box-shadow: var(--shadow-md);
   z-index: 200;
+  max-width: 420px;
 }
-.close { cursor: pointer; color: var(--dim); font-weight: 700; font-size: 0.9rem; }
-.close:hover { color: var(--text); }
+.cookie-notice p { margin: 0; line-height: 1.4; color: var(--muted); }
+.cookie-notice p a { color: var(--accent); text-decoration: none; }
+.cookie-notice p a:hover { text-decoration: underline; }
+.cookie-notice-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+.cookie-accept { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.cookie-accept:hover { opacity: 0.88; }
+.cookie-close { cursor: pointer; color: var(--dim); font-weight: 700; font-size: 0.9rem; line-height: 1; background: none; border: none; padding: 0; }
+.cookie-close:hover { color: var(--text); }
 
 /* ── FAQ ── */
 .faq-grid { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }

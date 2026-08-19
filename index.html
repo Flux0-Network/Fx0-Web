@@ -580,10 +580,27 @@
       .catch(() => {});
   </script>
 
-  <div class="mitteilung" id="box">
-    <span>Beta</span>
-    <span class="close" onclick="document.getElementById('box').style.display='none'">✕</span>
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern. Mehr in unserer <a href="/impressum.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
   </div>
+
+  <script>
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        document.getElementById('cookie-notice').style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        document.getElementById('cookie-notice').style.display = 'none';
+      }
+      document.getElementById('cookie-accept').addEventListener('click', accept);
+      document.getElementById('cookie-close').addEventListener('click', accept);
+    })();
+  </script>
 
 </body>
 </html>
