@@ -974,6 +974,18 @@ kbd {
   line-height: 1;
 }
 
+/* ── REFERENZEN ── */
+.ref-item { align-items: center; gap: 12px; padding: 10px 16px; }
+.ref-item:hover { border-color: var(--accent); color: var(--text); box-shadow: 0 0 0 3px rgba(124,58,237,0.08); }
+.ref-favicon {
+  width: 28px; height: 28px; border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 800; flex-shrink: 0;
+}
+.ref-info { display: flex; flex-direction: column; gap: 1px; }
+.ref-name { font-size: 0.85rem; font-weight: 700; color: var(--text); line-height: 1.2; }
+.ref-url { font-size: 0.72rem; color: var(--dim); font-weight: 400; font-family: 'JetBrains Mono', monospace; }
+
 /* ── UPDATE CARDS (news page) ── */
 .update-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px 32px; margin-bottom: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
 .update-card:hover { border-color: var(--border-md); box-shadow: var(--shadow-sm); }
