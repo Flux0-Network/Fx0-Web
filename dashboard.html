@@ -94,7 +94,7 @@
             <div class="dash-projekt-header">
               <div>
                 <span class="dash-projekt-name" id="dash-projekt-name">Meine Website</span>
-                <span class="dash-projekt-paket" id="dash-projekt-paket">Advanced</span>
+                <span class="dash-projekt-paket" id="dash-projekt-paket">Individuell</span>
               </div>
               <span class="product-status product-status--dev" id="dash-projekt-status-badge">In Entwicklung</span>
             </div>
@@ -135,32 +135,7 @@
               </div>
             </div>
             <form id="anfrage-form">
-              <div class="dash-anfrage-paket-grid">
-                <label class="dash-paket-option">
-                  <input type="radio" name="paket" value="Launch" />
-                  <span class="dash-paket-option-inner">
-                    <span class="dash-paket-option-name">Launch</span>
-                    <span class="dash-paket-option-price">ab 400 €</span>
-                    <span class="dash-paket-option-desc">1 Seite · Logo · Basic SEO</span>
-                  </span>
-                </label>
-                <label class="dash-paket-option">
-                  <input type="radio" name="paket" value="Advanced" checked />
-                  <span class="dash-paket-option-inner">
-                    <span class="dash-paket-option-name">Advanced</span>
-                    <span class="dash-paket-option-price">ab 1.500 €</span>
-                    <span class="dash-paket-option-desc">Bis 9 Seiten · Full SEO · Support</span>
-                  </span>
-                </label>
-                <label class="dash-paket-option">
-                  <input type="radio" name="paket" value="Individuell" />
-                  <span class="dash-paket-option-inner">
-                    <span class="dash-paket-option-name">Individuell</span>
-                    <span class="dash-paket-option-price">Auf Anfrage</span>
-                    <span class="dash-paket-option-desc">Eigene Anforderungen</span>
-                  </span>
-                </label>
-              </div>
+              <input type="hidden" name="paket" value="Individuell" />
               <div class="dash-anfrage-field">
                 <label for="anfrage-beschreibung">Was soll gebaut werden?</label>
                 <textarea id="anfrage-beschreibung" name="beschreibung" rows="4" placeholder="Beschreibe dein Projekt — was soll die Website machen, wer ist die Zielgruppe, gibt es Vorbilder?" required></textarea>
@@ -408,15 +383,6 @@
         btn.disabled = false;
         btn.textContent = 'Anfrage senden →';
       }
-    });
-
-    // Paket option highlight
-    document.querySelectorAll('.dash-paket-option input').forEach(radio => {
-      radio.addEventListener('change', () => {
-        document.querySelectorAll('.dash-paket-option').forEach(l => l.classList.remove('selected'));
-        radio.closest('.dash-paket-option').classList.add('selected');
-      });
-      if (radio.checked) radio.closest('.dash-paket-option').classList.add('selected');
     });
 
     // Show error from callback redirect (e.g. ?error=token)

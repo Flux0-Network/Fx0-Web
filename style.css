@@ -1411,11 +1411,20 @@ kbd {
 }
 
 /* ── PAKETE ── */
-.pakete-grid {
+.paket-individuell-wrap {
+  margin-bottom: 20px;
+}
+.paket-card--wide {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.paket-list--two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 10px 24px;
+}
+@media (max-width: 540px) {
+  .paket-list--two-col { grid-template-columns: 1fr; }
 }
 .paket-card {
   background: var(--bg);
@@ -1815,7 +1824,6 @@ kbd {
   /* main grids */
   .features-grid { grid-template-columns: repeat(2,1fr); }
   .products-grid { grid-template-columns: repeat(2,1fr); }
-  .pakete-grid { grid-template-columns: 1fr 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
   .prozess-grid { grid-template-columns: repeat(2, 1fr); }
   .product-card {
