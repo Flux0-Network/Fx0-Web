@@ -48,6 +48,7 @@
         <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <a href="https://discord.gg/D9GwqWpwHT" class="btn-join" target="_blank" rel="noopener">Angebot anfragen</a>
+      <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
       <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -176,72 +177,6 @@
     </div>
   </section>
 
-  <!-- PORTFOLIO -->
-  <section id="portfolio" class="section">
-    <div class="container">
-      <div class="section-label-row">
-        <span class="dot dot--blau"></span>
-        ARBEITEN
-      </div>
-      <div class="section-intro">
-        <h2 class="section-title">Was wir bisher gebaut haben.</h2>
-        <p class="section-sub">Echte Projekte, echte Kunden — von der Landingpage bis zum kompletten Webauftritt.</p>
-      </div>
-      <div class="portfolio-grid">
-
-        <div class="portfolio-card">
-          <div class="portfolio-browser">
-            <div class="portfolio-browser-bar">
-              <span class="portfolio-dot"></span>
-              <span class="portfolio-dot"></span>
-              <span class="portfolio-dot"></span>
-              <span class="portfolio-url">erdmann-webpage.vercel.app</span>
-            </div>
-            <div class="portfolio-preview-content">
-              <div class="portfolio-preview-nav"></div>
-              <div class="portfolio-preview-hero">
-                <div class="portfolio-preview-line portfolio-preview-line--lg"></div>
-                <div class="portfolio-preview-line"></div>
-                <div class="portfolio-preview-btn"></div>
-              </div>
-              <div class="portfolio-preview-cards">
-                <div class="portfolio-preview-card"></div>
-                <div class="portfolio-preview-card"></div>
-                <div class="portfolio-preview-card"></div>
-                <div class="portfolio-preview-card"></div>
-              </div>
-            </div>
-          </div>
-          <div class="portfolio-card-info">
-            <div class="portfolio-card-meta">
-              <h3>H.G. Erdmann GmbH</h3>
-              <span class="portfolio-card-type">Advanced</span>
-            </div>
-            <p>Kompletter Webauftritt für ein Sanitär- und Heizungsunternehmen aus Hagenburg — 9 Seiten, modernes Design, 3D-Badplaner Integration, mobile-optimiert.</p>
-            <div class="portfolio-tags">
-              <span>Next.js</span>
-              <span>Tailwind CSS</span>
-              <span>TypeScript</span>
-              <span>9 Seiten</span>
-            </div>
-            <a href="https://erdmann-webpage.vercel.app/" class="btn-ghost" target="_blank" rel="noopener">Live ansehen →</a>
-          </div>
-        </div>
-
-        <div class="portfolio-card portfolio-card--soon">
-          <div class="portfolio-soon-inner">
-            <div class="portfolio-soon-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-            </div>
-            <p>Dein Projekt könnte hier stehen.</p>
-            <a href="https://discord.gg/D9GwqWpwHT" class="btn-ghost" target="_blank" rel="noopener">Anfragen →</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- PROZESS -->
   <section id="prozess" class="section">
     <div class="container">
@@ -361,6 +296,44 @@
           </ul>
           <a href="https://lyqdex.io" target="_blank" rel="noopener" class="btn-primary">Öffnen →</a>
         </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCORD PARTNER / LOGO CLOUD -->
+  <section class="logo-cloud-section">
+    <div class="container">
+      <p class="logo-cloud-label">Discord Partner & befreundete Server</p>
+      <div class="logo-cloud">
+
+        <a href="https://discord.gg/WV3GCj3CaU" class="logo-cloud-item" target="_blank" rel="noopener">
+          <img
+            src="https://cdn.discordapp.com/icons/1435694704116105350/775702c0577f7d3d5134c4138858cfdf.webp?size=64"
+            alt="Freunde finden in deiner Nähe - DACH"
+            class="logo-cloud-avatar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          />
+          <span class="logo-cloud-avatar-fallback">F</span>
+          <span>Freunde finden DACH</span>
+        </a>
+
+        <a href="https://discord.gg/busbahnhof" class="logo-cloud-item" target="_blank" rel="noopener">
+          <img
+            src=""
+            alt="Busbahnhof"
+            class="logo-cloud-avatar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            id="busbahnhof-avatar"
+          />
+          <span class="logo-cloud-avatar-fallback" id="busbahnhof-fallback" style="background:#5865f2">B</span>
+          <span>Busbahnhof</span>
+        </a>
+
+        <a href="https://discord.gg/yqQutP6EKV" class="logo-cloud-item logo-cloud-item--add" target="_blank" rel="noopener">
+          <span class="logo-cloud-plus">+</span>
+          <span>Partner werden</span>
+        </a>
 
       </div>
     </div>
@@ -498,6 +471,31 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    fetch('/api/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const loginBtn  = document.getElementById('nav-login-btn');
+        const userLink  = document.getElementById('nav-user-link');
+        const name = data.global_name || data.username || '?';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          userLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          userLink.appendChild(ph);
+        }
+        userLink.style.display = 'flex';
+      })
+      .catch(() => {});
+  </script>
 
   <div class="mitteilung" id="box">
     <span>Beta</span>
