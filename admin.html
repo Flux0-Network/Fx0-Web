@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin — Flux0</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .admin-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .admin-stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .admin-stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .admin-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .admin-req-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .admin-req-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .admin-req-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+    .admin-req-user {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .admin-req-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .admin-req-avatar-ph {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .admin-req-name {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .admin-req-uid {
+      font-size: 0.78rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .admin-req-badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .admin-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    .admin-badge--paket {
+      background: #ede9fe;
+      border-color: #c4b5fd;
+      color: #5b21b6;
+    }
+    .admin-badge--date {
+      color: var(--muted);
+    }
+    .admin-req-desc {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 22px;
+      white-space: pre-wrap;
+    }
+    .admin-status-row {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin-bottom: 20px;
+    }
+    .admin-step-btn {
+      flex: 1;
+      padding: 10px 6px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: center;
+      position: relative;
+    }
+    .admin-step-btn:first-child {
+      border-radius: 8px 0 0 8px;
+    }
+    .admin-step-btn:last-child {
+      border-radius: 0 8px 8px 0;
+    }
+    .admin-step-btn:not(:last-child) {
+      border-right: none;
+    }
+    .admin-step-btn:hover {
+      background: var(--surface);
+      color: var(--text);
+    }
+    .admin-step-btn.done {
+      background: #ede9fe;
+      color: #5b21b6;
+      border-color: #c4b5fd;
+    }
+    .admin-step-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+      z-index: 1;
+    }
+    .admin-note-label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .admin-note-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 72px;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+    }
+    .admin-note-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
+    }
+    .admin-save-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-save-msg {
+      font-size: 0.82rem;
+      color: #22c55e;
+      font-weight: 500;
+      display: none;
+    }
+    .admin-empty {
+      text-align: center;
+      padding: 64px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .admin-no-access {
+      text-align: center;
+      padding: 80px 0;
+    }
+    .admin-no-access h2 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+    .admin-no-access p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    @media (max-width: 600px) {
+      .admin-stats { grid-template-columns: 1fr; }
+      .admin-req-header { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Flux0" class="logo-img"/>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="admin.html" class="nav-active">Admin</a></li>
+        <li class="nav-login" id="nav-login-li"><a href="dashboard.html">Login</a></li>
+      </ul>
+      <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
+      <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="hero hero--small">
+    <div class="container">
+      <div class="hero-label">
+        <span class="dot dot--blau"></span>
+        ADMIN · INTERN
+      </div>
+      <h1>Anfragen & Projekte</h1>
+      <p class="hero-sub">Übersicht aller Website-Anfragen und Projektstatus.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="view-loading" style="text-align:center;padding:64px 0;color:var(--dim);font-size:0.9rem">
+        Wird geladen…
+      </div>
+
+      <div id="view-no-access" class="admin-no-access" style="display:none">
+        <h2>Kein Zugang</h2>
+        <p>Du hast keinen Zugriff auf das Admin Panel. Bitte mit dem richtigen Discord-Account einloggen.</p>
+        <a href="dashboard.html" class="btn-ghost" style="margin-top:16px;display:inline-flex">← Dashboard</a>
+      </div>
+
+      <div id="view-login" style="display:none;text-align:center;padding:64px 0">
+        <p style="color:var(--muted);margin-bottom:16px">Du musst eingeloggt sein.</p>
+        <a href="dashboard.html" class="btn-primary">Mit Discord einloggen →</a>
+      </div>
+
+      <div id="view-admin" style="display:none">
+
+        <div class="admin-stats">
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-total">0</div>
+            <div class="admin-stat-label">Anfragen gesamt</div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-active">0</div>
+            <div class="admin-stat-label">In Bearbeitung</div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-done">0</div>
+            <div class="admin-stat-label">Abgeschlossen</div>
+          </div>
+        </div>
+
+        <div class="admin-section-title">Alle Anfragen</div>
+        <div class="admin-req-list" id="req-list"></div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:1px solid var(--border);padding-top:24px">
+        <span class="footer-copy">© 2026 Flux0 · Admin Panel · intern</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const STEPS = ['Anfrage', 'Design', 'Entwicklung', 'Launch'];
+
+    function buildAvatar(id, hash, name, size, cls) {
+      if (hash) {
+        const img = document.createElement('img');
+        img.className = cls;
+        img.src = `https://cdn.discordapp.com/avatars/${id}/${hash}.png?size=${size}`;
+        img.alt = name;
+        return img;
+      }
+      const ph = document.createElement('div');
+      ph.className = cls + '-ph';
+      ph.textContent = (name || '?')[0].toUpperCase();
+      return ph;
+    }
+
+    function formatDate(ts) {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function renderCard(req) {
+      const card = document.createElement('div');
+      card.className = 'admin-req-card';
+
+      const name = req.global_name || req.username || 'Unbekannt';
+      let currentStatus = req.status ?? 0;
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'admin-req-header';
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'admin-req-user';
+      userDiv.appendChild(buildAvatar(req.id, req.avatar, name, 64, 'admin-req-avatar'));
+      const userInfo = document.createElement('div');
+      userInfo.innerHTML = `<div class="admin-req-name">${name}</div><div class="admin-req-uid">${req.id}</div>`;
+      userDiv.appendChild(userInfo);
+      header.appendChild(userDiv);
+
+      const badges = document.createElement('div');
+      badges.className = 'admin-req-badges';
+      if (req.paket) badges.innerHTML += `<span class="admin-badge admin-badge--paket">${req.paket}</span>`;
+      if (req.budget) badges.innerHTML += `<span class="admin-badge">Budget: ${req.budget}</span>`;
+      badges.innerHTML += `<span class="admin-badge admin-badge--date">${formatDate(req.createdAt)}</span>`;
+      header.appendChild(badges);
+
+      card.appendChild(header);
+
+      // Description
+      const desc = document.createElement('div');
+      desc.className = 'admin-req-desc';
+      desc.textContent = req.beschreibung || '—';
+      card.appendChild(desc);
+
+      // Status steps
+      const statusRow = document.createElement('div');
+      statusRow.className = 'admin-status-row';
+      const stepBtns = STEPS.map((label, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'admin-step-btn';
+        btn.textContent = label;
+        updateStepStyle(btn, i, currentStatus);
+        btn.addEventListener('click', () => {
+          currentStatus = i;
+          stepBtns.forEach((b, j) => updateStepStyle(b, j, currentStatus));
+        });
+        return btn;
+      });
+      stepBtns.forEach(b => statusRow.appendChild(b));
+      card.appendChild(statusRow);
+
+      // Note
+      const noteLabel = document.createElement('div');
+      noteLabel.className = 'admin-note-label';
+      noteLabel.textContent = 'Notiz für Kunden';
+      card.appendChild(noteLabel);
+
+      const noteArea = document.createElement('textarea');
+      noteArea.className = 'admin-note-textarea';
+      noteArea.placeholder = 'Sichtbar im Kunden-Dashboard…';
+      noteArea.value = req.note || '';
+      card.appendChild(noteArea);
+
+      // Save row
+      const saveRow = document.createElement('div');
+      saveRow.className = 'admin-save-row';
+
+      const saveBtn = document.createElement('button');
+      saveBtn.className = 'btn-primary';
+      saveBtn.textContent = 'Speichern →';
+
+      const saveMsg = document.createElement('span');
+      saveMsg.className = 'admin-save-msg';
+      saveMsg.textContent = 'Gespeichert ✓';
+
+      saveBtn.addEventListener('click', async () => {
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Speichert…';
+        saveMsg.style.display = 'none';
+        try {
+          const r = await fetch('/api/admin', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: req.id, status: currentStatus, note: noteArea.value }),
+          });
+          if (!r.ok) throw new Error('failed');
+          saveMsg.style.display = 'inline';
+          setTimeout(() => { saveMsg.style.display = 'none'; }, 3000);
+        } catch {
+          saveMsg.textContent = 'Fehler beim Speichern';
+          saveMsg.style.color = '#ef4444';
+          saveMsg.style.display = 'inline';
+          setTimeout(() => {
+            saveMsg.style.display = 'none';
+            saveMsg.style.color = '#22c55e';
+            saveMsg.textContent = 'Gespeichert ✓';
+          }, 3000);
+        } finally {
+          saveBtn.disabled = false;
+          saveBtn.textContent = 'Speichern →';
+        }
+      });
+
+      saveRow.appendChild(saveBtn);
+      saveRow.appendChild(saveMsg);
+      card.appendChild(saveRow);
+
+      return card;
+    }
+
+    function updateStepStyle(btn, index, currentStatus) {
+      btn.classList.remove('done', 'active');
+      if (index < currentStatus) btn.classList.add('done');
+      if (index === currentStatus) btn.classList.add('active');
+    }
+
+    // Load session for nav avatar
+    function initNav(data) {
+      const navLoginLi = document.getElementById('nav-login-li');
+      const navUserLink = document.getElementById('nav-user-link');
+      const name = data.global_name || data.username || '—';
+      if (navLoginLi) navLoginLi.style.display = 'none';
+      if (navUserLink) {
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          navUserLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          navUserLink.appendChild(ph);
+        }
+        navUserLink.style.display = 'flex';
+      }
+    }
+
+    async function init() {
+      // Check session
+      let userData;
+      try {
+        const r = await fetch('/api/me', { credentials: 'include' });
+        if (!r.ok) throw new Error(r.status);
+        userData = await r.json();
+        initNav(userData);
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-login').style.display = 'block';
+        return;
+      }
+
+      // Load admin data
+      let requests = [];
+      try {
+        const r = await fetch('/api/admin', { credentials: 'include' });
+        if (r.status === 403) {
+          document.getElementById('view-loading').style.display = 'none';
+          document.getElementById('view-no-access').style.display = 'block';
+          return;
+        }
+        if (!r.ok) throw new Error(r.status);
+        const json = await r.json();
+        requests = json.requests || [];
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-no-access').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('view-loading').style.display = 'none';
+      document.getElementById('view-admin').style.display = 'block';
+
+      // Stats
+      const total = requests.length;
+      const done = requests.filter(r => r.status === 3).length;
+      const active = requests.filter(r => r.status > 0 && r.status < 3).length;
+      document.getElementById('stat-total').textContent = total;
+      document.getElementById('stat-active').textContent = active;
+      document.getElementById('stat-done').textContent = done;
+
+      // Render cards
+      const list = document.getElementById('req-list');
+      if (requests.length === 0) {
+        list.innerHTML = '<div class="admin-empty">Noch keine Anfragen vorhanden.</div>';
+      } else {
+        requests.forEach(req => list.appendChild(renderCard(req)));
+      }
+    }
+
+    init();
+  </script>
+
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        document.getElementById('cookie-notice').style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        document.getElementById('cookie-notice').style.display = 'none';
+      }
+      document.getElementById('cookie-accept').addEventListener('click', accept);
+      document.getElementById('cookie-close').addEventListener('click', accept);
+    })();
+  </script>
+
+</body>
+</html>
