@@ -2,9 +2,9 @@
 
 :root {
   --bg:        #000000;
-  --surface:   #0a0a0a;
-  --border:    #1a1a1a;
-  --border-md: #242424;
+  --surface:   #111111;
+  --border:    #222222;
+  --border-md: #2e2e2e;
   --text:      #ffffff;
   --muted:     #e4e4e4;
   --dim:       #888888;
@@ -371,7 +371,7 @@ body::after {
 
 /* ── FOOTER ── */
 /* ── FOOTER ── */
-.footer { border-top: 1px solid var(--border); padding: 56px 0 0; background: var(--surface); }
+.footer { border-top: 1px solid var(--border); padding: 56px 0 0; background: var(--bg); }
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -928,7 +928,7 @@ kbd {
 .logo-cloud-section {
   padding: 40px 0;
   border-top: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--bg);
 }
 .logo-cloud-label {
   text-align: center;
