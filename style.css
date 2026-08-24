@@ -461,7 +461,7 @@ body::after {
 
 /* ── FOOTER ── */
 /* ── FOOTER ── */
-.footer { padding: 56px 0 0; background: var(--bg); }
+.footer { padding: 56px 0 0; }
 .footer-grid {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -1013,7 +1013,6 @@ kbd {
 /* ── LOGO CLOUD ── */
 .logo-cloud-section {
   padding: 40px 0;
-  background: var(--bg);
 }
 .logo-cloud-label {
   text-align: center;
