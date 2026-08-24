@@ -38,16 +38,23 @@ module.exports = async (req, res) => {
     return res.status(403).json({ error: 'forbidden' });
   }
 
+  const kvAvailable = !!(
+    (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) &&
+    (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)
+  );
+
   if (req.method === 'GET') {
+    if (!kvAvailable) return res.json({ requests: [], kv: false });
     const ids = (await kvCmd('SMEMBERS', 'flux0:requests')) || [];
     const requests = (await Promise.all(ids.map(id => kvCmd('GET', `flux0:req:${id}`))))
       .filter(Boolean)
       .map(v => (typeof v === 'string' ? JSON.parse(v) : v))
       .sort((a, b) => b.createdAt - a.createdAt);
-    return res.json({ requests });
+    return res.json({ requests, kv: true });
   }
 
   if (req.method === 'POST') {
+    if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
     const { userId, status, note } = req.body || {};
     if (!userId) return res.status(400).json({ error: 'missing_userId' });
     const raw = await kvCmd('GET', `flux0:req:${userId}`);
