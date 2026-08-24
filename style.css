@@ -24,7 +24,16 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background: var(--bg);
+  background:
+    radial-gradient(ellipse 90% 40% at -5% 8%,  rgba(255,255,255,0.10) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 35% at 108% 4%,  rgba(255,255,255,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 38% at -5% 28%,  rgba(255,255,255,0.07) 0%, transparent 52%),
+    radial-gradient(ellipse 65% 32% at 108% 42%,  rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 75% 36% at -5% 58%,  rgba(255,255,255,0.07) 0%, transparent 52%),
+    radial-gradient(ellipse 60% 30% at 108% 72%,  rgba(255,255,255,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse 85% 40% at -5% 88%,  rgba(255,255,255,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 65% 32% at 108% 96%,  rgba(255,255,255,0.06) 0%, transparent 50%),
+    #000000;
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
@@ -244,10 +253,7 @@ body::after {
 .hero::before {
   content: '';
   position: absolute;
-  top: 0;
-  bottom: -160px;
-  left: 0;
-  right: 0;
+  inset: 0;
   background:
     radial-gradient(ellipse 160% 55% at -15% 115%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 58%),
     radial-gradient(ellipse 90% 45% at 115% -5%, rgba(255,255,255,0.09) 0%, transparent 50%),
@@ -259,42 +265,13 @@ body::after {
 
 /* ── TEXT EFFECTS ── */
 
-/* Gradient section titles */
-.section-title {
-  background: linear-gradient(160deg, #ffffff 30%, rgba(255,255,255,0.65) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Hero h1 glow */
+/* Hero h1 sehr subtiler Glow */
 .hero h1 {
-  text-shadow: 0 0 80px rgba(255,255,255,0.12);
+  text-shadow: 0 0 60px rgba(255,255,255,0.08);
 }
 
-/* Hero h1 span — subtile Gradient-Dimmung */
-.hero h1 span {
-  background: linear-gradient(160deg, #ffffff 20%, rgba(255,255,255,0.5) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* CTA heading gradient */
-.cta-inner h2 {
-  background: linear-gradient(160deg, #ffffff 20%, rgba(255,255,255,0.6) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Paket highlighted name */
-.paket-card--highlight .paket-name {
-  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.75) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
+/* Hero h1 span — leicht gedimmt (keine harte Grau-Wirkung) */
+.hero h1 span { color: rgba(255,255,255,0.55); }
 
 /* ── CARD EFFECTS ── */
 
@@ -383,84 +360,7 @@ body::after {
 }
 
 /* ── SECTION GLOW EFFECTS ── */
-#pakete,
-#prozess,
-#design,
-#products,
-#faq,
-.cta {
-  position: relative;
-}
-#pakete > .container,
-#prozess > .container,
-#design > .container,
-#products > .container,
-#faq > .container,
-.cta > .container {
-  position: relative;
-  z-index: 1;
-}
-
-/* Alle Glow-::before bluten 160px über die Sektion hinaus
-   damit benachbarte Effekte weich ineinander fließen */
-#pakete::before,
-#prozess::before,
-#design::before,
-#products::before,
-#faq::before,
-.cta::before {
-  content: '';
-  position: absolute;
-  top: -160px;
-  bottom: -160px;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* Pakete — Licht von oben rechts */
-#pakete::before {
-  background:
-    radial-gradient(ellipse 100% 60% at 115% -10%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 40%, transparent 62%),
-    radial-gradient(ellipse 55% 45% at 90% 15%, rgba(255,255,255,0.05) 0%, transparent 55%);
-}
-
-/* Prozess — Licht von unten links */
-#prozess::before {
-  background:
-    radial-gradient(ellipse 130% 55% at -10% 115%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 38%, transparent 62%),
-    radial-gradient(ellipse 45% 35% at 15% 90%, rgba(255,255,255,0.04) 0%, transparent 55%);
-}
-
-/* Design — Licht von oben links */
-#design::before {
-  background:
-    radial-gradient(ellipse 100% 60% at -8% -10%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 38%, transparent 60%),
-    radial-gradient(ellipse 55% 40% at 10% 5%, rgba(255,255,255,0.05) 0%, transparent 52%);
-}
-
-/* Products — Licht von unten rechts */
-#products::before {
-  background:
-    radial-gradient(ellipse 110% 55% at 115% 110%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 40%, transparent 60%),
-    radial-gradient(ellipse 50% 35% at 88% 88%, rgba(255,255,255,0.04) 0%, transparent 52%);
-}
-
-/* FAQ — Licht von oben mitte-rechts */
-#faq::before {
-  background:
-    radial-gradient(ellipse 80% 50% at 80% -15%, rgba(255,255,255,0.09) 0%, transparent 58%),
-    radial-gradient(ellipse 45% 30% at 65% 0%, rgba(255,255,255,0.04) 0%, transparent 52%);
-}
-
-/* CTA — beidseitiger Glow, starkes Zentrum */
-.cta::before {
-  background:
-    radial-gradient(ellipse 140% 65% at -15% 120%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 35%, transparent 58%),
-    radial-gradient(ellipse 80% 55% at 115% -15%, rgba(255,255,255,0.09) 0%, transparent 52%),
-    radial-gradient(ellipse 55% 45% at 50% 50%, rgba(255,255,255,0.025) 0%, transparent 68%);
-}
+/* Ambient-Glow direkt im body-background — kein Clipping, keine Artefakte */
 
 .hero-label {
   display: inline-flex;
