@@ -256,6 +256,131 @@ body::after {
 }
 .hero .container { position: relative; z-index: 1; }
 
+/* ── TEXT EFFECTS ── */
+
+/* Gradient section titles */
+.section-title {
+  background: linear-gradient(160deg, #ffffff 30%, rgba(255,255,255,0.65) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Hero h1 glow */
+.hero h1 {
+  text-shadow: 0 0 80px rgba(255,255,255,0.12);
+}
+
+/* Hero h1 span — subtile Gradient-Dimmung */
+.hero h1 span {
+  background: linear-gradient(160deg, #ffffff 20%, rgba(255,255,255,0.5) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* CTA heading gradient */
+.cta-inner h2 {
+  background: linear-gradient(160deg, #ffffff 20%, rgba(255,255,255,0.6) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Paket highlighted name */
+.paket-card--highlight .paket-name {
+  background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.75) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── CARD EFFECTS ── */
+
+/* Feature cards — white glow border + lift */
+.feature-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+.feature-card:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px -8px rgba(255,255,255,0.08);
+  transform: translateY(-2px);
+  background: var(--surface);
+}
+
+/* Paket cards — glow + lift */
+.paket-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+.paket-card:hover {
+  border-color: rgba(255,255,255,0.22);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 12px 40px -8px rgba(255,255,255,0.07);
+  transform: translateY(-3px);
+  background: var(--surface);
+}
+.paket-card--highlight {
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.1), 0 8px 32px -8px rgba(255,255,255,0.06);
+}
+.paket-card--highlight:hover {
+  border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.15), 0 16px 48px -8px rgba(255,255,255,0.1);
+}
+
+/* Community cards */
+.community-card {
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
+}
+.community-card:hover {
+  border-color: rgba(255,255,255,0.2);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.06), 0 8px 32px -8px rgba(255,255,255,0.07);
+  transform: translateY(-2px);
+  background: var(--surface);
+}
+
+/* Product cards — glow on hover */
+.product-card {
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.product-card:hover {
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+/* Prozess steps — glow */
+.prozess-step {
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.prozess-step:hover {
+  background: var(--surface);
+  box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), inset -1px 0 0 rgba(255,255,255,0.05);
+}
+
+/* FAQ items */
+.faq-item {
+  transition: background 0.15s;
+}
+.faq-item summary:hover { background: rgba(255,255,255,0.03); }
+.faq-item[open] { background: rgba(255,255,255,0.02); }
+
+/* Logo cloud items — lift */
+.logo-cloud-item {
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
+}
+.logo-cloud-item:hover {
+  border-color: rgba(255,255,255,0.2) !important;
+  box-shadow: 0 4px 20px -4px rgba(255,255,255,0.06);
+  transform: translateY(-2px);
+}
+
+/* Addon items */
+.addon-item {
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.addon-item:hover {
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+}
+
 /* ── SECTION GLOW EFFECTS ── */
 #pakete,
 #prozess,
@@ -394,11 +519,6 @@ body::after {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 28px 24px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-.feature-card:hover {
-  border-color: var(--border-md);
-  box-shadow: var(--shadow-md);
 }
 .feature-card--accent {
   background: var(--accent);
@@ -805,9 +925,7 @@ kbd {
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 28px 26px;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.community-card:hover { border-color: var(--border-md); box-shadow: var(--shadow-md); }
 .community-card--tall { grid-row: span 1; }
 .community-card--yellow,
 .community-card--purple,
@@ -838,10 +956,8 @@ kbd {
   align-items: center;
   gap: 24px;
   border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
 }
 .product-card:last-child { border-bottom: none; }
-.product-card:hover { background: var(--surface); }
 
 .product-card-left { display: flex; align-items: center; gap: 16px; min-width: 200px; }
 .product-logo-icon {
@@ -1562,10 +1678,10 @@ kbd {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  position: relative;
 }
 .paket-card--highlight {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.3);
 }
 .paket-card-top {
   display: flex;
@@ -1886,10 +2002,8 @@ kbd {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: background 0.15s;
 }
 .prozess-step:last-child { border-right: none; }
-.prozess-step:hover { background: var(--surface); }
 .prozess-step-icon {
   width: 40px; height: 40px;
   border-radius: 10px;
