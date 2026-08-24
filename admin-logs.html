@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logs — Flux0</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      width: fit-content;
+      margin-bottom: 32px;
+    }
+    .admin-tab {
+      padding: 8px 18px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admin-tab:hover { color: var(--text); background: var(--bg); }
+    .admin-tab.active { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .log-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .log-stat {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .log-stat-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .log-stat-label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .log-search-row {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .log-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+    .log-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+    .log-section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .log-table-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .log-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.86rem;
+    }
+    .log-table th {
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+    .log-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+      vertical-align: middle;
+    }
+    .log-table tr:last-child td { border-bottom: none; }
+    .log-table tr:hover td { background: var(--bg); }
+    .log-user-cell {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .log-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .log-avatar-ph {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .log-name { font-weight: 600; }
+    .log-uid {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .log-action-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      background: #ede9fe;
+      border: 1px solid #c4b5fd;
+      color: #5b21b6;
+    }
+    .log-time {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+    .log-ip {
+      font-size: 0.78rem;
+      color: var(--dim);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .log-empty {
+      text-align: center;
+      padding: 48px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .log-count {
+      font-size: 0.8rem;
+      color: var(--dim);
+      font-weight: 500;
+    }
+    .admin-no-access {
+      text-align: center;
+      padding: 80px 0;
+    }
+    .admin-no-access h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .admin-no-access p { color: var(--muted); font-size: 0.9rem; }
+    @media (max-width: 600px) {
+      .log-stats { grid-template-columns: 1fr; }
+      .log-table th:nth-child(4), .log-table td:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Flux0" class="logo-img"/>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="admin.html">Admin</a></li>
+        <li class="nav-login" id="nav-login-li"><a href="dashboard.html">Login</a></li>
+      </ul>
+      <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
+      <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="hero hero--small">
+    <div class="container">
+      <div class="hero-label">
+        <span class="dot dot--blau"></span>
+        ADMIN · INTERN
+      </div>
+      <h1>Login Logs</h1>
+      <p class="hero-sub">Wer hat sich wann eingeloggt — die letzten 200 Einträge.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="view-loading" style="text-align:center;padding:64px 0;color:var(--dim);font-size:0.9rem">
+        Wird geladen…
+      </div>
+
+      <div id="view-no-access" class="admin-no-access" style="display:none">
+        <h2>Kein Zugang</h2>
+        <p>Du hast keinen Zugriff auf das Admin Panel.</p>
+        <a href="dashboard.html" class="btn-ghost" style="margin-top:16px;display:inline-flex">← Dashboard</a>
+      </div>
+
+      <div id="view-login" style="display:none;text-align:center;padding:64px 0">
+        <p style="color:var(--muted);margin-bottom:16px">Du musst eingeloggt sein.</p>
+        <a href="dashboard.html" class="btn-primary">Mit Discord einloggen →</a>
+      </div>
+
+      <div id="view-admin" style="display:none">
+
+        <!-- Nav Tabs -->
+        <div class="admin-tabs">
+          <a href="admin.html" class="admin-tab">Anfragen</a>
+          <a href="admin-logs.html" class="admin-tab active">Login Logs</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="log-stats">
+          <div class="log-stat">
+            <div class="log-stat-number" id="stat-total">0</div>
+            <div class="log-stat-label">Logins gesamt</div>
+          </div>
+          <div class="log-stat">
+            <div class="log-stat-number" id="stat-unique">0</div>
+            <div class="log-stat-label">Unique User</div>
+          </div>
+          <div class="log-stat">
+            <div class="log-stat-number" id="stat-today">0</div>
+            <div class="log-stat-label">Heute</div>
+          </div>
+        </div>
+
+        <!-- Search -->
+        <div class="log-search-row">
+          <input type="text" class="log-search" id="log-search" placeholder="Suche nach Name oder Discord ID…" />
+          <span class="log-count" id="log-count"></span>
+        </div>
+
+        <div class="log-section-title">Login-Verlauf</div>
+
+        <div class="log-table-wrap">
+          <table class="log-table">
+            <thead>
+              <tr>
+                <th>Nutzer</th>
+                <th>Discord ID</th>
+                <th>Aktion</th>
+                <th>IP</th>
+                <th>Zeitpunkt</th>
+              </tr>
+            </thead>
+            <tbody id="log-tbody"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:1px solid var(--border);padding-top:24px">
+        <span class="footer-copy">© 2026 Flux0 · Admin Panel · intern</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    let allLogs = [];
+
+    function buildAvatar(id, hash, name) {
+      if (hash) {
+        const img = document.createElement('img');
+        img.className = 'log-avatar';
+        img.src = `https://cdn.discordapp.com/avatars/${id}/${hash}.png?size=64`;
+        img.alt = name;
+        return img;
+      }
+      const ph = document.createElement('div');
+      ph.className = 'log-avatar-ph';
+      ph.textContent = (name || '?')[0].toUpperCase();
+      return ph;
+    }
+
+    function formatDateTime(ts) {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleString('de-DE', {
+        day: '2-digit', month: '2-digit', year: 'numeric',
+        hour: '2-digit', minute: '2-digit',
+      });
+    }
+
+    function renderRows(logs) {
+      const tbody = document.getElementById('log-tbody');
+      tbody.innerHTML = '';
+      document.getElementById('log-count').textContent = `${logs.length} Einträge`;
+
+      if (logs.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" class="log-empty">Keine Einträge gefunden.</td></tr>';
+        return;
+      }
+
+      logs.forEach(log => {
+        const name = log.global_name || log.username || 'Unbekannt';
+        const tr = document.createElement('tr');
+
+        // User cell
+        const tdUser = document.createElement('td');
+        const userCell = document.createElement('div');
+        userCell.className = 'log-user-cell';
+        userCell.appendChild(buildAvatar(log.userId, log.avatar, name));
+        const nameEl = document.createElement('span');
+        nameEl.className = 'log-name';
+        nameEl.textContent = name;
+        userCell.appendChild(nameEl);
+        tdUser.appendChild(userCell);
+
+        // Discord ID
+        const tdId = document.createElement('td');
+        tdId.innerHTML = `<span class="log-uid">${log.userId || '—'}</span>`;
+
+        // Action
+        const tdAction = document.createElement('td');
+        tdAction.innerHTML = `<span class="log-action-badge">⬥ ${log.action || 'login'}</span>`;
+
+        // IP
+        const tdIp = document.createElement('td');
+        tdIp.innerHTML = `<span class="log-ip">${log.ip || '—'}</span>`;
+
+        // Time
+        const tdTime = document.createElement('td');
+        tdTime.innerHTML = `<span class="log-time">${formatDateTime(log.timestamp)}</span>`;
+
+        tr.appendChild(tdUser);
+        tr.appendChild(tdId);
+        tr.appendChild(tdAction);
+        tr.appendChild(tdIp);
+        tr.appendChild(tdTime);
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterLogs() {
+      const q = document.getElementById('log-search').value.toLowerCase().trim();
+      if (!q) { renderRows(allLogs); return; }
+      const filtered = allLogs.filter(l => {
+        const name = (l.global_name || l.username || '').toLowerCase();
+        const uid = (l.userId || '').toLowerCase();
+        return name.includes(q) || uid.includes(q);
+      });
+      renderRows(filtered);
+    }
+
+    function initNav(data) {
+      const navLoginLi = document.getElementById('nav-login-li');
+      const navUserLink = document.getElementById('nav-user-link');
+      const name = data.global_name || data.username || '—';
+      if (navLoginLi) navLoginLi.style.display = 'none';
+      if (navUserLink) {
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          navUserLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          navUserLink.appendChild(ph);
+        }
+        navUserLink.style.display = 'flex';
+      }
+    }
+
+    async function init() {
+      try {
+        const r = await fetch('/api/me', { credentials: 'include' });
+        if (!r.ok) throw new Error();
+        initNav(await r.json());
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-login').style.display = 'block';
+        return;
+      }
+
+      let logs = [];
+      try {
+        const r = await fetch('/api/admin-logs', { credentials: 'include' });
+        if (r.status === 403 || r.status === 401) {
+          document.getElementById('view-loading').style.display = 'none';
+          document.getElementById('view-no-access').style.display = 'block';
+          return;
+        }
+        if (!r.ok) throw new Error();
+        const json = await r.json();
+        logs = json.logs || [];
+        if (!json.kv) {
+          const notice = document.createElement('div');
+          notice.style.cssText = 'background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:12px 16px;font-size:0.85rem;color:#92400e;margin-bottom:24px';
+          notice.textContent = 'KV nicht konfiguriert — Login-Logs werden noch nicht gespeichert.';
+          document.getElementById('view-admin').prepend(notice);
+        }
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-no-access').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('view-loading').style.display = 'none';
+      document.getElementById('view-admin').style.display = 'block';
+
+      allLogs = logs;
+
+      // Stats
+      const uniqueIds = new Set(logs.map(l => l.userId)).size;
+      const todayStart = new Date(); todayStart.setHours(0,0,0,0);
+      const todayCount = logs.filter(l => l.timestamp >= todayStart.getTime()).length;
+      document.getElementById('stat-total').textContent = logs.length;
+      document.getElementById('stat-unique').textContent = uniqueIds;
+      document.getElementById('stat-today').textContent = todayCount;
+
+      renderRows(allLogs);
+      document.getElementById('log-search').addEventListener('input', filterLogs);
+    }
+
+    init();
+  </script>
+
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
+  </div>
+  <script>
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        document.getElementById('cookie-notice').style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        document.getElementById('cookie-notice').style.display = 'none';
+      }
+      document.getElementById('cookie-accept').addEventListener('click', accept);
+      document.getElementById('cookie-close').addEventListener('click', accept);
+    })();
+  </script>
+
+</body>
+</html>

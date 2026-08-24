@@ -217,6 +217,86 @@
       font-weight: 500;
       display: none;
     }
+    .admin-tabs {
+      display: flex;
+      gap: 4px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 4px;
+      width: fit-content;
+      margin-bottom: 32px;
+    }
+    .admin-tab {
+      padding: 8px 18px;
+      border-radius: 7px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .admin-tab:hover { color: var(--text); background: var(--bg); }
+    .admin-tab.active { background: var(--bg); color: var(--text); border: 1px solid var(--border); }
+    .admin-filter-bar {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .admin-filter-chips {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .admin-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .admin-chip:hover { color: var(--text); border-color: var(--text); }
+    .admin-chip.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .admin-search {
+      flex: 1;
+      min-width: 200px;
+      padding: 9px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--text);
+      font-size: 0.88rem;
+      font-family: inherit;
+    }
+    .admin-search:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+    .admin-filter-count { font-size: 0.8rem; color: var(--dim); font-weight: 500; }
+    .admin-req-dm {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border-radius: 7px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .admin-req-dm:hover { color: var(--accent); border-color: var(--accent); }
     .admin-empty {
       text-align: center;
       padding: 64px 0;
@@ -290,6 +370,12 @@
 
       <div id="view-admin" style="display:none">
 
+        <!-- Page Tabs -->
+        <div class="admin-tabs">
+          <a href="admin.html" class="admin-tab active">Anfragen</a>
+          <a href="admin-logs.html" class="admin-tab">Login Logs</a>
+        </div>
+
         <div class="admin-stats">
           <div class="admin-stat">
             <div class="admin-stat-number" id="stat-total">0</div>
@@ -305,7 +391,19 @@
           </div>
         </div>
 
-        <div class="admin-section-title">Alle Anfragen</div>
+        <!-- Filter Bar -->
+        <div class="admin-filter-bar">
+          <div class="admin-filter-chips">
+            <button class="admin-chip active" data-filter="all">Alle</button>
+            <button class="admin-chip" data-filter="0">Offen</button>
+            <button class="admin-chip" data-filter="1-2">In Arbeit</button>
+            <button class="admin-chip" data-filter="3">Abgeschlossen</button>
+          </div>
+          <input type="text" class="admin-search" id="admin-search" placeholder="Name oder Discord ID suchen…" />
+          <span class="admin-filter-count" id="admin-filter-count"></span>
+        </div>
+
+        <div class="admin-section-title" id="req-list-title">Alle Anfragen</div>
         <div class="admin-req-list" id="req-list"></div>
 
       </div>
@@ -324,6 +422,37 @@
   <script src="script.js"></script>
   <script>
     const STEPS = ['Anfrage', 'Design', 'Entwicklung', 'Launch'];
+    let allRequests = [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    function applyFilter() {
+      let list = allRequests;
+      if (activeFilter !== 'all') {
+        if (activeFilter === '1-2') {
+          list = list.filter(r => r.status === 1 || r.status === 2);
+        } else {
+          const s = parseInt(activeFilter);
+          list = list.filter(r => (r.status ?? 0) === s);
+        }
+      }
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(r => {
+          const name = (r.global_name || r.username || '').toLowerCase();
+          const uid = (r.id || '').toLowerCase();
+          return name.includes(q) || uid.includes(q);
+        });
+      }
+      const reqList = document.getElementById('req-list');
+      reqList.innerHTML = '';
+      document.getElementById('admin-filter-count').textContent = `${list.length} Anfrage${list.length !== 1 ? 'n' : ''}`;
+      if (list.length === 0) {
+        reqList.innerHTML = '<div class="admin-empty">Keine Anfragen gefunden.</div>';
+      } else {
+        list.forEach(req => reqList.appendChild(renderCard(req)));
+      }
+    }
 
     function buildAvatar(id, hash, name, size, cls) {
       if (hash) {
@@ -368,6 +497,13 @@
       if (req.paket) badges.innerHTML += `<span class="admin-badge admin-badge--paket">${req.paket}</span>`;
       if (req.budget) badges.innerHTML += `<span class="admin-badge">Budget: ${req.budget}</span>`;
       badges.innerHTML += `<span class="admin-badge admin-badge--date">${formatDate(req.createdAt)}</span>`;
+      const dmLink = document.createElement('a');
+      dmLink.className = 'admin-req-dm';
+      dmLink.href = `https://discord.com/users/${req.id}`;
+      dmLink.target = '_blank';
+      dmLink.rel = 'noopener';
+      dmLink.innerHTML = '↗ Discord DM';
+      badges.appendChild(dmLink);
       header.appendChild(badges);
 
       card.appendChild(header);
@@ -533,13 +669,26 @@
       document.getElementById('stat-active').textContent = active;
       document.getElementById('stat-done').textContent = done;
 
-      // Render cards
-      const list = document.getElementById('req-list');
-      if (requests.length === 0) {
-        list.innerHTML = '<div class="admin-empty">Noch keine Anfragen vorhanden.</div>';
-      } else {
-        requests.forEach(req => list.appendChild(renderCard(req)));
-      }
+      // Store and render with filter support
+      allRequests = requests;
+
+      // Wire up filter chips
+      document.querySelectorAll('.admin-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.admin-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.dataset.filter;
+          applyFilter();
+        });
+      });
+
+      // Wire up search
+      document.getElementById('admin-search').addEventListener('input', e => {
+        searchQuery = e.target.value.trim();
+        applyFilter();
+      });
+
+      applyFilter();
     }
 
     init();

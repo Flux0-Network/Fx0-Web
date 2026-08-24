@@ -1,6 +1,7 @@
 const { createHmac } = require('crypto');
 
 const ADMIN_IDS = (process.env.ADMIN_DISCORD_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
+const STATUS_LABELS = ['Anfrage', 'Design', 'Entwicklung', 'Launch'];
 
 function getSession(req) {
   const SESSION_SECRET = process.env.SESSION_SECRET;
@@ -64,6 +65,30 @@ module.exports = async (req, res) => {
     if (typeof status === 'number') updated.status = status;
     if (typeof note === 'string') updated.note = note;
     await kvCmd('SET', `flux0:req:${userId}`, JSON.stringify(updated));
+
+    // Discord webhook on status change
+    const webhookUrl = process.env.DISCORD_STATUS_WEBHOOK;
+    if (webhookUrl && typeof status === 'number' && status !== existing.status) {
+      const name = existing.global_name || existing.username || 'Unbekannt';
+      const embed = {
+        title: '🔄 Projektstatus geändert',
+        color: 0x7c3aed,
+        fields: [
+          { name: 'Kunde', value: `${name} (${userId})`, inline: true },
+          { name: 'Paket', value: existing.paket || '—', inline: true },
+          { name: 'Status', value: `${STATUS_LABELS[existing.status] ?? existing.status} → **${STATUS_LABELS[status] ?? status}**`, inline: false },
+          ...(note ? [{ name: 'Notiz', value: note.slice(0, 512), inline: false }] : []),
+        ],
+        timestamp: new Date().toISOString(),
+        footer: { text: 'flux0.dev · Admin Panel' },
+      };
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ embeds: [embed] }),
+      }).catch(() => {});
+    }
+
     return res.json({ ok: true });
   }
 
