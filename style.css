@@ -249,12 +249,11 @@ body::after {
 .hero::before {
   content: '';
   position: absolute;
-  top: -10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px;
-  height: 600px;
-  background: radial-gradient(ellipse at 50% 40%, rgba(139,92,246,0.22) 0%, rgba(192,132,252,0.04) 55%, transparent 70%);
+  inset: 0;
+  background:
+    radial-gradient(ellipse 160% 55% at -15% 115%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 58%),
+    radial-gradient(ellipse 90% 45% at 115% -5%, rgba(255,255,255,0.09) 0%, transparent 50%),
+    radial-gradient(ellipse 60% 30% at 50% 80%, rgba(255,255,255,0.03) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
