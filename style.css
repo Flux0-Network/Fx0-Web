@@ -256,7 +256,98 @@ body::after {
 }
 .hero .container { position: relative; z-index: 1; }
 
+/* ── SECTION GLOW EFFECTS ── */
+#pakete,
+#prozess,
+#design,
+#products,
+#faq,
+.cta {
+  position: relative;
+  overflow: hidden;
+}
+#pakete > .container,
+#prozess > .container,
+#design > .container,
+#products > .container,
+#faq > .container,
+.cta > .container {
+  position: relative;
+  z-index: 1;
+}
 
+/* Pakete — Licht von oben rechts */
+#pakete::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 110% 0%, rgba(255,255,255,0.09) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 95% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Prozess — Licht von unten links */
+#prozess::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 120% 50% at -10% 110%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 40%, transparent 60%),
+    radial-gradient(ellipse 40% 30% at 20% 90%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Design — Licht von oben links */
+#design::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at -5% 0%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 40%, transparent 58%),
+    radial-gradient(ellipse 50% 35% at 15% -10%, rgba(255,255,255,0.06) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Products — Licht von unten rechts */
+#products::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 100% 50% at 110% 100%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 40%, transparent 58%),
+    radial-gradient(ellipse 45% 30% at 85% 85%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* FAQ — Licht von oben mittig-rechts */
+#faq::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 70% 45% at 75% -5%, rgba(255,255,255,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 25% at 60% 5%, rgba(255,255,255,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* CTA — starker zentraler Glow */
+.cta::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 130% 60% at -15% 115%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 35%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 110% -10%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,255,255,0.025) 0%, transparent 65%);
+  pointer-events: none;
+  z-index: 0;
+}
 
 .hero-label {
   display: inline-flex;
