@@ -240,12 +240,14 @@ body::after {
 .hero {
   padding: 148px 0 96px;
   position: relative;
-  overflow: hidden;
 }
 .hero::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: -160px;
+  left: 0;
+  right: 0;
   background:
     radial-gradient(ellipse 160% 55% at -15% 115%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 58%),
     radial-gradient(ellipse 90% 45% at 115% -5%, rgba(255,255,255,0.09) 0%, transparent 50%),
@@ -388,7 +390,6 @@ body::after {
 #faq,
 .cta {
   position: relative;
-  overflow: hidden;
 }
 #pakete > .container,
 #prozess > .container,
@@ -400,77 +401,65 @@ body::after {
   z-index: 1;
 }
 
-/* Pakete — Licht von oben rechts */
-#pakete::before {
+/* Alle Glow-::before bluten 160px über die Sektion hinaus
+   damit benachbarte Effekte weich ineinander fließen */
+#pakete::before,
+#prozess::before,
+#design::before,
+#products::before,
+#faq::before,
+.cta::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse 80% 50% at 110% 0%, rgba(255,255,255,0.09) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 95% 20%, rgba(255,255,255,0.05) 0%, transparent 50%);
+  top: -160px;
+  bottom: -160px;
+  left: 0;
+  right: 0;
   pointer-events: none;
   z-index: 0;
+}
+
+/* Pakete — Licht von oben rechts */
+#pakete::before {
+  background:
+    radial-gradient(ellipse 100% 60% at 115% -10%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 40%, transparent 62%),
+    radial-gradient(ellipse 55% 45% at 90% 15%, rgba(255,255,255,0.05) 0%, transparent 55%);
 }
 
 /* Prozess — Licht von unten links */
 #prozess::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 120% 50% at -10% 110%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 40%, transparent 60%),
-    radial-gradient(ellipse 40% 30% at 20% 90%, rgba(255,255,255,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+    radial-gradient(ellipse 130% 55% at -10% 115%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 38%, transparent 62%),
+    radial-gradient(ellipse 45% 35% at 15% 90%, rgba(255,255,255,0.04) 0%, transparent 55%);
 }
 
 /* Design — Licht von oben links */
 #design::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 90% 55% at -5% 0%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.04) 40%, transparent 58%),
-    radial-gradient(ellipse 50% 35% at 15% -10%, rgba(255,255,255,0.06) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+    radial-gradient(ellipse 100% 60% at -8% -10%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.04) 38%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 10% 5%, rgba(255,255,255,0.05) 0%, transparent 52%);
 }
 
 /* Products — Licht von unten rechts */
 #products::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 100% 50% at 110% 100%, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 40%, transparent 58%),
-    radial-gradient(ellipse 45% 30% at 85% 85%, rgba(255,255,255,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+    radial-gradient(ellipse 110% 55% at 115% 110%, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 40%, transparent 60%),
+    radial-gradient(ellipse 50% 35% at 88% 88%, rgba(255,255,255,0.04) 0%, transparent 52%);
 }
 
-/* FAQ — Licht von oben mittig-rechts */
+/* FAQ — Licht von oben mitte-rechts */
 #faq::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 70% 45% at 75% -5%, rgba(255,255,255,0.08) 0%, transparent 55%),
-    radial-gradient(ellipse 40% 25% at 60% 5%, rgba(255,255,255,0.04) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
+    radial-gradient(ellipse 80% 50% at 80% -15%, rgba(255,255,255,0.09) 0%, transparent 58%),
+    radial-gradient(ellipse 45% 30% at 65% 0%, rgba(255,255,255,0.04) 0%, transparent 52%);
 }
 
-/* CTA — starker zentraler Glow */
+/* CTA — beidseitiger Glow, starkes Zentrum */
 .cta::before {
-  content: '';
-  position: absolute;
-  inset: 0;
   background:
-    radial-gradient(ellipse 130% 60% at -15% 115%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 35%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 110% -10%, rgba(255,255,255,0.08) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255,255,255,0.025) 0%, transparent 65%);
-  pointer-events: none;
-  z-index: 0;
+    radial-gradient(ellipse 140% 65% at -15% 120%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.05) 35%, transparent 58%),
+    radial-gradient(ellipse 80% 55% at 115% -15%, rgba(255,255,255,0.09) 0%, transparent 52%),
+    radial-gradient(ellipse 55% 45% at 50% 50%, rgba(255,255,255,0.025) 0%, transparent 68%);
 }
 
 .hero-label {
