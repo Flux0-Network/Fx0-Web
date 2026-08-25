@@ -353,43 +353,62 @@ body::after {
   max-width: 420px;
 }
 
-/* Terminal */
-.hv-terminal {
+/* Website Preview Card */
+.wp-card {
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
-  background: #080808;
-  box-shadow: 0 24px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  background: #06060a;
+  box-shadow: 0 32px 72px -16px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.05);
 }
-.hv-term-bar {
+.wp-bar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background: #111;
+  background: #0f0f14;
   border-bottom: 1px solid var(--border);
 }
 .browser-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
-.hv-term-title {
-  flex: 1;
-  text-align: center;
-  font-size: 0.7rem;
-  color: var(--dim);
+.wp-url {
+  flex: 1; text-align: center;
+  font-size: 0.68rem; color: var(--dim);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 4px; padding: 2px 8px; margin: 0 6px;
 }
-.hv-term-body {
-  padding: 18px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-family: 'Courier New', monospace;
-  font-size: 0.8rem;
-  line-height: 1.6;
+.wp-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 14px; }
+
+/* mini nav */
+.wp-nav { display: flex; align-items: center; gap: 10px; }
+.wp-nav-logo { width: 40px; height: 7px; background: rgba(255,255,255,0.25); border-radius: 3px; }
+.wp-nav-links { display: flex; gap: 6px; flex: 1; }
+.wp-nl { width: 24px; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; }
+.wp-nav-btn { width: 46px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.12); }
+
+/* mini hero */
+.wp-hero { position: relative; padding: 16px 0 8px; display: flex; flex-direction: column; gap: 7px; overflow: hidden; }
+.wp-glow {
+  position: absolute; inset: -40px -60px;
+  background: radial-gradient(ellipse at 30% 50%, rgba(120,80,255,0.12) 0%, transparent 65%),
+              radial-gradient(ellipse at 70% 30%, rgba(0,160,120,0.08) 0%, transparent 60%);
+  pointer-events: none;
 }
-.hv-term-body p { margin: 0; color: rgba(255,255,255,0.5); }
-.tc-dim  { color: rgba(255,255,255,0.25); }
-.tc-green { color: #4ade80; }
-.tc-white { color: rgba(255,255,255,0.9); }
-.tc-blink { animation: tw-blink 0.9s step-end infinite; }
+.wp-label { width: 64px; height: 14px; border-radius: 99px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
+.wp-h1 { height: 13px; background: rgba(255,255,255,0.28); border-radius: 4px; width: 78%; }
+.wp-h1--b { width: 58%; background: rgba(255,255,255,0.18); }
+.wp-sub { height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; width: 88%; }
+.wp-sub--s { width: 66%; }
+.wp-ctas { display: flex; gap: 8px; margin-top: 4px; }
+.wp-btn { height: 22px; width: 72px; border-radius: 5px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
+.wp-btn--p { background: rgba(255,255,255,0.88); border-color: transparent; width: 84px; }
+
+/* mini cards */
+.wp-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+.wp-mc { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 7px; padding: 9px 8px; display: flex; flex-direction: column; gap: 5px; }
+.wp-mc-icon { width: 16px; height: 16px; border-radius: 4px; background: rgba(255,255,255,0.1); }
+.wp-mc-line { height: 5px; border-radius: 2px; background: rgba(255,255,255,0.08); width: 72%; }
+.wp-mc-line--s { width: 48%; background: rgba(255,255,255,0.05); }
 
 /* Floating chips */
 .hv-card {
