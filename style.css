@@ -2030,7 +2030,7 @@ kbd {
   }
 
   /* hero */
-  .hero { padding: 100px 0 60px; }
+  .hero { padding: 160px 0 60px; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { letter-spacing: -0.025em; }
   .hero-sub { font-size: 0.9rem; }
