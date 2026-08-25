@@ -135,6 +135,40 @@
       border: 1px solid var(--border-md) !important;
       background: var(--surface) !important;
     }
+    /* Admin user modal */
+    .aum-overlay { position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:500;display:flex;justify-content:flex-end;align-items:stretch;backdrop-filter:blur(2px); }
+    .aum-panel { width:420px;max-width:100vw;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;animation:aumSlide .2s ease; }
+    @keyframes aumSlide { from { transform:translateX(100%); } to { transform:translateX(0); } }
+    .aum-header { display:flex;align-items:center;gap:14px;padding:20px 20px 16px;flex-shrink:0; }
+    .aum-avatar { width:48px;height:48px;border-radius:50%;overflow:hidden;flex-shrink:0; }
+    .aum-avatar img,.aum-avatar div { width:100%;height:100%;object-fit:cover;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700; }
+    .aum-title { flex:1;min-width:0; }
+    .aum-title h3 { font-size:1rem;font-weight:700;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .aum-title small { font-size:0.68rem;color:var(--dim);font-family:monospace; }
+    .aum-close { background:none;border:none;cursor:pointer;color:var(--dim);padding:6px;border-radius:8px;display:flex;align-items:center;transition:color .12s; }
+    .aum-close:hover { color:var(--fg); }
+    .aum-body { flex:1;overflow-y:auto;padding:0 20px 24px; }
+    .aum-section { margin-bottom:22px; }
+    .aum-section-title { font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin-bottom:10px; }
+    .aum-status-row { display:flex;gap:6px;flex-wrap:wrap; }
+    .aum-status-btn { padding:5px 14px;border-radius:20px;border:1px solid var(--border-md);background:none;color:var(--muted);cursor:pointer;font-size:0.8rem;font-family:inherit;transition:all .15s; }
+    .aum-status-btn:hover { border-color:var(--muted); }
+    .aum-status-btn.active { border-color:transparent;font-weight:600; }
+    .aum-field { margin-bottom:10px; }
+    .aum-field label { display:block;font-size:0.75rem;color:var(--dim);margin-bottom:4px; }
+    .aum-field input,.aum-field textarea { width:100%;padding:8px 11px;background:var(--surface);border:1px solid var(--border-md);border-radius:8px;color:var(--fg);font-size:0.84rem;font-family:inherit;outline:none;box-sizing:border-box; }
+    .aum-field textarea { resize:vertical;min-height:70px; }
+    .aum-btn { padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:0.84rem;font-family:inherit;transition:opacity .15s; }
+    .aum-btn-primary { background:#3b82f6;color:#fff; }
+    .aum-btn-primary:hover { opacity:.85; }
+    .aum-btn-ghost { background:var(--surface);color:var(--muted);border:1px solid var(--border-md); }
+    .aum-btn-ghost:hover { color:var(--fg); }
+    .aum-doc-row { display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border); }
+    .aum-doc-row:last-child { border-bottom:none; }
+    .aum-doc-type { font-size:0.65rem;font-weight:600;text-transform:uppercase;padding:2px 7px;border-radius:10px;background:var(--surface);color:var(--dim);flex-shrink:0; }
+    .aum-doc-name { flex:1;font-size:0.84rem;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis; }
+    .aum-doc-del { background:none;border:none;cursor:pointer;color:var(--dim);padding:4px;border-radius:6px;display:flex;align-items:center;flex-shrink:0; }
+    .aum-doc-del:hover { color:#ef4444; }
 
     /* Mobile top header */
     .dash-mobile-header { display: none; }
@@ -817,6 +851,182 @@
         const aEmpty = msg => `<div style="padding:32px 20px;text-align:center;color:var(--muted);font-size:0.85rem">${msg}</div>`;
         const aError = () => '<div style="padding:32px 20px;text-align:center;color:#ef4444;font-size:0.85rem">Fehler beim Laden.</div>';
 
+        function openUserModal(u, onProjectUpdated) {
+          const statusColors = ['#f59e0b', '#3b82f6', '#22c55e'];
+          const statusLabels = ['Offen', 'In Arbeit', 'Fertig'];
+          const name = u.global_name || u.username || '?';
+
+          const overlay = document.createElement('div');
+          overlay.className = 'aum-overlay';
+
+          const panel = document.createElement('div');
+          panel.className = 'aum-panel';
+
+          // Header
+          const header = document.createElement('div');
+          header.className = 'aum-header';
+          const avDiv = document.createElement('div');
+          avDiv.className = 'aum-avatar';
+          avDiv.innerHTML = u.avatar
+            ? `<img src="https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=128" style="width:100%;height:100%;object-fit:cover">`
+            : `<div style="width:100%;height:100%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700">${name[0].toUpperCase()}</div>`;
+          const titleDiv = document.createElement('div');
+          titleDiv.className = 'aum-title';
+          titleDiv.innerHTML = `<h3>${name}</h3><small>${u.id}</small>`;
+          const closeBtn = document.createElement('button');
+          closeBtn.className = 'aum-close';
+          closeBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+          closeBtn.addEventListener('click', () => overlay.remove());
+          overlay.addEventListener('click', e => { if (e.target === overlay) overlay.remove(); });
+          header.appendChild(avDiv); header.appendChild(titleDiv); header.appendChild(closeBtn);
+          panel.appendChild(header);
+
+          const body = document.createElement('div');
+          body.className = 'aum-body';
+
+          // Project section
+          const projSec = document.createElement('div');
+          projSec.className = 'aum-section';
+          const projTitle = document.createElement('div');
+          projTitle.className = 'aum-section-title';
+          projTitle.textContent = 'Projekt';
+          projSec.appendChild(projTitle);
+
+          let proj = u.project ? { ...u.project } : null;
+
+          if (!proj) {
+            const noProj = document.createElement('div');
+            noProj.style.cssText = 'font-size:0.84rem;color:var(--dim);padding:10px 0';
+            noProj.textContent = 'Kein aktives Projekt.';
+            projSec.appendChild(noProj);
+          } else {
+            // Status buttons
+            const statusRow = document.createElement('div');
+            statusRow.className = 'aum-status-row';
+            statusRow.style.marginBottom = '14px';
+            let currentStatus = typeof proj.status === 'number' ? proj.status : 0;
+            const statusBtns = statusLabels.map((lbl, i) => {
+              const btn = document.createElement('button');
+              btn.className = 'aum-status-btn' + (i === currentStatus ? ' active' : '');
+              btn.textContent = lbl;
+              if (i === currentStatus) btn.style.cssText = `background:${statusColors[i]};color:#fff;border-color:${statusColors[i]}`;
+              btn.addEventListener('click', async () => {
+                if (currentStatus === i) return;
+                btn.disabled = true;
+                const res = await aFetch('/api/admin-users', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: u.id, status: i }) });
+                if (res.ok) {
+                  statusBtns.forEach((b, j) => {
+                    b.className = 'aum-status-btn' + (j === i ? ' active' : '');
+                    b.style.cssText = j === i ? `background:${statusColors[j]};color:#fff;border-color:${statusColors[j]}` : '';
+                  });
+                  currentStatus = i;
+                  proj.status = i;
+                  if (onProjectUpdated) onProjectUpdated(u.id, proj);
+                }
+                btn.disabled = false;
+              });
+              statusRow.appendChild(btn);
+              return btn;
+            });
+            projSec.appendChild(statusRow);
+
+            // Editable fields
+            const fieldName = document.createElement('div');
+            fieldName.className = 'aum-field';
+            fieldName.innerHTML = `<label>Projektname</label><input type="text" value="${(proj.name || '').replace(/"/g, '&quot;')}" placeholder="z.B. Firmenwebsite">`;
+            const fieldPaket = document.createElement('div');
+            fieldPaket.className = 'aum-field';
+            fieldPaket.innerHTML = `<label>Paket</label><input type="text" value="${(proj.paket || '').replace(/"/g, '&quot;')}" placeholder="z.B. Individuell">`;
+            const fieldNote = document.createElement('div');
+            fieldNote.className = 'aum-field';
+            fieldNote.innerHTML = `<label>Notiz (intern)</label><textarea placeholder="Interne Notiz…">${proj.note || ''}</textarea>`;
+            const saveBtn = document.createElement('button');
+            saveBtn.className = 'aum-btn aum-btn-primary';
+            saveBtn.textContent = 'Speichern';
+            saveBtn.addEventListener('click', async () => {
+              saveBtn.disabled = true; saveBtn.textContent = '…';
+              const nameVal = fieldName.querySelector('input').value.trim();
+              const paketVal = fieldPaket.querySelector('input').value.trim();
+              const noteVal = fieldNote.querySelector('textarea').value;
+              await aFetch('/api/admin-users', { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: u.id, name: nameVal, paket: paketVal, note: noteVal }) });
+              saveBtn.textContent = 'Gespeichert ✓';
+              setTimeout(() => { saveBtn.textContent = 'Speichern'; saveBtn.disabled = false; }, 1600);
+            });
+            projSec.appendChild(fieldName); projSec.appendChild(fieldPaket); projSec.appendChild(fieldNote); projSec.appendChild(saveBtn);
+          }
+          body.appendChild(projSec);
+
+          // Documents section
+          const docSec = document.createElement('div');
+          docSec.className = 'aum-section';
+          const docTitle = document.createElement('div');
+          docTitle.className = 'aum-section-title';
+          docTitle.textContent = 'Dokumente';
+          docSec.appendChild(docTitle);
+
+          const docList = document.createElement('div');
+          docSec.appendChild(docList);
+
+          function renderDocs(docs) {
+            docList.innerHTML = '';
+            if (!docs.length) {
+              docList.innerHTML = `<div style="font-size:0.82rem;color:var(--dim);padding:6px 0 10px">Keine Dokumente.</div>`;
+            }
+            docs.forEach(doc => {
+              const row = document.createElement('div');
+              row.className = 'aum-doc-row';
+              const delBtn = document.createElement('button');
+              delBtn.className = 'aum-doc-del';
+              delBtn.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>`;
+              delBtn.addEventListener('click', async () => {
+                if (!confirm('Dokument löschen?')) return;
+                const res = await aFetch('/api/admin-users', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: u.id, docId: doc.id }) });
+                if (res.ok) { const updated = docs.filter(d => d.id !== doc.id); renderDocs(updated); }
+              });
+              row.innerHTML = `<span class="aum-doc-type">${doc.type || 'Dok'}</span><a href="${doc.url}" target="_blank" rel="noopener" class="aum-doc-name" style="color:var(--muted);text-decoration:none">${doc.name}</a>`;
+              row.appendChild(delBtn);
+              docList.appendChild(row);
+            });
+          }
+
+          // Load docs
+          aFetch(`/api/admin-users?userId=${u.id}`).then(r => r.json()).then(({ docs = [] }) => renderDocs(docs)).catch(() => {});
+
+          // Add doc form
+          const addDocForm = document.createElement('div');
+          addDocForm.style.cssText = 'margin-top:12px;display:flex;flex-direction:column;gap:7px';
+          addDocForm.innerHTML = `
+            <div class="aum-field" style="margin:0"><label>Name</label><input type="text" placeholder="z.B. Angebot #001" id="aum-doc-name"></div>
+            <div class="aum-field" style="margin:0"><label>URL</label><input type="text" placeholder="https://…" id="aum-doc-url"></div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <select id="aum-doc-type" style="padding:7px 10px;background:var(--surface);border:1px solid var(--border-md);border-radius:8px;color:var(--fg);font-size:0.83rem;font-family:inherit;outline:none;flex:1">
+                <option>Angebot</option><option>Rechnung</option><option>Vertrag</option><option>Dokument</option><option>Sonstiges</option>
+              </select>
+              <button class="aum-btn aum-btn-ghost" id="aum-doc-add">+ Hinzufügen</button>
+            </div>`;
+          addDocForm.querySelector('#aum-doc-add').addEventListener('click', async () => {
+            const nameI = addDocForm.querySelector('#aum-doc-name');
+            const urlI = addDocForm.querySelector('#aum-doc-url');
+            const typeI = addDocForm.querySelector('#aum-doc-type');
+            if (!nameI.value.trim() || !urlI.value.trim()) return;
+            const btn = addDocForm.querySelector('#aum-doc-add');
+            btn.disabled = true; btn.textContent = '…';
+            const res = await aFetch('/api/admin-users', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ userId: u.id, name: nameI.value.trim(), url: urlI.value.trim(), type: typeI.value }) });
+            if (res.ok) {
+              const { doc } = await res.json();
+              nameI.value = ''; urlI.value = '';
+              aFetch(`/api/admin-users?userId=${u.id}`).then(r => r.json()).then(({ docs = [] }) => renderDocs(docs));
+            }
+            btn.disabled = false; btn.textContent = '+ Hinzufügen';
+          });
+          docSec.appendChild(addDocForm);
+          body.appendChild(docSec);
+
+          panel.appendChild(body);
+          overlay.appendChild(panel);
+          document.body.appendChild(overlay);
+        }
+
         function loadAdminUsers(container) {
           container.innerHTML = aLoading();
           aFetch('/api/admin-users').then(r => r.json()).then(({ users = [] }) => {
@@ -850,10 +1060,16 @@
                 badge = `<div style="margin-top:5px;display:flex;gap:6px;flex-wrap:wrap"><span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:var(--surface);color:var(--muted)">${proj.paket || 'Anfrage'}</span><span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;border:1px solid ${statusColors[si]};color:${statusColors[si]}">${statusLabels[si]}</span></div>`;
               }
               const row = document.createElement('div');
-              row.style.cssText = 'display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);transition:background .12s';
+              row.style.cssText = 'display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer';
               row.onmouseenter = () => row.style.background = 'var(--surface)';
               row.onmouseleave = () => row.style.background = '';
-              row.innerHTML = `${av}<div style="flex:1;min-width:0"><div style="font-size:0.9rem;font-weight:600">${name}</div><div style="font-size:0.7rem;color:var(--dim);margin-top:1px;font-family:monospace">${u.id}</div>${badge}</div>`;
+              row.innerHTML = `${av}<div style="flex:1;min-width:0"><div style="font-size:0.9rem;font-weight:600">${name}</div><div style="font-size:0.7rem;color:var(--dim);margin-top:1px;font-family:monospace">${u.id}</div>${badge}</div><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;color:var(--dim);margin-top:2px"><polyline points="9 18 15 12 9 6"/></svg>`;
+              row.addEventListener('click', () => openUserModal(u, (userId, updatedProj) => {
+                u.project = updatedProj;
+                // Refresh badge in list row
+                const si = typeof updatedProj.status === 'number' ? updatedProj.status : 0;
+                const badgeEl = row.querySelector('div[data-badge]') || row.querySelector('div > div:last-child');
+              }));
               container.appendChild(row);
             });
           }).catch(() => { container.innerHTML = aError(); });

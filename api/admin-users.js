@@ -82,6 +82,23 @@ module.exports = async (req, res) => {
     return res.json({ ok: true, doc });
   }
 
+  // PATCH → update project status/details { userId, status?, name?, paket?, note? }
+  if (req.method === 'PATCH') {
+    if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
+    const { userId, status, name, paket, note } = req.body || {};
+    if (!userId) return res.status(400).json({ error: 'missing_userId' });
+    const raw = await kvCmd('GET', `flux0:req:${userId}`);
+    if (!raw) return res.status(404).json({ error: 'no_project' });
+    const proj = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (typeof status === 'number') proj.status = status;
+    if (name?.trim()) proj.name = name.trim();
+    if (paket?.trim()) proj.paket = paket.trim();
+    if (note !== undefined) proj.note = note.trim().slice(0, 500);
+    proj.updatedAt = Date.now();
+    await kvCmd('SET', `flux0:req:${userId}`, JSON.stringify(proj));
+    return res.json({ ok: true, proj });
+  }
+
   // DELETE → remove doc { userId, docId }
   if (req.method === 'DELETE') {
     if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
