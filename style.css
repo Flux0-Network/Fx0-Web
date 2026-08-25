@@ -550,10 +550,9 @@ body::after {
 .cookie-close:hover { color: var(--text); }
 
 /* ── FAQ ── */
-.faq-grid { display: flex; flex-direction: column; gap: 2px; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.faq-grid { display: flex; flex-direction: column; gap: 8px; }
 
-.faq-item { background: var(--bg); border-bottom: 1px solid var(--border); }
-.faq-item:last-child { border-bottom: none; }
+.faq-item { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); }
 
 .faq-item summary {
   list-style: none;
@@ -1578,7 +1577,7 @@ kbd {
   .paket-list--two-col { grid-template-columns: 1fr; }
 }
 .paket-card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
@@ -1897,20 +1896,22 @@ kbd {
 .prozess-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
+  gap: 16px;
 }
 .prozess-step {
   background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   padding: 28px 24px;
-  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 12px;
+  transition: border-color 0.2s, background 0.2s;
 }
-.prozess-step:last-child { border-right: none; }
+.prozess-step:hover {
+  border-color: rgba(255,255,255,0.18);
+  background: var(--surface);
+}
 .prozess-step-icon {
   width: 40px; height: 40px;
   border-radius: 10px;
