@@ -651,6 +651,24 @@
       }
     })();
     (function () {
+      const orbs = [
+        { el: document.querySelector('.aurora--1'), sx: 0.10, sy: 0.06, amp: 70, freq: 0.00045, phase: 0   },
+        { el: document.querySelector('.aurora--2'), sx: -0.08, sy: -0.05, amp: 55, freq: 0.00035, phase: 2.1 },
+        { el: document.querySelector('.aurora--3'), sx: 0.06, sy: 0.08,  amp: 45, freq: 0.00028, phase: 4.3 },
+      ];
+      function animateAurora(t) {
+        const sy = window.scrollY;
+        orbs.forEach(o => {
+          if (!o.el) return;
+          const dx = Math.sin(t * o.freq + o.phase) * o.amp;
+          const dy = Math.cos(t * o.freq * 0.65 + o.phase) * o.amp * 0.55;
+          o.el.style.transform = `translate(${dx + sy * o.sx}px, ${dy + sy * o.sy}px)`;
+        });
+        requestAnimationFrame(animateAurora);
+      }
+      requestAnimationFrame(animateAurora);
+    })();
+    (function () {
       const card = document.querySelector('.wp-card');
       if (!card) return;
       card.addEventListener('mousemove', (e) => {
