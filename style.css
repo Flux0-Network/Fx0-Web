@@ -273,8 +273,8 @@ body::after {
   text-shadow: 0 0 60px rgba(255,255,255,0.08);
 }
 
-/* Hero h1 span — leicht gedimmt (keine harte Grau-Wirkung) */
-.hero h1 span { color: rgba(255,255,255,0.55); }
+/* Hero h1 span — subtil gedimmt */
+.hero h1 span { color: rgba(255,255,255,0.82); }
 
 /* ── CARD EFFECTS ── */
 
