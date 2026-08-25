@@ -1570,7 +1570,7 @@ kbd {
   .paket-list--two-col { grid-template-columns: 1fr; }
 }
 .paket-card {
-  background: var(--bg);
+  background: transparent;
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
