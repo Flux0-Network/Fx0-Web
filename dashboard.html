@@ -55,9 +55,16 @@
     .dash-sidebar-footer a:hover { background: var(--surface); color: var(--fg); }
 
     /* Main panel */
-    .dash-main { flex: 1; overflow-y: auto; min-width: 0; }
-    .dash-panel { display: none; padding: 28px 32px; }
+    .dash-main { flex: 1; overflow: hidden; min-width: 0; display: flex; flex-direction: column; }
+    .dash-panel { display: none; padding: 28px 32px; overflow-y: auto; flex: 1; min-height: 0; }
     .dash-panel.active { display: block; }
+    /* Admin iframe panel */
+    .dash-panel-iframe { padding: 0 !important; }
+    .dash-panel-iframe.active { display: flex; flex-direction: column; }
+    .dash-admin-subnav { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; padding: 0 4px; background: var(--bg); }
+    .dash-admin-tab { padding: 10px 16px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-size: 0.85rem; color: var(--muted); transition: color .15s; }
+    .dash-admin-tab.active { color: var(--fg); border-bottom-color: var(--fg); font-weight: 500; }
+    .dash-admin-frame { flex: 1; border: none; width: 100%; min-height: 0; display: block; }
     .dash-panel-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 20px; color: var(--fg); }
     /* Desktop: hide logout from tab nav (sidebar footer handles it) */
     @media (min-width: 701px) { .dash-sidenav-logout { display: none !important; } }
@@ -104,7 +111,7 @@
       .dash-sidenav-icon { width: 20px; height: 20px; }
       .dash-sidebar-footer { display: none; }
       .dash-mobile-header { order: 0; }
-      .dash-main { flex: 1; overflow-y: auto; order: 1; }
+      .dash-main { flex: 1; overflow: hidden; order: 1; }
       .dash-panel { padding: 18px 16px; }
     }
   </style>
@@ -741,32 +748,38 @@
         nav.appendChild(btn);
       });
 
-      // Admin section
+      // Admin section (iframe-based, no redirect)
       if (isAdmin) {
+        const adminPages = [
+          { label: 'Benutzer', src: '/admin-users.html' },
+          { label: 'Tickets', src: '/admin-tickets.html' },
+          { label: 'Logs', src: '/admin-logs.html' },
+        ];
         const adminPanel = document.createElement('div');
         adminPanel.id = 'panel-admin';
-        adminPanel.className = 'dash-panel' + (savedSection === 'panel-admin' ? ' active' : '');
-        const adminTitle = document.createElement('div');
-        adminTitle.className = 'dash-panel-title';
-        adminTitle.textContent = 'Admin';
-        adminPanel.appendChild(adminTitle);
-        const adminLinks = [
-          { href: '/admin-users.html', label: 'Benutzer & Anfragen' },
-          { href: '/admin-tickets.html', label: 'Support-Tickets' },
-          { href: '/admin-logs.html', label: 'System-Logs' },
-        ];
-        const adminGrid = document.createElement('div');
-        adminGrid.style.cssText = 'display:flex;flex-direction:column;gap:8px';
-        adminLinks.forEach(({ href, label }) => {
-          const a = document.createElement('a');
-          a.href = href;
-          a.textContent = label + ' →';
-          a.style.cssText = 'display:block;padding:12px 16px;border:1px solid var(--border);border-radius:8px;color:var(--fg);text-decoration:none;font-size:0.9rem;background:var(--surface);transition:background .15s';
-          a.onmouseenter = () => a.style.background = 'var(--border)';
-          a.onmouseleave = () => a.style.background = 'var(--surface)';
-          adminGrid.appendChild(a);
+        adminPanel.className = 'dash-panel dash-panel-iframe' + (savedSection === 'panel-admin' ? ' active' : '');
+
+        const subnav = document.createElement('div');
+        subnav.className = 'dash-admin-subnav';
+
+        const frame = document.createElement('iframe');
+        frame.className = 'dash-admin-frame';
+        frame.src = adminPages[0].src;
+
+        adminPages.forEach(({ label, src }, i) => {
+          const tab = document.createElement('button');
+          tab.textContent = label;
+          tab.className = 'dash-admin-tab' + (i === 0 ? ' active' : '');
+          tab.addEventListener('click', () => {
+            subnav.querySelectorAll('.dash-admin-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            frame.src = src;
+          });
+          subnav.appendChild(tab);
         });
-        adminPanel.appendChild(adminGrid);
+
+        adminPanel.appendChild(subnav);
+        adminPanel.appendChild(frame);
         main.appendChild(adminPanel);
 
         const adminBtn = document.createElement('button');
@@ -802,22 +815,34 @@
         sidebar.appendChild(footer);
       }
 
-      // Mobile top header (logo left, avatar right)
+      // Mobile top header (logo left, avatar + logout right)
       const mobileHeader = document.createElement('div');
       mobileHeader.className = 'dash-mobile-header';
       const mobileLogo = document.createElement('a');
       mobileLogo.href = 'index.html';
       mobileLogo.innerHTML = '<img src="logo.png" alt="Flux0" class="dash-mobile-logo">';
+      const mobileRight = document.createElement('div');
+      mobileRight.style.cssText = 'display:flex;align-items:center;gap:10px';
       const mobileAvatar = document.createElement('div');
       mobileAvatar.className = 'dash-mobile-avatar';
       const avatarEl = document.getElementById('dash-avatar-wrap');
       if (avatarEl) {
-        const clone = avatarEl.cloneNode(true);
-        clone.removeAttribute('id');
-        mobileAvatar.appendChild(clone);
+        const inner = avatarEl.firstElementChild;
+        if (inner) {
+          const clone = inner.cloneNode(true);
+          clone.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
+          mobileAvatar.appendChild(clone);
+        }
       }
+      const mobileLogoutBtn = document.createElement('a');
+      mobileLogoutBtn.href = '/api/logout';
+      mobileLogoutBtn.title = 'Ausloggen';
+      mobileLogoutBtn.style.cssText = 'display:flex;align-items:center;color:var(--muted);padding:4px';
+      mobileLogoutBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
+      mobileRight.appendChild(mobileAvatar);
+      mobileRight.appendChild(mobileLogoutBtn);
       mobileHeader.appendChild(mobileLogo);
-      mobileHeader.appendChild(mobileAvatar);
+      mobileHeader.appendChild(mobileRight);
       dashView.appendChild(mobileHeader);
 
       dashView.appendChild(sidebar);
