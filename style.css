@@ -280,7 +280,7 @@ body::after {
 
 /* ── HERO ── */
 .hero {
-  padding: 148px 0 96px;
+  padding: 148px 0 180px;
   position: relative;
 }
 .hero .container { position: relative; z-index: 1; }
