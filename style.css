@@ -30,19 +30,6 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(ellipse 900px 700px at -120px 25%, rgba(255,255,255,0.10) 0%, transparent 100%),
-    radial-gradient(ellipse 800px 600px at calc(100% + 120px) 8%, rgba(255,255,255,0.07) 0%, transparent 100%),
-    radial-gradient(ellipse 850px 650px at -120px 70%, rgba(255,255,255,0.07) 0%, transparent 100%),
-    radial-gradient(ellipse 750px 550px at calc(100% + 120px) 60%, rgba(255,255,255,0.05) 0%, transparent 100%);
-}
-
 body::after {
   content: '';
   position: fixed;
@@ -51,6 +38,26 @@ body::after {
   z-index: 9999;
   opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── GLOW ORBS ── */
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-orb--tl {
+  width: 900px; height: 900px;
+  top: -300px; left: -350px;
+  background: rgba(255,255,255,0.08);
+  filter: blur(180px);
+}
+.glow-orb--tr {
+  width: 700px; height: 700px;
+  top: -200px; right: -300px;
+  background: rgba(255,255,255,0.05);
+  filter: blur(160px);
 }
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
