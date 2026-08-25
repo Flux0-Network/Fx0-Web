@@ -15,7 +15,7 @@
     .dash-page .navbar { display: none; }
     .dash-page .footer { display: none; }
     .dash-app-section { padding: 0 !important; margin-top: 0; height: 100vh; overflow: hidden; }
-    .dash-logo-corner { position: fixed; top: 14px; right: 20px; z-index: 50; opacity: .7; transition: opacity .15s; }
+    .dash-logo-corner { position: fixed; top: 14px; left: 20px; z-index: 50; opacity: .7; transition: opacity .15s; }
     .dash-logo-corner:hover { opacity: 1; }
     .dash-logo-corner img { height: 28px; width: auto; display: block; }
     .dash-app-container { max-width: none !important; padding: 0 !important; height: 100%; display: flex; flex-direction: column; }
@@ -66,10 +66,35 @@
     /* Ticket chat */
     .tc-arrow { transition: transform .2s; }
 
-    @media (max-width: 640px) {
-      .dash-sidebar { width: 56px; }
-      .dash-sidenav-item span:last-child, .dash-sidebar-name, .dash-sidebar-id, .dash-sidebar-footer a span { display: none; }
-      .dash-panel { padding: 20px 16px; }
+    /* Mobile: bottom tab bar */
+    .dash-page .navbar { display: none !important; }
+    @media (max-width: 700px) {
+      .dash-app-section { height: 100dvh; }
+      #view-dashboard { flex-direction: column; }
+      .dash-sidebar {
+        width: 100%; flex-direction: row;
+        border-right: none; border-top: 1px solid var(--border);
+        order: 2; flex-shrink: 0;
+      }
+      .dash-sidebar-profile { display: none; }
+      .dash-sidenav {
+        flex-direction: row; padding: 6px 4px;
+        justify-content: space-around; gap: 0;
+        overflow-x: auto; flex: 1;
+      }
+      .dash-sidenav-item {
+        flex-direction: column; gap: 3px;
+        padding: 7px 10px; font-size: 0.7rem;
+        align-items: center; border-radius: 10px;
+        flex: 1; min-width: 0;
+      }
+      .dash-sidenav-item span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+      .dash-sidenav-icon { width: 20px; height: 20px; }
+      .dash-sidebar-footer { display: none; }
+      .dash-main { flex: 1; overflow-y: auto; order: 1; }
+      .dash-panel { padding: 18px 16px; }
+      .dash-logo-corner { top: 10px; left: 14px; }
+      .dash-logo-corner img { height: 22px; }
     }
   </style>
 </head>
