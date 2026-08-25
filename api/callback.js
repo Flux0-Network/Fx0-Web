@@ -1,5 +1,23 @@
 const { createHmac } = require('crypto');
 
+async function kvLog(entry) {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return;
+  try {
+    const cmd = async (...args) => {
+      const r = await fetch(url, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(args),
+      });
+      return (await r.json()).result;
+    };
+    await cmd('LPUSH', 'flux0:logs', JSON.stringify(entry));
+    await cmd('LTRIM', 'flux0:logs', 0, 499);
+  } catch {}
+}
+
 module.exports = async (req, res) => {
   const { code, error } = req.query;
 
@@ -70,6 +88,17 @@ module.exports = async (req, res) => {
     res.setHeader('Set-Cookie',
       `flux0_session=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=${7 * 24 * 3600}; Path=/`
     );
+
+    kvLog({
+      userId: user.id,
+      username: user.username,
+      global_name: user.global_name || user.username,
+      avatar: user.avatar,
+      action: 'login',
+      timestamp: Date.now(),
+      ip: req.headers['x-forwarded-for']?.split(',')[0]?.trim() || null,
+    });
+
     res.redirect('/dashboard.html');
 
   } catch (err) {

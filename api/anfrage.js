@@ -1,5 +1,19 @@
 const { createHmac } = require('crypto');
 
+async function kvCmd(...args) {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  try {
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(args),
+    });
+    return (await r.json()).result;
+  } catch { return null; }
+}
+
 function getSession(req) {
   const SESSION_SECRET = process.env.SESSION_SECRET;
   const cookie = req.headers.cookie || '';
@@ -56,6 +70,23 @@ module.exports = async (req, res) => {
       body: JSON.stringify({ embeds: [embed] }),
     });
     if (!r.ok) throw new Error(`Webhook ${r.status}`);
+
+    // Persist request to KV (best-effort)
+    const record = JSON.stringify({
+      id: user.id,
+      username: user.username,
+      global_name: user.global_name,
+      avatar: user.avatar,
+      paket,
+      beschreibung,
+      budget,
+      status: 0,
+      note: '',
+      createdAt: Date.now(),
+    });
+    await kvCmd('SET', `flux0:req:${user.id}`, record);
+    await kvCmd('SADD', 'flux0:requests', user.id);
+
     res.json({ ok: true });
   } catch (err) {
     console.error('[anfrage] webhook error:', err.message);
