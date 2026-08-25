@@ -341,71 +341,86 @@ body::after {
 }
 .hero-text { display: flex; flex-direction: column; }
 
-/* Browser Mockup */
+/* Hero Visual — Terminal + Floating Cards */
 .hero-visual {
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.browser-mockup {
+.hv-scene {
+  position: relative;
   width: 100%;
-  max-width: 460px;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  overflow: hidden;
-  background: #0a0a0a;
-  box-shadow: 0 32px 80px -20px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.04);
+  max-width: 420px;
 }
-.browser-bar {
+
+/* Terminal */
+.hv-terminal {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #080808;
+  box-shadow: 0 24px 60px -12px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.04);
+}
+.hv-term-bar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 10px 14px;
-  background: #111111;
+  background: #111;
   border-bottom: 1px solid var(--border);
 }
-.browser-dot {
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.browser-url {
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.hv-term-title {
   flex: 1;
   text-align: center;
   font-size: 0.7rem;
   color: var(--dim);
+}
+.hv-term-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.hv-term-body p { margin: 0; color: rgba(255,255,255,0.5); }
+.tc-dim  { color: rgba(255,255,255,0.25); }
+.tc-green { color: #4ade80; }
+.tc-white { color: rgba(255,255,255,0.9); }
+.tc-blink { animation: tw-blink 0.9s step-end infinite; }
+
+/* Floating chips */
+.hv-card {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
   background: rgba(255,255,255,0.05);
   border: 1px solid var(--border);
-  border-radius: 5px;
-  padding: 3px 10px;
-  margin: 0 8px;
+  border-radius: 99px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px -6px rgba(0,0,0,0.5);
 }
-.browser-content { padding: 16px; display: flex; flex-direction: column; gap: 16px; }
+.hv-card-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.hv-card--tl { top: -18px; right: -10px; }
+.hv-card--br { bottom: -18px; left: -10px; }
 
-/* mini nav */
-.bm-nav { display: flex; align-items: center; justify-content: space-between; }
-.bm-logo { width: 48px; height: 8px; background: rgba(255,255,255,0.2); border-radius: 4px; }
-.bm-nav-links { display: flex; gap: 8px; }
-.bm-link { width: 28px; height: 6px; background: rgba(255,255,255,0.08); border-radius: 3px; }
-
-/* mini hero */
-.bm-hero { display: flex; flex-direction: column; gap: 8px; padding: 10px 0; }
-.bm-h1 { height: 14px; background: rgba(255,255,255,0.22); border-radius: 4px; width: 72%; }
-.bm-h1--sm { width: 55%; background: rgba(255,255,255,0.15); }
-.bm-sub { height: 7px; background: rgba(255,255,255,0.07); border-radius: 3px; width: 85%; }
-.bm-sub--short { width: 60%; }
-.bm-btns { display: flex; gap: 8px; margin-top: 4px; }
-.bm-btn { height: 22px; width: 80px; border-radius: 5px; background: rgba(255,255,255,0.08); border: 1px solid var(--border); }
-.bm-btn--primary { background: rgba(255,255,255,0.9); border-color: transparent; }
-
-/* mini cards */
-.bm-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; }
-.bm-card { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 7px; padding: 10px 8px; display: flex; flex-direction: column; gap: 6px; }
-.bm-card-icon { width: 18px; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.1); }
-.bm-card-lines { display: flex; flex-direction: column; gap: 4px; }
-.bm-card-lines div { height: 5px; border-radius: 2px; background: rgba(255,255,255,0.07); }
-.bm-card-lines div:first-child { width: 70%; }
-.bm-card-lines div:last-child { width: 45%; }
+@keyframes float-a {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+@keyframes float-b {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(7px); }
+}
+.float-a { animation: float-a 4s ease-in-out infinite; }
+.float-b { animation: float-b 5s ease-in-out infinite; }
 
 /* ── TEXT EFFECTS ── */
 

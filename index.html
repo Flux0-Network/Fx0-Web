@@ -72,38 +72,38 @@
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
-        <div class="browser-mockup">
-          <div class="browser-bar">
-            <span class="browser-dot" style="background:#ff5f57"></span>
-            <span class="browser-dot" style="background:#febc2e"></span>
-            <span class="browser-dot" style="background:#28c840"></span>
-            <div class="browser-url">flux0.dev</div>
+        <div class="hv-scene">
+
+          <!-- Floating card top-right: Live Preview -->
+          <div class="hv-card hv-card--tl float-a">
+            <div class="hv-card-dot" style="background:#28c840"></div>
+            <span>Live Preview</span>
           </div>
-          <div class="browser-content">
-            <div class="bm-nav">
-              <div class="bm-logo"></div>
-              <div class="bm-nav-links">
-                <div class="bm-link"></div>
-                <div class="bm-link"></div>
-                <div class="bm-link"></div>
-              </div>
+
+          <!-- Terminal -->
+          <div class="hv-terminal">
+            <div class="hv-term-bar">
+              <span class="browser-dot" style="background:#ff5f57"></span>
+              <span class="browser-dot" style="background:#febc2e"></span>
+              <span class="browser-dot" style="background:#28c840"></span>
+              <span class="hv-term-title">terminal</span>
             </div>
-            <div class="bm-hero">
-              <div class="bm-h1"></div>
-              <div class="bm-h1 bm-h1--sm"></div>
-              <div class="bm-sub"></div>
-              <div class="bm-sub bm-sub--short"></div>
-              <div class="bm-btns">
-                <div class="bm-btn bm-btn--primary"></div>
-                <div class="bm-btn"></div>
-              </div>
-            </div>
-            <div class="bm-cards">
-              <div class="bm-card"><div class="bm-card-icon"></div><div class="bm-card-lines"><div></div><div></div></div></div>
-              <div class="bm-card"><div class="bm-card-icon"></div><div class="bm-card-lines"><div></div><div></div></div></div>
-              <div class="bm-card"><div class="bm-card-icon"></div><div class="bm-card-lines"><div></div><div></div></div></div>
+            <div class="hv-term-body">
+              <p><span class="tc-dim">$</span> flux0 init <span class="tc-green">mein-projekt</span></p>
+              <p><span class="tc-dim">✓</span> Projekt erstellt</p>
+              <p><span class="tc-dim">$</span> flux0 deploy</p>
+              <p><span class="tc-dim">⠿</span> Build läuft<span class="tc-blink">_</span></p>
+              <p><span class="tc-green">✓</span> Deployed → <span class="tc-white">flux0.dev/mein-projekt</span></p>
+              <p class="tc-dim">  Fertig in 3.2s</p>
             </div>
           </div>
+
+          <!-- Floating card bottom-right: Launch -->
+          <div class="hv-card hv-card--br float-b">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/></svg>
+            <span>Launch in ∅ 5 Tagen</span>
+          </div>
+
         </div>
       </div>
     </div>
