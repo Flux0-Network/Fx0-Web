@@ -680,7 +680,7 @@
       { id: 'block-verbindungen', label: 'Verbindungen', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
     ];
 
-    function initSidebar(isAdmin) {
+    function initSidebar(isAdmin, userData) {
       const dashView = document.getElementById('view-dashboard');
       const stored = localStorage.getItem('flux0-dash-section');
       const savedSection = (stored === 'panel-admin' && !isAdmin) ? NAV_ITEMS[0].id : (stored || NAV_ITEMS[0].id);
@@ -1011,14 +1011,10 @@
       mobileRight.style.cssText = 'display:flex;align-items:center;gap:10px';
       const mobileAvatar = document.createElement('div');
       mobileAvatar.className = 'dash-mobile-avatar';
-      const avatarEl = document.getElementById('dash-avatar-wrap');
-      if (avatarEl) {
-        const inner = avatarEl.firstElementChild;
-        if (inner) {
-          const clone = inner.cloneNode(true);
-          clone.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
-          mobileAvatar.appendChild(clone);
-        }
+      if (userData) {
+        const avEl = buildAvatar(userData.id, userData.avatar, userData.global_name || userData.username || '?', 64, 'dash-avatar');
+        avEl.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
+        mobileAvatar.appendChild(avEl);
       }
       const mobileLogoutBtn = document.createElement('a');
       mobileLogoutBtn.href = '/api/logout';
@@ -1034,22 +1030,19 @@
       // Desktop top-right profile avatar
       const deskProfile = document.createElement('div');
       deskProfile.className = 'dash-desk-profile';
-      const nameEl2 = document.getElementById('dash-username');
-      if (nameEl2) {
+      if (userData) {
+        const uName = userData.global_name || userData.username || '?';
         const nameSpan = document.createElement('span');
         nameSpan.className = 'dash-desk-profile-name';
-        nameSpan.textContent = nameEl2.textContent;
+        nameSpan.textContent = uName;
         deskProfile.appendChild(nameSpan);
+        const deskAvatar = document.createElement('div');
+        deskAvatar.className = 'dash-desk-profile-avatar';
+        const avEl2 = buildAvatar(userData.id, userData.avatar, uName, 64, 'dash-avatar');
+        avEl2.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
+        deskAvatar.appendChild(avEl2);
+        deskProfile.appendChild(deskAvatar);
       }
-      const deskAvatar = document.createElement('div');
-      deskAvatar.className = 'dash-desk-profile-avatar';
-      const avatarEl2 = document.getElementById('dash-avatar-wrap');
-      if (avatarEl2?.firstElementChild) {
-        const clone2 = avatarEl2.firstElementChild.cloneNode(true);
-        clone2.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
-        deskAvatar.appendChild(clone2);
-      }
-      deskProfile.appendChild(deskAvatar);
       document.body.appendChild(deskProfile);
 
       dashView.appendChild(sidebar);
@@ -1094,7 +1087,7 @@
           }).catch(() => {});
 
         // Init sidebar navigation
-        initSidebar(data.isAdmin);
+        initSidebar(data.isAdmin, data);
 
         // Load tickets
         loadTickets();
