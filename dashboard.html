@@ -672,7 +672,6 @@
       { id: 'dash-anfrage', label: 'Neue Anfrage', icon: '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>' },
       { id: 'block-dokumente', label: 'Dokumente', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.7" fill="none"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><line x1="8" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>' },
       { id: 'dash-ticket-section', label: 'Support', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/>' },
-      { id: 'dash-activity-section', label: 'Aktivität', icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
       { id: 'block-verbindungen', label: 'Verbindungen', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
     ];
 
@@ -755,74 +754,114 @@
           return fetch(path, { credentials: 'include', ...opts });
         }
 
+        const aLoading = () => '<div style="padding:32px 20px;text-align:center;color:var(--muted);font-size:0.85rem">Wird geladen…</div>';
+        const aEmpty = msg => `<div style="padding:32px 20px;text-align:center;color:var(--muted);font-size:0.85rem">${msg}</div>`;
+        const aError = () => '<div style="padding:32px 20px;text-align:center;color:#ef4444;font-size:0.85rem">Fehler beim Laden.</div>';
+
         function loadAdminUsers(container) {
-          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          container.innerHTML = aLoading();
           aFetch('/api/admin-users').then(r => r.json()).then(({ users = [] }) => {
-            container.innerHTML = '';
-            if (!users.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Benutzer.</div>'; return; }
+            if (!users.length) { container.innerHTML = aEmpty('Noch keine Benutzer.'); return; }
+            const statusColors = ['#f59e0b', '#3b82f6', '#22c55e'];
+            const statusLabels = ['Offen', 'In Arbeit', 'Fertig'];
+            container.innerHTML = `
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:1px">
+                <div style="background:var(--bg);padding:14px 20px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:700">${users.length}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">Benutzer</div>
+                </div>
+                <div style="background:var(--bg);padding:14px 20px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:700">${users.filter(u => u.project).length}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">Mit Anfrage</div>
+                </div>
+                <div style="background:var(--bg);padding:14px 20px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:700">${users.filter(u => u.project?.status === 2).length}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">Abgeschlossen</div>
+                </div>
+              </div>`;
             users.forEach(u => {
               const name = u.global_name || u.username || '?';
               const av = u.avatar
-                ? `<img src="https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=32" style="width:32px;height:32px;border-radius:50%;flex-shrink:0">`
-                : `<div style="width:32px;height:32px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;flex-shrink:0">${name[0]}</div>`;
+                ? `<img src="https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=64" style="width:38px;height:38px;border-radius:50%;flex-shrink:0;object-fit:cover">`
+                : `<div style="width:38px;height:38px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.95rem;font-weight:700;flex-shrink:0;color:var(--fg)">${name[0].toUpperCase()}</div>`;
               const proj = u.project;
-              const statusLabels = ['Offen', 'In Arbeit', 'Fertig'];
-              const badge = proj
-                ? `<span style="font-size:0.7rem;padding:2px 8px;border-radius:10px;background:var(--surface);color:var(--muted);white-space:nowrap">${proj.paket || '—'} · ${statusLabels[proj.status] || 'Offen'}</span>`
-                : '<span style="font-size:0.7rem;color:var(--dim)">Keine Anfrage</span>';
+              let badge = '';
+              if (proj) {
+                const si = typeof proj.status === 'number' ? proj.status : 0;
+                badge = `<div style="margin-top:5px;display:flex;gap:6px;flex-wrap:wrap"><span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;background:var(--surface);color:var(--muted)">${proj.paket || 'Anfrage'}</span><span style="font-size:0.68rem;padding:2px 8px;border-radius:20px;border:1px solid ${statusColors[si]};color:${statusColors[si]}">${statusLabels[si]}</span></div>`;
+              }
               const row = document.createElement('div');
-              row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border)';
-              row.innerHTML = `${av}<div style="flex:1;min-width:0"><div style="font-size:0.87rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div><div style="font-size:0.7rem;color:var(--dim)">${u.id}</div></div>${badge}`;
+              row.style.cssText = 'display:flex;align-items:flex-start;gap:12px;padding:14px 20px;border-bottom:1px solid var(--border);transition:background .12s';
+              row.onmouseenter = () => row.style.background = 'var(--surface)';
+              row.onmouseleave = () => row.style.background = '';
+              row.innerHTML = `${av}<div style="flex:1;min-width:0"><div style="font-size:0.9rem;font-weight:600">${name}</div><div style="font-size:0.7rem;color:var(--dim);margin-top:1px;font-family:monospace">${u.id}</div>${badge}</div>`;
               container.appendChild(row);
             });
-          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+          }).catch(() => { container.innerHTML = aError(); });
         }
 
         function loadAdminTickets(container) {
-          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          container.innerHTML = aLoading();
           aFetch('/api/admin-tickets').then(r => r.json()).then(({ tickets = [] }) => {
-            container.innerHTML = '';
-            if (!tickets.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Tickets.</div>'; return; }
+            if (!tickets.length) { container.innerHTML = aEmpty('Noch keine Tickets.'); return; }
+            const open = tickets.filter(t => t.status !== 'closed').length;
+            container.innerHTML = `
+              <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--border);margin-bottom:1px">
+                <div style="background:var(--bg);padding:14px 20px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:700;color:#3b82f6">${open}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">Offen</div>
+                </div>
+                <div style="background:var(--bg);padding:14px 20px;text-align:center">
+                  <div style="font-size:1.5rem;font-weight:700">${tickets.length - open}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">Geschlossen</div>
+                </div>
+              </div>`;
             tickets.forEach(t => {
-              const card = document.createElement('div');
-              card.style.cssText = 'border-bottom:1px solid var(--border)';
-              const name = t.global_name || t.username || '?';
-              const header = document.createElement('div');
-              header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer';
               const isOpen = t.status !== 'closed';
-              header.innerHTML = `<div style="flex:1;min-width:0"><div style="font-size:0.87rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.subject}</div><div style="font-size:0.7rem;color:var(--dim)">${name} · ${new Date(t.createdAt).toLocaleDateString('de-DE')}</div></div><span style="font-size:0.7rem;padding:2px 8px;border-radius:10px;background:var(--surface);color:${isOpen ? '#3b82f6' : 'var(--muted)'};white-space:nowrap">${isOpen ? 'Offen' : 'Geschlossen'}</span><span class="tc-arrow" style="color:var(--muted);font-size:0.75rem">▾</span>`;
+              const name = t.global_name || t.username || '?';
+              const card = document.createElement('div');
+              card.style.cssText = `border-bottom:1px solid var(--border);border-left:3px solid ${isOpen ? '#3b82f6' : 'transparent'}`;
+              const header = document.createElement('div');
+              header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:13px 16px;cursor:pointer;transition:background .12s';
+              header.onmouseenter = () => header.style.background = 'var(--surface)';
+              header.onmouseleave = () => header.style.background = '';
+              header.innerHTML = `
+                <div style="flex:1;min-width:0">
+                  <div style="font-size:0.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.subject}</div>
+                  <div style="font-size:0.72rem;color:var(--muted);margin-top:2px">${name} · ${new Date(t.createdAt).toLocaleDateString('de-DE')} · ${(t.replies||[]).length} Antworten</div>
+                </div>
+                <span style="font-size:0.68rem;padding:3px 9px;border-radius:20px;border:1px solid ${isOpen ? '#3b82f6' : 'var(--border)'};color:${isOpen ? '#3b82f6' : 'var(--muted)'};white-space:nowrap;flex-shrink:0">${isOpen ? 'Offen' : 'Geschlossen'}</span>
+                <svg class="tc-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex-shrink:0;color:var(--muted);transition:transform .2s"><polyline points="6 9 12 15 18 9"/></svg>`;
               const body = document.createElement('div');
-              body.style.display = 'none';
-              body.style.padding = '0 16px 14px';
+              body.style.cssText = 'display:none;padding:0 16px 16px';
               const initMsg = document.createElement('div');
-              initMsg.style.cssText = 'padding:8px 12px;background:var(--surface);border-radius:8px;font-size:0.83rem;margin:10px 0 8px;white-space:pre-wrap;word-break:break-word';
+              initMsg.style.cssText = 'padding:10px 14px;background:var(--surface);border-radius:10px;font-size:0.84rem;margin:10px 0;white-space:pre-wrap;word-break:break-word;line-height:1.5';
               initMsg.textContent = t.message;
               body.appendChild(initMsg);
               (t.replies || []).forEach(rpl => {
-                const b = document.createElement('div');
                 const fromAdmin = rpl.from === 'admin';
-                b.style.cssText = `display:flex;margin-bottom:5px;justify-content:${fromAdmin ? 'flex-end' : 'flex-start'}`;
-                b.innerHTML = `<span style="padding:6px 11px;border-radius:10px;font-size:0.82rem;max-width:80%;background:${fromAdmin ? '#3b82f6' : 'var(--surface)'};color:${fromAdmin ? '#fff' : 'var(--fg)'};word-break:break-word">${rpl.text || rpl.message || ''}</span>`;
+                const b = document.createElement('div');
+                b.style.cssText = `display:flex;margin-bottom:6px;justify-content:${fromAdmin ? 'flex-end' : 'flex-start'}`;
+                b.innerHTML = `<span style="padding:8px 13px;border-radius:14px;font-size:0.83rem;max-width:78%;line-height:1.4;word-break:break-word;background:${fromAdmin ? '#3b82f6' : 'var(--surface)'};color:${fromAdmin ? '#fff' : 'var(--fg)'}">${rpl.text || rpl.message || ''}</span>`;
                 body.appendChild(b);
               });
               const replyRow = document.createElement('div');
-              replyRow.style.cssText = 'display:flex;gap:6px;margin-top:8px';
+              replyRow.style.cssText = 'display:flex;gap:6px;margin-top:10px';
               const replyInput = document.createElement('input');
               replyInput.type = 'text';
-              replyInput.placeholder = 'Antwort schreiben...';
-              replyInput.style.cssText = 'flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font-size:0.83rem;min-width:0';
+              replyInput.placeholder = 'Als Admin antworten…';
+              replyInput.style.cssText = 'flex:1;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font-size:0.84rem;min-width:0;outline:none';
               const replyBtn = document.createElement('button');
-              replyBtn.textContent = '→';
-              replyBtn.style.cssText = 'padding:7px 13px;border-radius:8px;background:#3b82f6;color:#fff;border:none;cursor:pointer;font-size:0.85rem;flex-shrink:0';
+              replyBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+              replyBtn.style.cssText = 'padding:8px 13px;border-radius:8px;background:#3b82f6;color:#fff;border:none;cursor:pointer;display:flex;align-items:center;flex-shrink:0';
               async function sendAdminReply() {
-                const msg = replyInput.value.trim();
-                if (!msg) return;
+                const msg = replyInput.value.trim(); if (!msg) return;
                 replyBtn.disabled = true;
                 const res = await aFetch('/api/admin-tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId: t.id, reply: msg }) });
                 if (res.ok) {
                   const b = document.createElement('div');
-                  b.style.cssText = 'display:flex;margin-bottom:5px;justify-content:flex-end';
-                  b.innerHTML = `<span style="padding:6px 11px;border-radius:10px;font-size:0.82rem;max-width:80%;background:#3b82f6;color:#fff;word-break:break-word">${msg}</span>`;
+                  b.style.cssText = 'display:flex;margin-bottom:6px;justify-content:flex-end';
+                  b.innerHTML = `<span style="padding:8px 13px;border-radius:14px;font-size:0.83rem;max-width:78%;background:#3b82f6;color:#fff;word-break:break-word">${msg}</span>`;
                   body.insertBefore(b, replyRow);
                   replyInput.value = '';
                 }
@@ -830,46 +869,48 @@
               }
               replyBtn.addEventListener('click', sendAdminReply);
               replyInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendAdminReply(); } });
-              replyRow.appendChild(replyInput);
-              replyRow.appendChild(replyBtn);
+              replyRow.appendChild(replyInput); replyRow.appendChild(replyBtn);
               body.appendChild(replyRow);
+              const actions = document.createElement('div');
+              actions.style.cssText = 'display:flex;gap:6px;margin-top:8px';
               const closeBtn = document.createElement('button');
               closeBtn.textContent = isOpen ? 'Ticket schließen' : 'Ticket öffnen';
-              closeBtn.style.cssText = 'margin-top:8px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:0.78rem';
+              closeBtn.style.cssText = 'padding:5px 12px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:0.78rem;transition:color .15s,border-color .15s';
+              closeBtn.onmouseenter = () => { closeBtn.style.color = 'var(--fg)'; closeBtn.style.borderColor = 'var(--fg)'; };
+              closeBtn.onmouseleave = () => { closeBtn.style.color = 'var(--muted)'; closeBtn.style.borderColor = 'var(--border)'; };
               closeBtn.addEventListener('click', async () => {
-                const newStatus = t.status === 'closed' ? 'open' : 'closed';
-                const res = await aFetch('/api/admin-tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId: t.id, status: newStatus }) });
-                if (res.ok) { t.status = newStatus; closeBtn.textContent = newStatus === 'closed' ? 'Ticket öffnen' : 'Ticket schließen'; }
+                const ns = t.status === 'closed' ? 'open' : 'closed';
+                const res = await aFetch('/api/admin-tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId: t.id, status: ns }) });
+                if (res.ok) { t.status = ns; closeBtn.textContent = ns === 'closed' ? 'Ticket öffnen' : 'Ticket schließen'; card.style.borderLeftColor = ns === 'closed' ? 'transparent' : '#3b82f6'; }
               });
-              body.appendChild(closeBtn);
+              actions.appendChild(closeBtn);
+              body.appendChild(actions);
               header.addEventListener('click', () => {
                 const open = body.style.display !== 'none';
                 body.style.display = open ? 'none' : 'block';
-                const arrow = header.querySelector('.tc-arrow');
-                if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+                header.querySelector('.tc-arrow').style.transform = open ? '' : 'rotate(180deg)';
               });
-              card.appendChild(header);
-              card.appendChild(body);
+              card.appendChild(header); card.appendChild(body);
               container.appendChild(card);
             });
-          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+          }).catch(() => { container.innerHTML = aError(); });
         }
 
         function loadAdminLogs(container) {
-          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          container.innerHTML = aLoading();
           aFetch('/api/admin-logs').then(r => r.json()).then(({ logs = [] }) => {
-            container.innerHTML = '';
-            if (!logs.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Logs.</div>'; return; }
-            logs.forEach((log, i) => {
+            if (!logs.length) { container.innerHTML = aEmpty('Keine Logs vorhanden.'); return; }
+            container.innerHTML = '<div style="padding:8px 0"></div>';
+            logs.forEach(log => {
               const row = document.createElement('div');
-              row.style.cssText = `padding:8px 16px;font-size:0.78rem;font-family:monospace;${i > 0 ? 'border-top:1px solid var(--border)' : ''}`;
+              row.style.cssText = 'display:flex;gap:10px;padding:5px 20px;font-size:0.78rem;font-family:monospace;line-height:1.5';
               const lvl = (log.level || 'info').toUpperCase();
-              const lvlColor = log.level === 'error' ? '#ef4444' : log.level === 'warn' ? '#f59e0b' : 'var(--muted)';
-              const time = log.createdAt ? new Date(log.createdAt).toLocaleString('de-DE') : '';
-              row.innerHTML = `<span style="color:${lvlColor}">[${lvl}]</span> <span style="color:var(--dim)">${time}</span> ${log.message || JSON.stringify(log)}`;
+              const lvlColor = { ERROR: '#ef4444', WARN: '#f59e0b', INFO: '#3b82f6' }[lvl] || 'var(--muted)';
+              const time = log.createdAt ? new Date(log.createdAt).toLocaleTimeString('de-DE') : '';
+              row.innerHTML = `<span style="color:${lvlColor};width:36px;flex-shrink:0">${lvl.slice(0,4)}</span><span style="color:var(--dim);flex-shrink:0;width:58px">${time}</span><span style="color:var(--fg);word-break:break-all">${log.message || JSON.stringify(log)}</span>`;
               container.appendChild(row);
             });
-          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+          }).catch(() => { container.innerHTML = aError(); });
         }
 
         const adminSubSections = [
