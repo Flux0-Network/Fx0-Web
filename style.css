@@ -291,12 +291,31 @@ body::after {
 /* ── TEXT EFFECTS ── */
 
 /* Hero h1 sehr subtiler Glow */
-.hero h1 {
-  text-shadow: 0 0 60px rgba(255,255,255,0.08);
+/* Typewriter cursor */
+.typewriter::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 1px;
+  -webkit-text-fill-color: rgba(255,255,255,0.6);
+  animation: tw-blink 0.65s step-end infinite;
 }
+.typewriter.done::after { display: none; }
+@keyframes tw-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* Hero h1 span — subtil gedimmt */
-.hero h1 span { color: rgba(255,255,255,0.82); }
+/* Scroll indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 36px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255,255,255,0.3);
+  animation: si-bounce 2s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes si-bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.3; }
+  50%      { transform: translateX(-50%) translateY(8px); opacity: 0.55; }
+}
 
 /* ── CARD EFFECTS ── */
 
@@ -400,8 +419,12 @@ body::after {
   line-height: 1.05;
   letter-spacing: -0.04em;
   margin-bottom: 20px;
+  background: linear-gradient(180deg, #ffffff 20%, #777777 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
-.hero h1 span { color: #ffffff; }
+.hero h1 span { -webkit-text-fill-color: transparent; }
 
 .hero-sub {
   max-width: 500px;

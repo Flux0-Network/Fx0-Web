@@ -58,12 +58,15 @@
   <!-- HERO -->
   <section class="hero">
     <div class="container">
-      <h1>Deine Website.<br /><span>Professionell. Fertig.</span></h1>
+      <h1>Deine Website.<br /><span class="typewriter">Professionell. Fertig.</span></h1>
       <p class="hero-sub">Wir bauen moderne Webseiten für Unternehmen, Freelancer und Projekte — von der ersten Idee bis zum Launch. Schnell, sauber, auf den Punkt.</p>
       <div class="hero-ctas">
         <a href="https://discord.gg/D9GwqWpwHT" class="btn-primary" target="_blank" rel="noopener">Angebot anfragen →</a>
         <a href="#pakete" class="btn-ghost">Pakete ansehen</a>
       </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </div>
   </section>
 
@@ -565,6 +568,19 @@
   </div>
 
   <script>
+    (function () {
+      const tw = document.querySelector('.hero h1 .typewriter');
+      if (tw) {
+        const text = tw.textContent.trim();
+        tw.textContent = '';
+        let i = 0;
+        function type() {
+          if (i < text.length) { tw.textContent += text[i++]; setTimeout(type, 55); }
+          else { tw.classList.add('done'); }
+        }
+        setTimeout(type, 500);
+      }
+    })();
     (function () {
       const revealSelectors = [
         '.section-label-row',
