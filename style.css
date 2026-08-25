@@ -253,7 +253,10 @@ body::after {
 .hero::before {
   content: '';
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: -100px;
   background:
     radial-gradient(ellipse 160% 55% at -15% 115%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.06) 35%, transparent 58%),
     radial-gradient(ellipse 90% 45% at 115% -5%, rgba(255,255,255,0.09) 0%, transparent 50%),
@@ -1511,7 +1514,7 @@ kbd {
 
 /* ── TECH STRIP ── */
 .tech-strip {
-  padding: 24px 0;
+  padding: 32px 0 40px;
 }
 .tech-strip-label {
   font-size: 0.72rem;
