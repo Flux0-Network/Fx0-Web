@@ -59,6 +59,21 @@
     .dash-panel { display: none; padding: 28px 32px; }
     .dash-panel.active { display: block; }
     .dash-panel-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 20px; color: var(--fg); }
+    /* Desktop: hide logout from tab nav (sidebar footer handles it) */
+    @media (min-width: 701px) { .dash-sidenav-logout { display: none !important; } }
+    /* Mobile top header */
+    .dash-mobile-header { display: none; }
+    @media (max-width: 700px) {
+      .dash-mobile-header {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 10px 14px; border-bottom: 1px solid var(--border);
+        background: var(--bg); flex-shrink: 0; order: 0;
+      }
+      .dash-mobile-logo { height: 22px; width: auto; opacity: .8; }
+      .dash-mobile-avatar { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; cursor: pointer; }
+      .dash-mobile-avatar img { width: 100%; height: 100%; object-fit: cover; }
+      .dash-mobile-avatar div { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; }
+    }
 
     /* Ticket chat */
     .tc-arrow { transition: transform .2s; }
@@ -88,6 +103,7 @@
       .dash-sidenav-item span:last-child { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
       .dash-sidenav-icon { width: 20px; height: 20px; }
       .dash-sidebar-footer { display: none; }
+      .dash-mobile-header { order: 0; }
       .dash-main { flex: 1; overflow-y: auto; order: 1; }
       .dash-panel { padding: 18px 16px; }
     }
@@ -652,9 +668,10 @@
       { id: 'block-verbindungen', label: 'Verbindungen', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
     ];
 
-    function initSidebar() {
+    function initSidebar(isAdmin) {
       const dashView = document.getElementById('view-dashboard');
-      const savedSection = localStorage.getItem('flux0-dash-section') || NAV_ITEMS[0].id;
+      const stored = localStorage.getItem('flux0-dash-section');
+      const savedSection = (stored === 'panel-admin' && !isAdmin) ? NAV_ITEMS[0].id : (stored || NAV_ITEMS[0].id);
 
       // Sidebar container
       const sidebar = document.createElement('div');
@@ -724,6 +741,55 @@
         nav.appendChild(btn);
       });
 
+      // Admin section
+      if (isAdmin) {
+        const adminPanel = document.createElement('div');
+        adminPanel.id = 'panel-admin';
+        adminPanel.className = 'dash-panel' + (savedSection === 'panel-admin' ? ' active' : '');
+        const adminTitle = document.createElement('div');
+        adminTitle.className = 'dash-panel-title';
+        adminTitle.textContent = 'Admin';
+        adminPanel.appendChild(adminTitle);
+        const adminLinks = [
+          { href: '/admin-users.html', label: 'Benutzer & Anfragen' },
+          { href: '/admin-tickets.html', label: 'Support-Tickets' },
+          { href: '/admin-logs.html', label: 'System-Logs' },
+        ];
+        const adminGrid = document.createElement('div');
+        adminGrid.style.cssText = 'display:flex;flex-direction:column;gap:8px';
+        adminLinks.forEach(({ href, label }) => {
+          const a = document.createElement('a');
+          a.href = href;
+          a.textContent = label + ' →';
+          a.style.cssText = 'display:block;padding:12px 16px;border:1px solid var(--border);border-radius:8px;color:var(--fg);text-decoration:none;font-size:0.9rem;background:var(--surface);transition:background .15s';
+          a.onmouseenter = () => a.style.background = 'var(--border)';
+          a.onmouseleave = () => a.style.background = 'var(--surface)';
+          adminGrid.appendChild(a);
+        });
+        adminPanel.appendChild(adminGrid);
+        main.appendChild(adminPanel);
+
+        const adminBtn = document.createElement('button');
+        adminBtn.className = 'dash-sidenav-item' + (savedSection === 'panel-admin' ? ' active' : '');
+        adminBtn.dataset.target = 'panel-admin';
+        adminBtn.innerHTML = `<svg class="dash-sidenav-icon" viewBox="0 0 24 24" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/></svg><span>Admin</span>`;
+        adminBtn.addEventListener('click', () => {
+          main.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+          nav.querySelectorAll('.dash-sidenav-item').forEach(n => n.classList.remove('active'));
+          adminPanel.classList.add('active');
+          adminBtn.classList.add('active');
+          try { localStorage.setItem('flux0-dash-section', 'panel-admin'); } catch {}
+        });
+        nav.appendChild(adminBtn);
+      }
+
+      // Mobile logout (desktop footer handles it)
+      const logoutNavBtn = document.createElement('a');
+      logoutNavBtn.href = '/api/logout';
+      logoutNavBtn.className = 'dash-sidenav-item dash-sidenav-logout';
+      logoutNavBtn.innerHTML = `<svg class="dash-sidenav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Logout</span>`;
+      nav.appendChild(logoutNavBtn);
+
       sidebar.appendChild(nav);
 
       // Logout in sidebar footer
@@ -735,6 +801,24 @@
         footer.appendChild(logout);
         sidebar.appendChild(footer);
       }
+
+      // Mobile top header (logo left, avatar right)
+      const mobileHeader = document.createElement('div');
+      mobileHeader.className = 'dash-mobile-header';
+      const mobileLogo = document.createElement('a');
+      mobileLogo.href = 'index.html';
+      mobileLogo.innerHTML = '<img src="logo.png" alt="Flux0" class="dash-mobile-logo">';
+      const mobileAvatar = document.createElement('div');
+      mobileAvatar.className = 'dash-mobile-avatar';
+      const avatarEl = document.getElementById('dash-avatar-wrap');
+      if (avatarEl) {
+        const clone = avatarEl.cloneNode(true);
+        clone.removeAttribute('id');
+        mobileAvatar.appendChild(clone);
+      }
+      mobileHeader.appendChild(mobileLogo);
+      mobileHeader.appendChild(mobileAvatar);
+      dashView.appendChild(mobileHeader);
 
       dashView.appendChild(sidebar);
       dashView.appendChild(main);
@@ -804,7 +888,7 @@
           }).catch(() => {});
 
         // Init sidebar navigation
-        initSidebar();
+        initSidebar(data.isAdmin);
 
         // Load tickets
         loadTickets();
