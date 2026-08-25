@@ -17,30 +17,55 @@
     .dash-app-container { max-width: none !important; padding: 0 !important; height: 100%; display: flex; flex-direction: column; }
     #view-loading, #view-login { padding: 64px 32px; }
     #view-error { padding: 0 24px; }
-    #view-dashboard { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
-    .dash-profile { padding: 14px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; gap: 14px; }
-    .dash-profile .dash-profile-info { flex: 1; min-width: 0; }
-    .dash-profile .dash-profile-info h2 { font-size: 1rem; margin: 0; }
-    .dash-profile .dash-id { font-size: 0.72rem; }
-    #dash-avatar-wrap img, #dash-avatar-wrap div { width: 36px !important; height: 36px !important; font-size: 1rem !important; }
-    /* 2-column grid */
-    #dash-grid { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; }
-    .dash-col { overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
-    #dash-col-left { border-right: 1px solid var(--border); }
-    .dash-col--over { background: rgba(124,58,237,.04); }
-    /* Blocks */
-    .dash-block { position: relative; transition: opacity .15s; }
-    .dash-block--dragging { opacity: .3; }
-    .dash-block--over { outline: 2px dashed var(--accent); outline-offset: 3px; border-radius: 12px; }
-    .dash-section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
-    .dash-drag-handle { cursor: grab; color: var(--dim); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; opacity: .45; }
-    .dash-drag-handle:hover { opacity: 1; background: var(--surface); }
-    .dash-collapse-btn { background: none; border: none; cursor: pointer; color: var(--dim); display: flex; align-items: center; padding: 2px; margin-left: auto; border-radius: 4px; transition: transform .2s, opacity .15s; opacity: .55; }
-    .dash-collapse-btn:hover { opacity: 1; background: var(--surface); }
+    #view-dashboard { height: 100%; display: flex; flex-direction: row; overflow: hidden; }
+
+    /* Sidebar */
+    .dash-sidebar {
+      width: 220px; flex-shrink: 0;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    .dash-sidebar-profile {
+      padding: 18px 16px 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .dash-sidebar-avatar { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+    .dash-sidebar-name { font-size: 0.9rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .dash-sidebar-id { font-size: 0.68rem; color: var(--dim); }
+    #dash-avatar-wrap img, #dash-avatar-wrap div { width: 36px !important; height: 36px !important; font-size: 1rem !important; flex-shrink: 0; }
+    .dash-sidenav { padding: 10px 8px; flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 1px; }
+    .dash-sidenav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: 8px;
+      font-size: 0.855rem; cursor: pointer;
+      color: var(--muted); background: none; border: none;
+      width: 100%; text-align: left;
+      transition: background .12s, color .12s;
+    }
+    .dash-sidenav-item:hover { background: var(--surface); color: var(--fg); }
+    .dash-sidenav-item.active { background: var(--surface); color: var(--fg); font-weight: 500; }
+    .dash-sidenav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; }
+    .dash-sidenav-item.active .dash-sidenav-icon { opacity: 1; }
+    .dash-sidebar-footer { padding: 12px 8px; border-top: 1px solid var(--border); }
+    .dash-sidebar-footer a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 0.855rem; color: var(--muted); text-decoration: none; }
+    .dash-sidebar-footer a:hover { background: var(--surface); color: var(--fg); }
+
+    /* Main panel */
+    .dash-main { flex: 1; overflow-y: auto; min-width: 0; }
+    .dash-panel { display: none; padding: 28px 32px; }
+    .dash-panel.active { display: block; }
+    .dash-panel-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 20px; color: var(--fg); }
+
+    /* Ticket chat */
     .tc-arrow { transition: transform .2s; }
-    @media (max-width: 768px) {
-      #dash-grid { grid-template-columns: 1fr; }
-      #dash-col-left { border-right: none; border-bottom: 1px solid var(--border); max-height: 50vh; }
+
+    @media (max-width: 640px) {
+      .dash-sidebar { width: 56px; }
+      .dash-sidenav-item span:last-child, .dash-sidebar-name, .dash-sidebar-id, .dash-sidebar-footer a span { display: none; }
+      .dash-panel { padding: 20px 16px; }
     }
   </style>
 </head>
@@ -190,7 +215,7 @@
         </div>
 
         <!-- Activity Feed -->
-        <div class="dash-dokumente" id="dash-activity-section" style="display:none">
+        <div class="dash-dokumente" id="dash-activity-section">
           <div class="dash-section-title">Aktivität</div>
           <div class="dash-dok-card">
             <div id="dash-activity-list" style="display:flex;flex-direction:column;gap:0"></div>
@@ -592,126 +617,102 @@
         }).catch(() => {});
     }
 
-    // Dashboard blocks — 2-column, drag to reorder/move, click to collapse
-    const BLOCK_IDS = ['block-projekt','dash-anfrage','block-dokumente','dash-activity-section','dash-ticket-section','block-verbindungen'];
+    // Sidebar navigation
+    const NAV_ITEMS = [
+      { id: 'block-projekt', label: 'Mein Projekt', icon: '<path d="M3 3h8v8H3zm10 0h8v8h-8zM3 13h8v8H3zm13 4v4m-2-2h4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      { id: 'dash-anfrage', label: 'Neue Anfrage', icon: '<circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7" fill="none"/><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>' },
+      { id: 'block-dokumente', label: 'Dokumente', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/><polyline points="14 2 14 8 20 8" stroke="currentColor" stroke-width="1.7" fill="none"/><line x1="8" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><line x1="8" y1="17" x2="12" y2="17" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>' },
+      { id: 'dash-ticket-section', label: 'Support', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" fill="none"/>' },
+      { id: 'dash-activity-section', label: 'Aktivität', icon: '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+      { id: 'block-verbindungen', label: 'Verbindungen', icon: '<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" fill="none"/>' },
+    ];
 
-    function saveDashLayout() {
-      const left = Array.from(document.querySelectorAll('#dash-col-left .dash-block')).map(b => b.id);
-      const right = Array.from(document.querySelectorAll('#dash-col-right .dash-block')).map(b => b.id);
-      const collapsed = BLOCK_IDS.filter(id => document.getElementById(id)?.querySelector('.dash-block-body')?.style.display === 'none');
-      try { localStorage.setItem('flux0-dash-blocks', JSON.stringify({ left, right, collapsed })); } catch {}
-    }
-
-    function initDashBlocks() {
-      let saved = {};
-      try { saved = JSON.parse(localStorage.getItem('flux0-dash-blocks') || '{}'); } catch {}
-
+    function initSidebar() {
       const dashView = document.getElementById('view-dashboard');
-      let dragSrc = null;
+      const savedSection = localStorage.getItem('flux0-dash-section') || NAV_ITEMS[0].id;
 
-      BLOCK_IDS.forEach(id => {
-        const el = document.getElementById(id);
-        if (!el) return;
-        const titleEl = el.querySelector(':scope > .dash-section-title');
-        if (!titleEl) return;
+      // Sidebar container
+      const sidebar = document.createElement('div');
+      sidebar.className = 'dash-sidebar';
 
-        el.classList.add('dash-block');
-        el.setAttribute('draggable', 'true');
-
-        const handle = document.createElement('span');
-        handle.className = 'dash-drag-handle';
-        handle.title = 'Verschieben';
-        handle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg>';
-        titleEl.prepend(handle);
-
-        const colBtn = document.createElement('button');
-        colBtn.className = 'dash-collapse-btn';
-        colBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
-        colBtn.title = 'Einklappen';
-        titleEl.appendChild(colBtn);
-
-        const body = document.createElement('div');
-        body.className = 'dash-block-body';
-        let next = titleEl.nextElementSibling;
-        while (next) { const sib = next.nextElementSibling; body.appendChild(next); next = sib; }
-        el.appendChild(body);
-
-        if (saved.collapsed?.includes(id)) {
-          body.style.display = 'none';
-          colBtn.style.transform = 'rotate(-90deg)';
-        }
-
-        colBtn.addEventListener('click', e => {
-          e.stopPropagation();
-          const col = body.style.display === 'none';
-          body.style.display = col ? '' : 'none';
-          colBtn.style.transform = col ? '' : 'rotate(-90deg)';
-          saveDashLayout();
-        });
-
-        el.addEventListener('dragstart', e => {
-          dragSrc = el;
-          e.dataTransfer.effectAllowed = 'move';
-          setTimeout(() => el.classList.add('dash-block--dragging'), 0);
-        });
-        el.addEventListener('dragend', () => {
-          el.classList.remove('dash-block--dragging');
-          document.querySelectorAll('.dash-block--over,.dash-col--over').forEach(b => b.classList.remove('dash-block--over','dash-col--over'));
-          saveDashLayout();
-        });
-        el.addEventListener('dragover', e => {
-          e.preventDefault(); e.stopPropagation();
-          if (dragSrc && dragSrc !== el) el.classList.add('dash-block--over');
-        });
-        el.addEventListener('dragleave', () => el.classList.remove('dash-block--over'));
-        el.addEventListener('drop', e => {
-          e.preventDefault(); e.stopPropagation();
-          el.classList.remove('dash-block--over');
-          if (!dragSrc || dragSrc === el) return;
-          const r = el.getBoundingClientRect();
-          if (e.clientY < r.top + r.height / 2) el.before(dragSrc); else el.after(dragSrc);
-          saveDashLayout();
-        });
-      });
-
-      // Build 2-column grid
-      const grid = document.createElement('div');
-      grid.id = 'dash-grid';
-      const colL = document.createElement('div');
-      colL.className = 'dash-col'; colL.id = 'dash-col-left';
-      const colR = document.createElement('div');
-      colR.className = 'dash-col'; colR.id = 'dash-col-right';
-
-      const allBlocks = BLOCK_IDS.map(id => document.getElementById(id)).filter(Boolean);
-      if (saved.left?.length || saved.right?.length) {
-        (saved.left || []).forEach(id => { const e = document.getElementById(id); if (e) colL.appendChild(e); });
-        (saved.right || []).forEach(id => { const e = document.getElementById(id); if (e) colR.appendChild(e); });
-        allBlocks.forEach(e => { if (e.parentNode === dashView) colR.appendChild(e); });
-      } else {
-        allBlocks.forEach((e, i) => (i < 2 ? colL : colR).appendChild(e));
+      // Profile in sidebar
+      const profile = dashView.querySelector('.dash-profile');
+      if (profile) {
+        profile.className = 'dash-sidebar-profile';
+        const avatarWrap = profile.querySelector('#dash-avatar-wrap');
+        const nameEl = profile.querySelector('#dash-username');
+        const idEl = profile.querySelector('#dash-discord-id');
+        const avatarRow = document.createElement('div');
+        avatarRow.className = 'dash-sidebar-avatar';
+        if (avatarWrap) avatarRow.appendChild(avatarWrap);
+        const info = document.createElement('div');
+        info.style.minWidth = 0;
+        if (nameEl) { nameEl.className = 'dash-sidebar-name'; info.appendChild(nameEl); }
+        if (idEl) { idEl.className = 'dash-sidebar-id'; info.appendChild(idEl); }
+        avatarRow.appendChild(info);
+        profile.innerHTML = '';
+        profile.appendChild(avatarRow);
+        sidebar.appendChild(profile);
       }
 
-      [colL, colR].forEach(col => {
-        col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('dash-col--over'); });
-        col.addEventListener('dragleave', e => { if (!col.contains(e.relatedTarget)) col.classList.remove('dash-col--over'); });
-        col.addEventListener('drop', e => {
-          e.preventDefault(); col.classList.remove('dash-col--over');
-          if (!dragSrc) return;
-          const bs = Array.from(col.querySelectorAll('.dash-block'));
-          let placed = false;
-          for (const b of bs) {
-            if (b === dragSrc) continue;
-            const r = b.getBoundingClientRect();
-            if (e.clientY < r.top + r.height / 2) { b.before(dragSrc); placed = true; break; }
-          }
-          if (!placed) col.appendChild(dragSrc);
-          saveDashLayout();
+      // Nav
+      const nav = document.createElement('nav');
+      nav.className = 'dash-sidenav';
+
+      // Main content
+      const main = document.createElement('div');
+      main.className = 'dash-main';
+
+      NAV_ITEMS.forEach(({ id, label, icon }) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        // Make it a panel
+        el.className = 'dash-panel';
+        el.style.display = '';
+        el.classList.toggle('active', id === savedSection);
+
+        // Remove the dash-section-title from the panel (sidebar is the nav)
+        const oldTitle = el.querySelector(':scope > .dash-section-title');
+        if (oldTitle) {
+          const panelTitle = document.createElement('div');
+          panelTitle.className = 'dash-panel-title';
+          panelTitle.textContent = label;
+          el.insertBefore(panelTitle, el.firstChild);
+          oldTitle.remove();
+        }
+
+        main.appendChild(el);
+
+        // Nav item
+        const btn = document.createElement('button');
+        btn.className = 'dash-sidenav-item' + (id === savedSection ? ' active' : '');
+        btn.dataset.target = id;
+        btn.innerHTML = `<svg class="dash-sidenav-icon" viewBox="0 0 24 24" width="16" height="16">${icon}</svg><span>${label}</span>`;
+        btn.addEventListener('click', () => {
+          main.querySelectorAll('.dash-panel').forEach(p => p.classList.remove('active'));
+          nav.querySelectorAll('.dash-sidenav-item').forEach(n => n.classList.remove('active'));
+          el.classList.add('active');
+          btn.classList.add('active');
+          try { localStorage.setItem('flux0-dash-section', id); } catch {}
         });
+        nav.appendChild(btn);
       });
 
-      grid.appendChild(colL);
-      grid.appendChild(colR);
-      dashView.appendChild(grid);
+      sidebar.appendChild(nav);
+
+      // Logout in sidebar footer
+      const logout = dashView.querySelector('.dash-logout');
+      if (logout) {
+        const footer = document.createElement('div');
+        footer.className = 'dash-sidebar-footer';
+        logout.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Ausloggen</span>`;
+        footer.appendChild(logout);
+        sidebar.appendChild(footer);
+      }
+
+      dashView.appendChild(sidebar);
+      dashView.appendChild(main);
     }
 
     // Show error from callback redirect (e.g. ?error=token)
@@ -777,8 +778,8 @@
             }
           }).catch(() => {});
 
-        // Init draggable + collapsible blocks
-        initDashBlocks();
+        // Init sidebar navigation
+        initSidebar();
 
         // Load tickets
         loadTickets();
