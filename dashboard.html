@@ -170,6 +170,37 @@
           </div>
         </div>
 
+        <!-- Support Ticket -->
+        <div class="dash-anfrage-section" id="dash-ticket-section">
+          <div class="dash-section-title">Support-Ticket</div>
+          <div class="dash-anfrage-card">
+            <div id="ticket-success" style="display:none" class="dash-anfrage-success">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <div>
+                <strong>Ticket gesendet!</strong>
+                <p>Wir melden uns so schnell wie möglich bei dir — schau auch in deinen Discord.</p>
+              </div>
+            </div>
+            <form id="ticket-form">
+              <div class="dash-anfrage-field">
+                <label for="ticket-subject">Betreff</label>
+                <input type="text" id="ticket-subject" placeholder="Worum geht es?" required />
+              </div>
+              <div class="dash-anfrage-field">
+                <label for="ticket-message">Nachricht</label>
+                <textarea id="ticket-message" rows="4" placeholder="Beschreibe dein Anliegen so genau wie möglich." required></textarea>
+              </div>
+              <div id="ticket-error" style="display:none" class="dash-notice dash-notice--warn"></div>
+              <button type="submit" class="btn-primary" id="ticket-submit">Ticket senden →</button>
+            </form>
+            <!-- Eigene Tickets -->
+            <div id="dash-ticket-list-wrap" style="display:none;margin-top:24px;border-top:1px solid var(--border);padding-top:20px">
+              <div style="font-size:0.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--dim);margin-bottom:12px">Meine Tickets</div>
+              <div id="dash-ticket-list" style="display:flex;flex-direction:column;gap:10px"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Verbindungen -->
         <div class="dash-connections">
           <div class="dash-section-title">Verbindungen</div>
@@ -393,6 +424,75 @@
       }
     });
 
+    // Ticket form
+    document.getElementById('ticket-form')?.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('ticket-submit');
+      const errEl = document.getElementById('ticket-error');
+      const subject = document.getElementById('ticket-subject').value.trim();
+      const message = document.getElementById('ticket-message').value.trim();
+      errEl.style.display = 'none';
+      if (!subject || !message) { errEl.textContent = 'Bitte fülle alle Felder aus.'; errEl.style.display = 'block'; return; }
+      btn.disabled = true;
+      btn.textContent = 'Wird gesendet…';
+      try {
+        const r = await fetch('/api/ticket', {
+          method: 'POST',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ subject, message }),
+        });
+        if (!r.ok) throw new Error((await r.json()).error || 'Fehler');
+        document.getElementById('ticket-form').style.display = 'none';
+        document.getElementById('ticket-success').style.display = 'flex';
+      } catch {
+        errEl.textContent = 'Senden fehlgeschlagen — versuch es nochmal.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Ticket senden →';
+      }
+    });
+
+    function loadTickets() {
+      fetch('/api/ticket', { credentials: 'include' })
+        .then(r => r.ok ? r.json() : null)
+        .then(json => {
+          if (!json?.tickets?.length) return;
+          const wrap = document.getElementById('dash-ticket-list-wrap');
+          const list = document.getElementById('dash-ticket-list');
+          if (!wrap || !list) return;
+          wrap.style.display = 'block';
+          const STATUS = { open: 'Offen', in_progress: 'In Bearbeitung', closed: 'Geschlossen' };
+          const STATUS_COLOR = { open: '#f59e0b', in_progress: '#3b82f6', closed: '#22c55e' };
+          json.tickets.forEach(t => {
+            const card = document.createElement('div');
+            card.style.cssText = 'border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:var(--bg)';
+            const header = document.createElement('div');
+            header.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:6px';
+            const statusDot = document.createElement('span');
+            statusDot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${STATUS_COLOR[t.status]||'#888'};flex-shrink:0`;
+            const subjectEl = document.createElement('span');
+            subjectEl.style.cssText = 'font-size:0.88rem;font-weight:600;flex:1';
+            subjectEl.textContent = t.subject;
+            const statusEl = document.createElement('span');
+            statusEl.style.cssText = `font-size:0.72rem;font-weight:600;color:${STATUS_COLOR[t.status]||'#888'}`;
+            statusEl.textContent = STATUS[t.status] || t.status;
+            header.appendChild(statusDot);
+            header.appendChild(subjectEl);
+            header.appendChild(statusEl);
+            card.appendChild(header);
+            if (t.replies?.length) {
+              const lastReply = t.replies[t.replies.length - 1];
+              const replyEl = document.createElement('div');
+              replyEl.style.cssText = 'font-size:0.8rem;color:var(--dim);padding:8px 0 0;border-top:1px solid var(--border);margin-top:8px';
+              replyEl.textContent = `Antwort: ${lastReply.message}`;
+              card.appendChild(replyEl);
+            }
+            list.appendChild(card);
+          });
+        }).catch(() => {});
+    }
+
     // Show error from callback redirect (e.g. ?error=token)
     const urlError = new URLSearchParams(location.search).get('error');
     if (urlError && ERRORS[urlError]) showError(ERRORS[urlError]);
@@ -455,6 +555,9 @@
               }
             }
           }).catch(() => {});
+
+        // Load tickets
+        loadTickets();
 
         // Load project status
         return fetch('/api/my-project', { credentials: 'include' })
