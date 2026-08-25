@@ -18,7 +18,7 @@
     .dash-app-container { max-width: none !important; padding: 0 !important; height: 100%; display: flex; flex-direction: column; }
     #view-loading, #view-login { padding: 64px 32px; }
     #view-error { padding: 0 24px; }
-    #view-dashboard { height: 100%; display: flex; flex-direction: row; overflow: hidden; }
+    #view-dashboard { flex: 1; min-height: 0; display: flex; flex-direction: row; overflow: hidden; }
 
     /* Sidebar */
     .dash-sidebar {
@@ -28,25 +28,27 @@
       overflow: hidden;
       background: var(--bg);
     }
-    /* Sidebar logo (desktop only) */
-    .dash-sidebar-logo { display: none; }
-    @media (min-width: 701px) {
-      .dash-sidebar-logo { display: flex; align-items: center; padding: 16px 16px 12px; text-decoration: none; }
-      .dash-sidebar-logo img { height: 26px; width: auto; opacity: .85; display: block; }
-      .dash-sidebar-logo:hover img { opacity: 1; }
-    }
-    /* Desktop: profile avatar top-right, not in sidebar */
+    /* Desktop: hide sidebar profile */
     @media (min-width: 701px) { .dash-sidebar-profile { display: none !important; } }
-    .dash-desk-profile { display: none; }
+    /* Desktop top bar */
+    .dash-top-bar { display: none; }
     @media (min-width: 701px) {
-      .dash-desk-profile {
-        position: fixed; top: 12px; right: 16px; z-index: 50;
-        display: flex; align-items: center; gap: 8px;
-      }
-      .dash-desk-profile-name { font-size: 0.82rem; font-weight: 500; color: var(--muted); }
-      .dash-desk-profile-avatar { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
-      .dash-desk-profile-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-      .dash-desk-profile-avatar div { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; }
+      .dash-top-bar { display: flex; align-items: center; height: 52px; border-bottom: 1px solid var(--border); flex-shrink: 0; background: var(--bg); }
+      .dash-top-bar-logo { width: 220px; flex-shrink: 0; padding: 0 16px; display: flex; align-items: center; height: 100%; text-decoration: none; border-right: 1px solid var(--border); }
+      .dash-top-bar-logo img { height: 26px; width: auto; opacity: .85; display: block; }
+      .dash-top-bar-logo:hover img { opacity: 1; }
+      .dash-top-bar-spacer { flex: 1; }
+      .dash-top-bar-profile { display: flex; align-items: center; padding: 0 14px; cursor: pointer; position: relative; height: 100%; gap: 6px; }
+      .dash-top-bar-profile:hover { background: var(--surface); }
+      .dash-top-bar-avatar { width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+      .dash-top-bar-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+      .dash-top-bar-avatar div { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; font-weight: 600; background: var(--surface); color: var(--fg); }
+      .dash-top-bar-caret { font-size: 0.65rem; color: var(--dim); }
+      .dash-top-bar-dropdown { display: none; position: absolute; top: calc(100% + 4px); right: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 10px; box-shadow: 0 4px 24px rgba(0,0,0,.14); min-width: 175px; overflow: hidden; z-index: 200; }
+      .dash-top-bar-dropdown.open { display: block; }
+      .dash-top-bar-dropdown a, .dash-top-bar-dropdown button { display: flex; align-items: center; gap: 9px; padding: 10px 14px; font-size: 0.84rem; color: var(--fg); text-decoration: none; background: none; border: none; cursor: pointer; width: 100%; text-align: left; font-family: inherit; transition: background .12s; }
+      .dash-top-bar-dropdown a:hover, .dash-top-bar-dropdown button:hover { background: var(--surface); }
+      .dash-top-bar-dropdown hr { border: none; border-top: 1px solid var(--border); margin: 3px 0; }
     }
     .dash-sidebar-profile {
       padding: 18px 16px 14px;
@@ -694,13 +696,6 @@
       const sidebar = document.createElement('div');
       sidebar.className = 'dash-sidebar';
 
-      // Logo at top of sidebar (desktop only)
-      const sidebarLogo = document.createElement('a');
-      sidebarLogo.href = 'index.html';
-      sidebarLogo.className = 'dash-sidebar-logo';
-      sidebarLogo.innerHTML = '<img src="logo.png" alt="Flux0">';
-      sidebar.appendChild(sidebarLogo);
-
       // Profile in sidebar
       const profile = dashView.querySelector('.dash-profile');
       if (profile) {
@@ -1011,7 +1006,7 @@
       mobileHeader.className = 'dash-mobile-header';
       const mobileLogo = document.createElement('a');
       mobileLogo.href = 'index.html';
-      mobileLogo.innerHTML = '<img src="logo.png" alt="Flux0" class="dash-mobile-logo">';
+      mobileLogo.innerHTML = '<img src="logo1.png" alt="Flux0" class="dash-mobile-logo">';
       const mobileRight = document.createElement('div');
       mobileRight.style.cssText = 'display:flex;align-items:center;gap:10px';
       const mobileAvatar = document.createElement('div');
@@ -1032,23 +1027,71 @@
       mobileHeader.appendChild(mobileRight);
       dashView.appendChild(mobileHeader);
 
-      // Desktop top-right profile avatar
-      const deskProfile = document.createElement('div');
-      deskProfile.className = 'dash-desk-profile';
+      // Desktop top bar (logo | line | spacer | profile dropdown)
+      const topBar = document.createElement('div');
+      topBar.className = 'dash-top-bar';
+
+      const topBarLogo = document.createElement('a');
+      topBarLogo.href = 'index.html';
+      topBarLogo.className = 'dash-top-bar-logo';
+      topBarLogo.innerHTML = '<img src="logo1.png" alt="Flux0">';
+      topBar.appendChild(topBarLogo);
+
+      const topBarSpacer = document.createElement('div');
+      topBarSpacer.className = 'dash-top-bar-spacer';
+      topBar.appendChild(topBarSpacer);
+
+      const topBarProfile = document.createElement('div');
+      topBarProfile.className = 'dash-top-bar-profile';
+
       if (userData) {
         const uName = userData.global_name || userData.username || '?';
-        const nameSpan = document.createElement('span');
-        nameSpan.className = 'dash-desk-profile-name';
-        nameSpan.textContent = uName;
-        deskProfile.appendChild(nameSpan);
-        const deskAvatar = document.createElement('div');
-        deskAvatar.className = 'dash-desk-profile-avatar';
-        const avEl2 = buildAvatar(userData.id, userData.avatar, uName, 64, 'dash-avatar');
-        avEl2.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
-        deskAvatar.appendChild(avEl2);
-        deskProfile.appendChild(deskAvatar);
+        const avatarWrap = document.createElement('div');
+        avatarWrap.className = 'dash-top-bar-avatar';
+        const avEl = buildAvatar(userData.id, userData.avatar, uName, 64, 'dash-avatar');
+        avEl.style.cssText = 'width:30px;height:30px;border-radius:50%;object-fit:cover;display:block';
+        avatarWrap.appendChild(avEl);
+        topBarProfile.appendChild(avatarWrap);
+
+        const caret = document.createElement('span');
+        caret.className = 'dash-top-bar-caret';
+        caret.innerHTML = '&#9660;';
+        topBarProfile.appendChild(caret);
+
+        const dropdown = document.createElement('div');
+        dropdown.className = 'dash-top-bar-dropdown';
+
+        const renameBtn = document.createElement('button');
+        renameBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Name ändern`;
+        renameBtn.addEventListener('click', () => {
+          dropdown.classList.remove('open');
+          const newName = prompt('Neuen Anzeigenamen eingeben:', uName);
+          if (newName?.trim()) {
+            try { localStorage.setItem('flux0-display-name', newName.trim()); } catch {}
+          }
+        });
+        dropdown.appendChild(renameBtn);
+
+        const hr = document.createElement('hr');
+        dropdown.appendChild(hr);
+
+        const logoutLink = document.createElement('a');
+        logoutLink.href = '/api/logout';
+        logoutLink.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Ausloggen`;
+        logoutLink.style.color = '#ef4444';
+        dropdown.appendChild(logoutLink);
+
+        topBarProfile.appendChild(dropdown);
+
+        topBarProfile.addEventListener('click', (e) => {
+          e.stopPropagation();
+          dropdown.classList.toggle('open');
+        });
+        document.addEventListener('click', () => dropdown.classList.remove('open'));
       }
-      document.body.appendChild(deskProfile);
+
+      topBar.appendChild(topBarProfile);
+      dashView.parentNode.insertBefore(topBar, dashView);
 
       dashView.appendChild(sidebar);
       dashView.appendChild(main);
