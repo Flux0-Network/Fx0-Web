@@ -29,6 +29,12 @@ async function kvCmd(...args) {
   return (await r.json()).result;
 }
 
+async function pushActivity(userId, type, text) {
+  const entry = JSON.stringify({ type, text, createdAt: Date.now() });
+  await kvCmd('LPUSH', `flux0:activity:${userId}`, entry);
+  await kvCmd('LTRIM', `flux0:activity:${userId}`, 0, 49);
+}
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
 
@@ -42,38 +48,38 @@ module.exports = async (req, res) => {
     (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) &&
     (process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN)
   );
+  if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
 
+  // GET /api/admin-docs?userId=xxx → docs for that user
   if (req.method === 'GET') {
-    if (!kvAvailable) return res.json({ tickets: [], kv: false });
-    const ids = (await kvCmd('SMEMBERS', 'flux0:tickets:all')) || [];
-    const tickets = (await Promise.all(ids.map(id => kvCmd('GET', `flux0:ticket:${id}`))))
-      .filter(Boolean)
-      .map(v => (typeof v === 'string' ? JSON.parse(v) : v))
-      .sort((a, b) => b.createdAt - a.createdAt);
-    return res.json({ tickets, kv: true });
+    const userId = req.query?.userId;
+    if (!userId) return res.status(400).json({ error: 'missing_userId' });
+    const raw = await kvCmd('GET', `flux0:docs:${userId}`);
+    const docs = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : [];
+    return res.json({ docs });
   }
 
+  // POST → add doc { userId, name, url, type }
   if (req.method === 'POST') {
-    if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
-    const { ticketId, status, reply } = req.body || {};
-    if (!ticketId) return res.status(400).json({ error: 'missing_ticketId' });
+    const { userId, name, url, type } = req.body || {};
+    if (!userId || !name?.trim() || !url?.trim()) return res.status(400).json({ error: 'missing_fields' });
+    const raw = await kvCmd('GET', `flux0:docs:${userId}`);
+    const docs = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : [];
+    const doc = { id: `${Date.now()}-${Math.random().toString(36).slice(2, 6)}`, name: name.trim(), url: url.trim(), type: type || 'Dokument', addedAt: Date.now() };
+    docs.unshift(doc);
+    await kvCmd('SET', `flux0:docs:${userId}`, JSON.stringify(docs));
+    await pushActivity(userId, 'doc_added', `Neues Dokument: ${doc.name}`);
+    return res.json({ ok: true, doc });
+  }
 
-    const raw = await kvCmd('GET', `flux0:ticket:${ticketId}`);
-    if (!raw) return res.status(404).json({ error: 'not_found' });
-    const ticket = typeof raw === 'string' ? JSON.parse(raw) : raw;
-
-    if (status) ticket.status = status;
-    if (reply?.trim()) {
-      ticket.replies = ticket.replies || [];
-      ticket.replies.push({ from: 'admin', text: reply.trim().slice(0, 2000), createdAt: Date.now() });
-      // Activity feed
-      const actEntry = JSON.stringify({ type: 'ticket_reply', text: `Ticket beantwortet: ${ticket.subject}`, createdAt: Date.now() });
-      kvCmd('LPUSH', `flux0:activity:${ticket.userId}`, actEntry).catch(() => {});
-      kvCmd('LTRIM', `flux0:activity:${ticket.userId}`, 0, 49).catch(() => {});
-    }
-    ticket.updatedAt = Date.now();
-
-    await kvCmd('SET', `flux0:ticket:${ticketId}`, JSON.stringify(ticket));
+  // DELETE → remove doc { userId, docId }
+  if (req.method === 'DELETE') {
+    const { userId, docId } = req.body || {};
+    if (!userId || !docId) return res.status(400).json({ error: 'missing_fields' });
+    const raw = await kvCmd('GET', `flux0:docs:${userId}`);
+    const docs = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : [];
+    const filtered = docs.filter(d => d.id !== docId);
+    await kvCmd('SET', `flux0:docs:${userId}`, JSON.stringify(filtered));
     return res.json({ ok: true });
   }
 

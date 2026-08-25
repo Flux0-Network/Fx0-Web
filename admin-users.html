@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nutzer — Flux0 Admin</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .admin-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; }
+    .admin-stat-number { font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+    .admin-stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .admin-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
+    .admin-filter-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .admin-search { flex: 1; min-width: 180px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; color: var(--fg); outline: none; }
+    .admin-filter-count { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+
+    /* Status widget */
+    .status-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 40px; }
+    .status-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .status-dot--up { background: #22c55e; box-shadow: 0 0 8px #22c55e66; }
+    .status-dot--down { background: #ef4444; box-shadow: 0 0 8px #ef444466; }
+    .status-dot--loading { background: var(--border); }
+    .status-name { font-weight: 600; font-size: 0.88rem; }
+    .status-latency { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+
+    /* User cards */
+    .user-list { display: flex; flex-direction: column; gap: 16px; }
+    .user-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+    .user-card-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; cursor: pointer; user-select: none; }
+    .user-card-header:hover { background: rgba(255,255,255,0.02); }
+    .user-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .user-avatar-ph { width: 44px; height: 44px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1rem; color: var(--muted); flex-shrink: 0; }
+    .user-info { flex: 1; min-width: 0; }
+    .user-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .user-uid { font-size: 0.72rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .user-meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-left: auto; }
+    .user-badge { padding: 3px 9px; border-radius: 99px; font-size: 0.7rem; font-weight: 600; border: 1px solid; }
+    .user-badge--project { color: #a78bfa; border-color: #a78bfa44; background: #a78bfa11; }
+    .user-badge--noproject { color: var(--dim); border-color: var(--border); background: transparent; }
+    .user-logins { font-size: 0.75rem; color: var(--dim); }
+    .user-lastlogin { font-size: 0.75rem; color: var(--dim); }
+    .user-chevron { font-size: 0.75rem; color: var(--dim); transition: transform 0.2s; margin-left: 8px; }
+    .user-card.open .user-chevron { transform: rotate(180deg); }
+
+    /* Expanded content */
+    .user-card-body { display: none; border-top: 1px solid var(--border); padding: 20px 24px; }
+    .user-card.open .user-card-body { display: block; }
+    .user-card-body-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .user-body-section-title { font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 12px; }
+    .user-project-info { font-size: 0.85rem; color: var(--muted); }
+    .user-project-info strong { color: var(--fg); display: block; margin-bottom: 4px; }
+    .project-steps { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+    .project-step { padding: 3px 10px; border-radius: 99px; font-size: 0.7rem; border: 1px solid var(--border); color: var(--dim); }
+    .project-step.done { background: rgba(168,85,247,0.15); border-color: #a855f7; color: #a855f7; }
+    .project-step.active { background: rgba(168,85,247,0.3); border-color: #a855f7; color: #a855f7; font-weight: 700; }
+
+    /* Docs */
+    .doc-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+    .doc-item { display: flex; align-items: center; gap: 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; }
+    .doc-type { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--muted); width: 70px; flex-shrink: 0; }
+    .doc-name { font-size: 0.85rem; flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .doc-link { font-size: 0.75rem; color: var(--muted); text-decoration: none; flex-shrink: 0; }
+    .doc-link:hover { color: var(--fg); }
+    .doc-del { font-size: 0.75rem; color: #ef4444; cursor: pointer; background: none; border: none; padding: 0 4px; flex-shrink: 0; }
+    .doc-add-form { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .doc-add-form input, .doc-add-form select { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 0.82rem; color: var(--fg); outline: none; width: 100%; box-sizing: border-box; font-family: inherit; }
+    .doc-add-row { display: flex; gap: 8px; margin-top: 8px; align-items: center; }
+    .doc-save-msg { font-size: 0.78rem; color: #22c55e; }
+
+    .admin-empty { color: var(--dim); text-align: center; padding: 48px 0; font-size: 0.9rem; }
+    .admin-no-access { text-align: center; padding: 80px 0; }
+    .admin-no-access h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .admin-no-access p { color: var(--muted); font-size: 0.9rem; }
+
+    @media (max-width: 700px) {
+      .admin-stats, .status-grid { grid-template-columns: 1fr; }
+      .user-card-body-grid { grid-template-columns: 1fr; }
+      .user-meta { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo"><img src="logo.png" alt="Flux0" class="logo-img"/></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="admin.html" class="nav-active">Admin</a></li>
+        <li class="nav-login" id="nav-login-li"><a href="dashboard.html">Login</a></li>
+      </ul>
+      <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
+      <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="hero hero--small">
+    <div class="container">
+      <h1>Nutzer & Status</h1>
+      <p class="hero-sub">Alle eingeloggten User, Service-Status und Dokumente verwalten.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="view-loading" style="text-align:center;padding:64px 0;color:var(--dim);font-size:0.9rem">Wird geladen…</div>
+
+      <div id="view-no-access" class="admin-no-access" style="display:none">
+        <h2>Kein Zugang</h2>
+        <p>Du hast keinen Zugriff auf das Admin Panel.</p>
+        <a href="dashboard.html" class="btn-ghost" style="margin-top:16px;display:inline-flex">← Dashboard</a>
+      </div>
+
+      <div id="view-login" style="display:none;text-align:center;padding:64px 0">
+        <p style="color:var(--muted);margin-bottom:16px">Du musst eingeloggt sein.</p>
+        <a href="dashboard.html" class="btn-primary">Mit Discord einloggen →</a>
+      </div>
+
+      <div id="view-admin" style="display:none">
+
+        <div class="admin-tabs">
+          <a href="admin.html" class="admin-tab">Anfragen</a>
+          <a href="admin-tickets.html" class="admin-tab">Tickets</a>
+          <a href="admin-users.html" class="admin-tab active">Nutzer & Status</a>
+          <a href="admin-logs.html" class="admin-tab">Login Logs</a>
+        </div>
+
+        <!-- Service Status -->
+        <div class="admin-section-title">Service Status</div>
+        <div class="status-grid" id="status-grid">
+          <div class="status-card"><div class="status-dot status-dot--loading" id="sd-flux0"></div><div class="status-name">flux0.dev</div><div class="status-latency" id="sl-flux0">…</div></div>
+          <div class="status-card"><div class="status-dot status-dot--loading" id="sd-flowwave"></div><div class="status-name">flowwave.app</div><div class="status-latency" id="sl-flowwave">…</div></div>
+          <div class="status-card"><div class="status-dot status-dot--loading" id="sd-lumaspace"></div><div class="status-name">lumaspace.de</div><div class="status-latency" id="sl-lumaspace">…</div></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="admin-stats">
+          <div class="admin-stat"><div class="admin-stat-number" id="stat-total">0</div><div class="admin-stat-label">User gesamt</div></div>
+          <div class="admin-stat"><div class="admin-stat-number" id="stat-projects">0</div><div class="admin-stat-label">Mit Projekt</div></div>
+          <div class="admin-stat"><div class="admin-stat-number" id="stat-logins">0</div><div class="admin-stat-label">Logins gesamt</div></div>
+        </div>
+
+        <div class="admin-filter-bar">
+          <input type="text" class="admin-search" id="admin-search" placeholder="Name oder Discord ID suchen…" />
+          <span class="admin-filter-count" id="admin-filter-count"></span>
+        </div>
+
+        <div class="admin-section-title">Nutzer</div>
+        <div class="user-list" id="user-list"></div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:1px solid var(--border);padding-top:24px">
+        <span class="footer-copy">© 2026 Flux0 · Admin Panel · intern</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const STEP_LABELS = ['Anfrage', 'Design', 'Entwicklung', 'Launch'];
+    let allUsers = [];
+    let searchQuery = '';
+
+    function formatDate(ts) {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    }
+
+    function applyFilter() {
+      let list = allUsers;
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(u => {
+          const name = (u.global_name || u.username || '').toLowerCase();
+          return name.includes(q) || u.id.includes(q);
+        });
+      }
+      const container = document.getElementById('user-list');
+      container.innerHTML = '';
+      document.getElementById('admin-filter-count').textContent = `${list.length} User`;
+      if (list.length === 0) {
+        container.innerHTML = '<div class="admin-empty">Keine User gefunden.</div>';
+      } else {
+        list.forEach(u => container.appendChild(renderUserCard(u)));
+      }
+    }
+
+    function buildAvatar(id, hash, name, cls) {
+      if (hash) {
+        const img = document.createElement('img');
+        img.className = cls;
+        img.src = `https://cdn.discordapp.com/avatars/${id}/${hash}.png?size=64`;
+        img.alt = name;
+        return img;
+      }
+      const ph = document.createElement('div');
+      ph.className = cls + '-ph';
+      ph.textContent = (name || '?')[0].toUpperCase();
+      return ph;
+    }
+
+    function renderUserCard(user) {
+      const name = user.global_name || user.username || 'Unbekannt';
+      const card = document.createElement('div');
+      card.className = 'user-card';
+
+      // Header (clickable toggle)
+      const header = document.createElement('div');
+      header.className = 'user-card-header';
+      header.appendChild(buildAvatar(user.id, user.avatar, name, 'user-avatar'));
+
+      const info = document.createElement('div');
+      info.className = 'user-info';
+      info.innerHTML = `<div class="user-name">${name}</div><div class="user-uid">${user.id}</div>`;
+      header.appendChild(info);
+
+      const meta = document.createElement('div');
+      meta.className = 'user-meta';
+      const projBadge = document.createElement('span');
+      projBadge.className = `user-badge ${user.project ? 'user-badge--project' : 'user-badge--noproject'}`;
+      projBadge.textContent = user.project ? 'Projekt aktiv' : 'Kein Projekt';
+      meta.appendChild(projBadge);
+      const loginsSpan = document.createElement('span');
+      loginsSpan.className = 'user-logins';
+      loginsSpan.textContent = `${user.loginCount || 1}× Login`;
+      meta.appendChild(loginsSpan);
+      const lastSpan = document.createElement('span');
+      lastSpan.className = 'user-lastlogin';
+      lastSpan.textContent = formatDate(user.lastLogin);
+      meta.appendChild(lastSpan);
+      header.appendChild(meta);
+
+      const chevron = document.createElement('span');
+      chevron.className = 'user-chevron';
+      chevron.textContent = '▼';
+      header.appendChild(chevron);
+
+      header.addEventListener('click', () => {
+        card.classList.toggle('open');
+        if (card.classList.contains('open') && !card.dataset.loaded) {
+          card.dataset.loaded = '1';
+          loadDocs(user.id, docsListEl, saveMsg);
+        }
+      });
+      card.appendChild(header);
+
+      // Body
+      const body = document.createElement('div');
+      body.className = 'user-card-body';
+
+      const grid = document.createElement('div');
+      grid.className = 'user-card-body-grid';
+
+      // Left: project info
+      const leftCol = document.createElement('div');
+      const projTitle = document.createElement('div');
+      projTitle.className = 'user-body-section-title';
+      projTitle.textContent = 'Projekt';
+      leftCol.appendChild(projTitle);
+
+      if (user.project) {
+        const proj = user.project;
+        const pInfo = document.createElement('div');
+        pInfo.className = 'user-project-info';
+        pInfo.innerHTML = `<strong>${proj.paket || 'Individuell'}</strong>Seit ${formatDate(proj.createdAt)}${proj.note ? `<br><span style="color:var(--dim);font-size:0.8rem">${proj.note}</span>` : ''}`;
+        leftCol.appendChild(pInfo);
+        const steps = document.createElement('div');
+        steps.className = 'project-steps';
+        STEP_LABELS.forEach((label, i) => {
+          const s = document.createElement('span');
+          s.className = 'project-step' + (i < proj.status ? ' done' : i === proj.status ? ' active' : '');
+          s.textContent = label;
+          steps.appendChild(s);
+        });
+        leftCol.appendChild(steps);
+      } else {
+        const noProj = document.createElement('p');
+        noProj.style.cssText = 'font-size:0.85rem;color:var(--dim)';
+        noProj.textContent = 'Kein aktives Projekt.';
+        leftCol.appendChild(noProj);
+      }
+
+      // Discord DM link
+      const dmLink = document.createElement('a');
+      dmLink.href = `https://discord.com/users/${user.id}`;
+      dmLink.target = '_blank';
+      dmLink.rel = 'noopener';
+      dmLink.className = 'btn-ghost';
+      dmLink.style.cssText = 'margin-top:12px;display:inline-flex;font-size:0.8rem;padding:6px 14px';
+      dmLink.textContent = '↗ Discord DM';
+      leftCol.appendChild(dmLink);
+
+      grid.appendChild(leftCol);
+
+      // Right: documents
+      const rightCol = document.createElement('div');
+      const docTitle = document.createElement('div');
+      docTitle.className = 'user-body-section-title';
+      docTitle.textContent = 'Dokumente';
+      rightCol.appendChild(docTitle);
+
+      const docsListEl = document.createElement('div');
+      docsListEl.className = 'doc-list';
+      docsListEl.innerHTML = '<div style="font-size:0.82rem;color:var(--dim)">Wird geladen…</div>';
+      rightCol.appendChild(docsListEl);
+
+      // Add doc form
+      const addForm = document.createElement('div');
+      addForm.className = 'doc-add-form';
+      const nameInput = document.createElement('input');
+      nameInput.type = 'text';
+      nameInput.placeholder = 'Name (z.B. Angebot #1)';
+      const urlInput = document.createElement('input');
+      urlInput.type = 'url';
+      urlInput.placeholder = 'URL (https://…)';
+      addForm.appendChild(nameInput);
+      addForm.appendChild(urlInput);
+
+      const addRow = document.createElement('div');
+      addRow.className = 'doc-add-row';
+      const typeSelect = document.createElement('select');
+      ['Angebot', 'Rechnung', 'Vertrag', 'Dokument'].forEach(t => {
+        const o = document.createElement('option');
+        o.value = t; o.textContent = t;
+        typeSelect.appendChild(o);
+      });
+      addRow.appendChild(typeSelect);
+      const addBtn = document.createElement('button');
+      addBtn.className = 'btn-primary';
+      addBtn.style.cssText = 'font-size:0.8rem;padding:6px 14px';
+      addBtn.textContent = 'Hinzufügen';
+      addRow.appendChild(addBtn);
+      const saveMsg = document.createElement('span');
+      saveMsg.className = 'doc-save-msg';
+      saveMsg.style.display = 'none';
+      addRow.appendChild(saveMsg);
+
+      addBtn.addEventListener('click', async () => {
+        const name = nameInput.value.trim();
+        const url = urlInput.value.trim();
+        if (!name || !url) return;
+        addBtn.disabled = true;
+        try {
+          const r = await fetch('/api/admin-docs', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId: user.id, name, url, type: typeSelect.value }),
+          });
+          if (!r.ok) throw new Error();
+          const { doc } = await r.json();
+          nameInput.value = '';
+          urlInput.value = '';
+          renderDoc(doc, docsListEl);
+          saveMsg.textContent = 'Gespeichert ✓';
+          saveMsg.style.display = 'inline';
+          setTimeout(() => { saveMsg.style.display = 'none'; }, 2500);
+        } catch {
+          saveMsg.textContent = 'Fehler';
+          saveMsg.style.display = 'inline';
+          setTimeout(() => { saveMsg.style.display = 'none'; }, 2500);
+        } finally { addBtn.disabled = false; }
+      });
+
+      rightCol.appendChild(addForm);
+      rightCol.appendChild(addRow);
+      grid.appendChild(rightCol);
+      body.appendChild(grid);
+      card.appendChild(body);
+      return card;
+    }
+
+    function renderDoc(doc, container) {
+      // Remove placeholder if present
+      const placeholder = container.querySelector('div[style]');
+      if (placeholder && placeholder.textContent.includes('geladen')) placeholder.remove();
+
+      const item = document.createElement('div');
+      item.className = 'doc-item';
+      item.dataset.id = doc.id;
+      item.innerHTML = `<span class="doc-type">${doc.type}</span><span class="doc-name">${doc.name}</span><a href="${doc.url}" target="_blank" rel="noopener" class="doc-link">↗ Öffnen</a>`;
+      const delBtn = document.createElement('button');
+      delBtn.className = 'doc-del';
+      delBtn.textContent = '✕';
+      delBtn.title = 'Löschen';
+      delBtn.addEventListener('click', async () => {
+        if (!confirm('Dokument löschen?')) return;
+        const r = await fetch('/api/admin-docs', {
+          method: 'DELETE',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ userId: item.closest('.user-card')?.dataset?.userId || '', docId: doc.id }),
+        }).catch(() => null);
+        if (r?.ok) item.remove();
+      });
+      item.appendChild(delBtn);
+      container.prepend(item);
+    }
+
+    async function loadDocs(userId, container, saveMsg) {
+      try {
+        const r = await fetch(`/api/admin-docs?userId=${userId}`, { credentials: 'include' });
+        if (!r.ok) throw new Error();
+        const { docs } = await r.json();
+        container.innerHTML = '';
+        if (docs.length === 0) {
+          container.innerHTML = '<div style="font-size:0.82rem;color:var(--dim)">Keine Dokumente.</div>';
+        } else {
+          docs.forEach(doc => renderDoc(doc, container));
+        }
+      } catch {
+        container.innerHTML = '<div style="font-size:0.82rem;color:#ef4444">Fehler beim Laden.</div>';
+      }
+    }
+
+    async function loadStatus() {
+      try {
+        const r = await fetch('/api/status');
+        if (!r.ok) return;
+        const { services } = await r.json();
+        const slugs = { 'flux0.dev': 'flux0', 'flowwave.app': 'flowwave', 'lumaspace.de': 'lumaspace' };
+        services.forEach(s => {
+          const key = slugs[s.name];
+          if (!key) return;
+          const dot = document.getElementById(`sd-${key}`);
+          const lat = document.getElementById(`sl-${key}`);
+          if (dot) { dot.className = `status-dot status-dot--${s.status}`; }
+          if (lat) lat.textContent = s.status === 'up' ? `${s.latency}ms` : 'Nicht erreichbar';
+        });
+      } catch {}
+    }
+
+    function initNav(data) {
+      const navLoginLi = document.getElementById('nav-login-li');
+      const navUserLink = document.getElementById('nav-user-link');
+      const name = data.global_name || data.username || '—';
+      if (navLoginLi) navLoginLi.style.display = 'none';
+      if (navUserLink) {
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          navUserLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          navUserLink.appendChild(ph);
+        }
+        navUserLink.style.display = 'flex';
+      }
+    }
+
+    async function init() {
+      try {
+        const r = await fetch('/api/me', { credentials: 'include' });
+        if (!r.ok) throw new Error(r.status);
+        initNav(await r.json());
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-login').style.display = 'block';
+        return;
+      }
+
+      try {
+        const r = await fetch('/api/admin-users', { credentials: 'include' });
+        if (r.status === 403) {
+          document.getElementById('view-loading').style.display = 'none';
+          document.getElementById('view-no-access').style.display = 'block';
+          return;
+        }
+        if (!r.ok) throw new Error(r.status);
+        const json = await r.json();
+        allUsers = json.users || [];
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-no-access').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('view-loading').style.display = 'none';
+      document.getElementById('view-admin').style.display = 'block';
+
+      document.getElementById('stat-total').textContent = allUsers.length;
+      document.getElementById('stat-projects').textContent = allUsers.filter(u => u.project).length;
+      document.getElementById('stat-logins').textContent = allUsers.reduce((s, u) => s + (u.loginCount || 1), 0);
+
+      applyFilter();
+      loadStatus();
+
+      document.getElementById('admin-search').addEventListener('input', e => {
+        searchQuery = e.target.value.trim();
+        applyFilter();
+      });
+    }
+
+    init();
+
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        const el = document.getElementById('cookie-notice');
+        if (el) el.style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        const el = document.getElementById('cookie-notice');
+        if (el) el.style.display = 'none';
+      }
+      document.getElementById('cookie-accept')?.addEventListener('click', accept);
+      document.getElementById('cookie-close')?.addEventListener('click', accept);
+    })();
+  </script>
+
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern. Mehr in unserer <a href="/impressum.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
+  </div>
+
+</body>
+</html>

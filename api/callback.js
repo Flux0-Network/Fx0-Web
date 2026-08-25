@@ -89,15 +89,33 @@ module.exports = async (req, res) => {
       `flux0_session=${token}; HttpOnly; Secure; SameSite=Lax; Max-Age=${7 * 24 * 3600}; Path=/`
     );
 
-    kvLog({
-      userId: user.id,
-      username: user.username,
-      global_name: user.global_name || user.username,
-      avatar: user.avatar,
-      action: 'login',
-      timestamp: Date.now(),
-      ip: req.headers['x-forwarded-for']?.split(',')[0]?.trim() || null,
-    });
+    const now = Date.now();
+    const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || null;
+
+    kvLog({ userId: user.id, username: user.username, global_name: user.global_name || user.username, avatar: user.avatar, action: 'login', timestamp: now, ip });
+
+    // Save/update user profile in KV
+    const kvUrl = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+    const kvToken = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+    if (kvUrl && kvToken) {
+      const kv = async (...args) => {
+        const r = await fetch(kvUrl, { method: 'POST', headers: { Authorization: `Bearer ${kvToken}`, 'Content-Type': 'application/json' }, body: JSON.stringify(args) });
+        return (await r.json()).result;
+      };
+      const existing = await kv('GET', `flux0:user:${user.id}`);
+      const prev = existing ? (typeof existing === 'string' ? JSON.parse(existing) : existing) : null;
+      const profile = {
+        id: user.id,
+        username: user.username,
+        global_name: user.global_name || user.username,
+        avatar: user.avatar,
+        firstSeen: prev?.firstSeen || now,
+        lastLogin: now,
+        loginCount: (prev?.loginCount || 0) + 1,
+      };
+      await kv('SET', `flux0:user:${user.id}`, JSON.stringify(profile));
+      await kv('SADD', 'flux0:users:all', user.id);
+    }
 
     res.redirect('/dashboard.html');
 

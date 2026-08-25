@@ -66,6 +66,13 @@ module.exports = async (req, res) => {
     if (typeof note === 'string') updated.note = note;
     await kvCmd('SET', `flux0:req:${userId}`, JSON.stringify(updated));
 
+    // Activity feed on status change
+    if (typeof status === 'number' && status !== existing.status) {
+      const activityEntry = JSON.stringify({ type: 'status_change', text: `Projektstatus: ${STATUS_LABELS[status] || status}`, createdAt: Date.now() });
+      kvCmd('LPUSH', `flux0:activity:${userId}`, activityEntry).catch(() => {});
+      kvCmd('LTRIM', `flux0:activity:${userId}`, 0, 49).catch(() => {});
+    }
+
     // Discord webhook on status change
     const webhookUrl = process.env.DISCORD_STATUS_WEBHOOK;
     if (webhookUrl && typeof status === 'number' && status !== existing.status) {

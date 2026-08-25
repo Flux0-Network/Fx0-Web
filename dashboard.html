@@ -150,14 +150,23 @@
         <!-- Dokumente -->
         <div class="dash-dokumente">
           <div class="dash-section-title">Dokumente</div>
-          <div class="dash-dok-card">
-            <div class="dash-dok-empty">
+          <div class="dash-dok-card" id="dash-dok-card">
+            <div class="dash-dok-empty" id="dash-dok-empty">
               <div class="dash-dok-empty-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
               </div>
               <p><strong>Keine Dokumente vorhanden</strong></p>
               <p>Angebote und Rechnungen erscheinen hier sobald dein Projekt gestartet ist.</p>
             </div>
+            <div id="dash-dok-list" style="display:none;display:flex;flex-direction:column;gap:8px;padding:8px 0"></div>
+          </div>
+        </div>
+
+        <!-- Activity Feed -->
+        <div class="dash-dokumente" id="dash-activity-section" style="display:none">
+          <div class="dash-section-title">Aktivität</div>
+          <div class="dash-dok-card">
+            <div id="dash-activity-list" style="display:flex;flex-direction:column;gap:0"></div>
           </div>
         </div>
 
@@ -395,6 +404,58 @@
       })
       .then(data => {
         showDashboard(data);
+
+        // Load docs
+        fetch('/api/docs', { credentials: 'include' })
+          .then(r => r.ok ? r.json() : null)
+          .then(json => {
+            if (!json || !json.docs?.length) return;
+            const emptyEl = document.getElementById('dash-dok-empty');
+            const listEl = document.getElementById('dash-dok-list');
+            if (emptyEl) emptyEl.style.display = 'none';
+            if (listEl) {
+              listEl.style.display = 'flex';
+              json.docs.forEach(doc => {
+                const item = document.createElement('a');
+                item.href = doc.url;
+                item.target = '_blank';
+                item.rel = 'noopener';
+                item.style.cssText = 'display:flex;align-items:center;gap:12px;padding:10px 14px;border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--fg);font-size:0.88rem;background:var(--bg)';
+                item.innerHTML = `<span style="font-size:0.7rem;font-weight:600;text-transform:uppercase;color:var(--muted);width:72px;flex-shrink:0">${doc.type}</span><span style="flex:1">${doc.name}</span><span style="font-size:0.75rem;color:var(--muted)">↗</span>`;
+                listEl.appendChild(item);
+              });
+            }
+          }).catch(() => {});
+
+        // Load activity feed
+        fetch('/api/activity', { credentials: 'include' })
+          .then(r => r.ok ? r.json() : null)
+          .then(json => {
+            if (!json || !json.events?.length) return;
+            const section = document.getElementById('dash-activity-section');
+            const list = document.getElementById('dash-activity-list');
+            if (!section || !list) return;
+            section.style.display = 'block';
+            const ICONS = { status_change: '🔄', ticket_reply: '💬', ticket_created: '🎫', doc_added: '📄' };
+            json.events.forEach((ev, i) => {
+              const row = document.createElement('div');
+              row.style.cssText = `display:flex;align-items:center;gap:12px;padding:12px 16px;font-size:0.85rem;${i > 0 ? 'border-top:1px solid var(--border)' : ''}`;
+              const icon = document.createElement('span');
+              icon.style.cssText = 'font-size:1rem;flex-shrink:0';
+              icon.textContent = ICONS[ev.type] || '•';
+              const text = document.createElement('span');
+              text.style.flex = '1';
+              text.textContent = ev.text;
+              const date = document.createElement('span');
+              date.style.cssText = 'font-size:0.72rem;color:var(--dim);flex-shrink:0';
+              date.textContent = new Date(ev.createdAt).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit' });
+              row.appendChild(icon);
+              row.appendChild(text);
+              row.appendChild(date);
+              list.appendChild(row);
+            });
+          }).catch(() => {});
+
         // Load project status
         return fetch('/api/my-project', { credentials: 'include' })
           .then(r => r.ok ? r.json() : null)

@@ -44,37 +44,17 @@ module.exports = async (req, res) => {
   );
 
   if (req.method === 'GET') {
-    if (!kvAvailable) return res.json({ tickets: [], kv: false });
-    const ids = (await kvCmd('SMEMBERS', 'flux0:tickets:all')) || [];
-    const tickets = (await Promise.all(ids.map(id => kvCmd('GET', `flux0:ticket:${id}`))))
-      .filter(Boolean)
-      .map(v => (typeof v === 'string' ? JSON.parse(v) : v))
-      .sort((a, b) => b.createdAt - a.createdAt);
-    return res.json({ tickets, kv: true });
-  }
-
-  if (req.method === 'POST') {
-    if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
-    const { ticketId, status, reply } = req.body || {};
-    if (!ticketId) return res.status(400).json({ error: 'missing_ticketId' });
-
-    const raw = await kvCmd('GET', `flux0:ticket:${ticketId}`);
-    if (!raw) return res.status(404).json({ error: 'not_found' });
-    const ticket = typeof raw === 'string' ? JSON.parse(raw) : raw;
-
-    if (status) ticket.status = status;
-    if (reply?.trim()) {
-      ticket.replies = ticket.replies || [];
-      ticket.replies.push({ from: 'admin', text: reply.trim().slice(0, 2000), createdAt: Date.now() });
-      // Activity feed
-      const actEntry = JSON.stringify({ type: 'ticket_reply', text: `Ticket beantwortet: ${ticket.subject}`, createdAt: Date.now() });
-      kvCmd('LPUSH', `flux0:activity:${ticket.userId}`, actEntry).catch(() => {});
-      kvCmd('LTRIM', `flux0:activity:${ticket.userId}`, 0, 49).catch(() => {});
-    }
-    ticket.updatedAt = Date.now();
-
-    await kvCmd('SET', `flux0:ticket:${ticketId}`, JSON.stringify(ticket));
-    return res.json({ ok: true });
+    if (!kvAvailable) return res.json({ users: [], kv: false });
+    const ids = (await kvCmd('SMEMBERS', 'flux0:users:all')) || [];
+    const users = (await Promise.all(ids.map(async id => {
+      const raw = await kvCmd('GET', `flux0:user:${id}`);
+      if (!raw) return null;
+      const u = typeof raw === 'string' ? JSON.parse(raw) : raw;
+      const reqRaw = await kvCmd('GET', `flux0:req:${id}`);
+      u.project = reqRaw ? (typeof reqRaw === 'string' ? JSON.parse(reqRaw) : reqRaw) : null;
+      return u;
+    }))).filter(Boolean).sort((a, b) => b.lastLogin - a.lastLogin);
+    return res.json({ users, kv: true });
   }
 
   return res.status(405).json({ error: 'method_not_allowed' });
