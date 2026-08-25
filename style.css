@@ -58,7 +58,9 @@ body::after {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
-  background: #000000;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .nav-inner {
@@ -66,9 +68,17 @@ body::after {
   margin: 0 auto;
   padding: 0 24px;
   height: 60px;
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 24px;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: flex-end;
 }
 
 .logo {
@@ -85,7 +95,7 @@ body::after {
 .logo span { color: var(--accent); }
 .logo-img { height: 32px; width: auto; display: block; flex-shrink: 0; }
 
-.nav-links { display: flex; list-style: none; gap: 4px; margin-left: auto; }
+.nav-links { display: flex; list-style: none; gap: 4px; justify-content: center; }
 .nav-links a {
   text-decoration: none;
   color: var(--muted);
