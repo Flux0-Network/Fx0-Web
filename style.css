@@ -350,7 +350,7 @@ body::after {
 .hv-scene {
   position: relative;
   width: 100%;
-  max-width: 560px;
+  max-width: 680px;
 }
 
 /* Website Preview Card */
@@ -397,7 +397,7 @@ body::after {
   border: 1px solid rgba(255,255,255,0.07);
   border-radius: 4px; padding: 2px 8px; margin: 0 6px;
 }
-.wp-body { padding: 20px 22px; display: flex; flex-direction: column; gap: 18px; }
+.wp-body { padding: 26px 28px; display: flex; flex-direction: column; gap: 22px; }
 
 /* mini nav */
 .wp-nav { display: flex; align-items: center; gap: 10px; }
@@ -415,18 +415,18 @@ body::after {
   pointer-events: none;
 }
 .wp-label { width: 64px; height: 14px; border-radius: 99px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
-.wp-h1 { height: 17px; background: rgba(255,255,255,0.28); border-radius: 4px; width: 78%; }
+.wp-h1 { height: 22px; background: rgba(255,255,255,0.28); border-radius: 5px; width: 78%; }
 .wp-h1--b { width: 58%; background: rgba(255,255,255,0.18); }
-.wp-sub { height: 8px; background: rgba(255,255,255,0.08); border-radius: 3px; width: 88%; }
+.wp-sub { height: 10px; background: rgba(255,255,255,0.08); border-radius: 3px; width: 88%; }
 .wp-sub--s { width: 66%; }
-.wp-ctas { display: flex; gap: 10px; margin-top: 6px; }
-.wp-btn { height: 28px; width: 88px; border-radius: 6px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
-.wp-btn--p { background: rgba(255,255,255,0.88); border-color: transparent; width: 100px; }
+.wp-ctas { display: flex; gap: 12px; margin-top: 8px; }
+.wp-btn { height: 34px; width: 100px; border-radius: 7px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); }
+.wp-btn--p { background: rgba(255,255,255,0.88); border-color: transparent; width: 116px; }
 
 /* mini cards */
-.wp-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 9px; }
-.wp-mc { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 12px 10px; display: flex; flex-direction: column; gap: 7px; }
-.wp-mc-icon { width: 20px; height: 20px; border-radius: 5px; background: rgba(255,255,255,0.1); }
+.wp-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 11px; }
+.wp-mc { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 9px; padding: 14px 12px; display: flex; flex-direction: column; gap: 8px; }
+.wp-mc-icon { width: 24px; height: 24px; border-radius: 6px; background: rgba(255,255,255,0.1); }
 .wp-mc-line { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); width: 72%; }
 .wp-mc-line--s { width: 48%; background: rgba(255,255,255,0.05); }
 
