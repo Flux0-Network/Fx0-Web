@@ -24,21 +24,25 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
-  background:
-    radial-gradient(ellipse 180% 70% at -10% 5%,  rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 55%, transparent 85%),
-    radial-gradient(ellipse 160% 65% at 110% 3%,  rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    radial-gradient(ellipse 170% 68% at -10% 30%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    radial-gradient(ellipse 150% 62% at 110% 45%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    radial-gradient(ellipse 165% 66% at -10% 60%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    radial-gradient(ellipse 145% 60% at 110% 75%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    radial-gradient(ellipse 175% 70% at -10% 90%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 55%, transparent 85%),
-    radial-gradient(ellipse 150% 62% at 110% 98%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
-    #000000;
+  background: #000000;
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 900px 700px at -120px 25%, rgba(255,255,255,0.10) 0%, transparent 100%),
+    radial-gradient(ellipse 800px 600px at calc(100% + 120px) 8%, rgba(255,255,255,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 850px 650px at -120px 70%, rgba(255,255,255,0.07) 0%, transparent 100%),
+    radial-gradient(ellipse 750px 550px at calc(100% + 120px) 60%, rgba(255,255,255,0.05) 0%, transparent 100%);
+}
+
 body::after {
   content: '';
   position: fixed;
