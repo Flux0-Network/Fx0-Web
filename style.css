@@ -1894,7 +1894,7 @@ kbd {
   overflow: hidden;
 }
 .prozess-step {
-  background: var(--bg);
+  background: transparent;
   padding: 28px 24px;
   border-right: 1px solid var(--border);
   display: flex;
