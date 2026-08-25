@@ -25,14 +25,14 @@ html { scroll-behavior: smooth; }
 body {
   font-family: 'Inter', system-ui, sans-serif;
   background:
-    radial-gradient(ellipse 90% 40% at -5% 8%,  rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 50%, transparent 75%),
-    radial-gradient(ellipse 70% 35% at 108% 4%,  rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 45%, transparent 72%),
-    radial-gradient(ellipse 80% 38% at -5% 28%,  rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 45%, transparent 72%),
-    radial-gradient(ellipse 65% 32% at 108% 42%,  rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 45%, transparent 70%),
-    radial-gradient(ellipse 75% 36% at -5% 58%,  rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 45%, transparent 72%),
-    radial-gradient(ellipse 60% 30% at 108% 72%,  rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 45%, transparent 70%),
-    radial-gradient(ellipse 85% 40% at -5% 88%,  rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 50%, transparent 75%),
-    radial-gradient(ellipse 65% 32% at 108% 96%,  rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 45%, transparent 70%),
+    radial-gradient(ellipse 180% 70% at -10% 5%,  rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 55%, transparent 85%),
+    radial-gradient(ellipse 160% 65% at 110% 3%,  rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 170% 68% at -10% 30%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 150% 62% at 110% 45%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 165% 66% at -10% 60%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 145% 60% at 110% 75%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 175% 70% at -10% 90%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 55%, transparent 85%),
+    radial-gradient(ellipse 150% 62% at 110% 98%, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
     #000000;
   color: var(--text);
   line-height: 1.6;
@@ -268,9 +268,9 @@ body::after {
   right: 0;
   bottom: -100px;
   background:
-    radial-gradient(ellipse 160% 55% at -15% 115%, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.04) 40%, transparent 68%),
-    radial-gradient(ellipse 90% 45% at 115% -5%, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 45%, transparent 70%),
-    radial-gradient(ellipse 60% 30% at 50% 80%, rgba(255,255,255,0.02) 0%, transparent 70%);
+    radial-gradient(ellipse 250% 90% at -15% 120%, rgba(255,255,255,0.11) 0%, rgba(255,255,255,0.03) 50%, transparent 82%),
+    radial-gradient(ellipse 180% 80% at 115% -10%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 55%, transparent 85%),
+    radial-gradient(ellipse 120% 60% at 50% 85%, rgba(255,255,255,0.02) 0%, transparent 80%);
   pointer-events: none;
   z-index: 0;
 }
