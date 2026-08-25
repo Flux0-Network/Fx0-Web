@@ -10,21 +10,41 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
-    /* Draggable blocks */
+    /* Full-screen app layout */
+    .dash-page { overflow: hidden; height: 100vh; }
+    .dash-page .footer { display: none; }
+    .dash-app-section { padding: 0 !important; margin-top: 60px; height: calc(100vh - 60px); overflow: hidden; }
+    .dash-app-container { max-width: none !important; padding: 0 !important; height: 100%; display: flex; flex-direction: column; }
+    #view-loading, #view-login { padding: 64px 32px; }
+    #view-error { padding: 0 24px; }
+    #view-dashboard { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+    .dash-profile { padding: 14px 24px; border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; gap: 14px; }
+    .dash-profile .dash-profile-info { flex: 1; min-width: 0; }
+    .dash-profile .dash-profile-info h2 { font-size: 1rem; margin: 0; }
+    .dash-profile .dash-id { font-size: 0.72rem; }
+    #dash-avatar-wrap img, #dash-avatar-wrap div { width: 36px !important; height: 36px !important; font-size: 1rem !important; }
+    /* 2-column grid */
+    #dash-grid { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; }
+    .dash-col { overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; min-height: 0; }
+    #dash-col-left { border-right: 1px solid var(--border); }
+    .dash-col--over { background: rgba(124,58,237,.04); }
+    /* Blocks */
     .dash-block { position: relative; transition: opacity .15s; }
-    .dash-block--dragging { opacity: .35; }
-    .dash-block--over { outline: 2px dashed var(--accent); outline-offset: 4px; border-radius: 12px; }
-    .dash-section-title { display: flex; align-items: center; gap: 8px; }
-    .dash-drag-handle { cursor: grab; color: var(--dim); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; opacity: .5; }
+    .dash-block--dragging { opacity: .3; }
+    .dash-block--over { outline: 2px dashed var(--accent); outline-offset: 3px; border-radius: 12px; }
+    .dash-section-title { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .dash-drag-handle { cursor: grab; color: var(--dim); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; opacity: .45; }
     .dash-drag-handle:hover { opacity: 1; background: var(--surface); }
-    .dash-block-body { }
-    .dash-collapse-btn { background: none; border: none; cursor: pointer; color: var(--dim); display: flex; align-items: center; padding: 2px; margin-left: auto; border-radius: 4px; transition: transform .2s, opacity .15s; opacity: .6; }
+    .dash-collapse-btn { background: none; border: none; cursor: pointer; color: var(--dim); display: flex; align-items: center; padding: 2px; margin-left: auto; border-radius: 4px; transition: transform .2s, opacity .15s; opacity: .55; }
     .dash-collapse-btn:hover { opacity: 1; background: var(--surface); }
-    /* Chat bubbles */
     .tc-arrow { transition: transform .2s; }
+    @media (max-width: 768px) {
+      #dash-grid { grid-template-columns: 1fr; }
+      #dash-col-left { border-right: none; border-bottom: 1px solid var(--border); max-height: 50vh; }
+    }
   </style>
 </head>
-<body>
+<body class="dash-page">
 
   <nav class="navbar">
     <div class="nav-inner">
@@ -42,15 +62,8 @@
     </div>
   </nav>
 
-  <section class="hero hero--small">
-    <div class="container">
-      <h1>Dashboard</h1>
-      <p class="hero-sub">Dein Flux0-Konto und deine verknüpften Dienste auf einen Blick.</p>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
+  <section class="section dash-app-section">
+    <div class="container dash-app-container">
 
       <!-- Loading state -->
       <div id="view-loading" style="text-align:center;padding:64px 0;color:var(--dim);font-size:0.9rem">
@@ -579,65 +592,50 @@
         }).catch(() => {});
     }
 
-    // Dashboard blocks — drag to reorder, click title to collapse
+    // Dashboard blocks — 2-column, drag to reorder/move, click to collapse
     const BLOCK_IDS = ['block-projekt','dash-anfrage','block-dokumente','dash-activity-section','dash-ticket-section','block-verbindungen'];
 
     function saveDashLayout() {
-      const order = BLOCK_IDS.map(id => document.getElementById(id)).filter(Boolean).sort((a, b) => {
-        const els = Array.from(a.parentNode.children);
-        return els.indexOf(a) - els.indexOf(b);
-      }).map(el => el.id);
-      const collapsed = BLOCK_IDS.filter(id => {
-        const el = document.getElementById(id);
-        return el?.querySelector('.dash-block-body')?.style.display === 'none';
-      });
-      try { localStorage.setItem('flux0-dash-blocks', JSON.stringify({ order, collapsed })); } catch {}
+      const left = Array.from(document.querySelectorAll('#dash-col-left .dash-block')).map(b => b.id);
+      const right = Array.from(document.querySelectorAll('#dash-col-right .dash-block')).map(b => b.id);
+      const collapsed = BLOCK_IDS.filter(id => document.getElementById(id)?.querySelector('.dash-block-body')?.style.display === 'none');
+      try { localStorage.setItem('flux0-dash-blocks', JSON.stringify({ left, right, collapsed })); } catch {}
     }
 
     function initDashBlocks() {
       let saved = {};
       try { saved = JSON.parse(localStorage.getItem('flux0-dash-blocks') || '{}'); } catch {}
 
-      const container = document.getElementById('view-dashboard');
+      const dashView = document.getElementById('view-dashboard');
       let dragSrc = null;
 
       BLOCK_IDS.forEach(id => {
         const el = document.getElementById(id);
         if (!el) return;
-
-        // Wrap content after the section title in dash-block-body
         const titleEl = el.querySelector(':scope > .dash-section-title');
         if (!titleEl) return;
 
         el.classList.add('dash-block');
         el.setAttribute('draggable', 'true');
 
-        // drag handle
         const handle = document.createElement('span');
         handle.className = 'dash-drag-handle';
         handle.title = 'Verschieben';
         handle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg>';
         titleEl.prepend(handle);
 
-        // collapse button
         const colBtn = document.createElement('button');
         colBtn.className = 'dash-collapse-btn';
         colBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
         colBtn.title = 'Einklappen';
         titleEl.appendChild(colBtn);
 
-        // body wrapper
         const body = document.createElement('div');
         body.className = 'dash-block-body';
         let next = titleEl.nextElementSibling;
-        while (next) {
-          const sib = next.nextElementSibling;
-          body.appendChild(next);
-          next = sib;
-        }
+        while (next) { const sib = next.nextElementSibling; body.appendChild(next); next = sib; }
         el.appendChild(body);
 
-        // restore collapsed
         if (saved.collapsed?.includes(id)) {
           body.style.display = 'none';
           colBtn.style.transform = 'rotate(-90deg)';
@@ -645,13 +643,12 @@
 
         colBtn.addEventListener('click', e => {
           e.stopPropagation();
-          const collapsed = body.style.display === 'none';
-          body.style.display = collapsed ? '' : 'none';
-          colBtn.style.transform = collapsed ? '' : 'rotate(-90deg)';
+          const col = body.style.display === 'none';
+          body.style.display = col ? '' : 'none';
+          colBtn.style.transform = col ? '' : 'rotate(-90deg)';
           saveDashLayout();
         });
 
-        // drag events
         el.addEventListener('dragstart', e => {
           dragSrc = el;
           e.dataTransfer.effectAllowed = 'move';
@@ -659,34 +656,62 @@
         });
         el.addEventListener('dragend', () => {
           el.classList.remove('dash-block--dragging');
-          document.querySelectorAll('.dash-block--over').forEach(b => b.classList.remove('dash-block--over'));
+          document.querySelectorAll('.dash-block--over,.dash-col--over').forEach(b => b.classList.remove('dash-block--over','dash-col--over'));
           saveDashLayout();
         });
         el.addEventListener('dragover', e => {
-          e.preventDefault();
-          e.dataTransfer.dropEffect = 'move';
+          e.preventDefault(); e.stopPropagation();
           if (dragSrc && dragSrc !== el) el.classList.add('dash-block--over');
         });
         el.addEventListener('dragleave', () => el.classList.remove('dash-block--over'));
         el.addEventListener('drop', e => {
-          e.preventDefault();
+          e.preventDefault(); e.stopPropagation();
           el.classList.remove('dash-block--over');
           if (!dragSrc || dragSrc === el) return;
-          const els = Array.from(container.querySelectorAll('.dash-block'));
-          const srcIdx = els.indexOf(dragSrc);
-          const tgtIdx = els.indexOf(el);
-          if (srcIdx < tgtIdx) el.after(dragSrc); else el.before(dragSrc);
+          const r = el.getBoundingClientRect();
+          if (e.clientY < r.top + r.height / 2) el.before(dragSrc); else el.after(dragSrc);
           saveDashLayout();
         });
       });
 
-      // restore order
-      if (saved.order?.length) {
-        saved.order.forEach(id => {
-          const el = document.getElementById(id);
-          if (el) container.appendChild(el);
-        });
+      // Build 2-column grid
+      const grid = document.createElement('div');
+      grid.id = 'dash-grid';
+      const colL = document.createElement('div');
+      colL.className = 'dash-col'; colL.id = 'dash-col-left';
+      const colR = document.createElement('div');
+      colR.className = 'dash-col'; colR.id = 'dash-col-right';
+
+      const allBlocks = BLOCK_IDS.map(id => document.getElementById(id)).filter(Boolean);
+      if (saved.left?.length || saved.right?.length) {
+        (saved.left || []).forEach(id => { const e = document.getElementById(id); if (e) colL.appendChild(e); });
+        (saved.right || []).forEach(id => { const e = document.getElementById(id); if (e) colR.appendChild(e); });
+        allBlocks.forEach(e => { if (e.parentNode === dashView) colR.appendChild(e); });
+      } else {
+        allBlocks.forEach((e, i) => (i < 2 ? colL : colR).appendChild(e));
       }
+
+      [colL, colR].forEach(col => {
+        col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('dash-col--over'); });
+        col.addEventListener('dragleave', e => { if (!col.contains(e.relatedTarget)) col.classList.remove('dash-col--over'); });
+        col.addEventListener('drop', e => {
+          e.preventDefault(); col.classList.remove('dash-col--over');
+          if (!dragSrc) return;
+          const bs = Array.from(col.querySelectorAll('.dash-block'));
+          let placed = false;
+          for (const b of bs) {
+            if (b === dragSrc) continue;
+            const r = b.getBoundingClientRect();
+            if (e.clientY < r.top + r.height / 2) { b.before(dragSrc); placed = true; break; }
+          }
+          if (!placed) col.appendChild(dragSrc);
+          saveDashLayout();
+        });
+      });
+
+      grid.appendChild(colL);
+      grid.appendChild(colR);
+      dashView.appendChild(grid);
     }
 
     // Show error from callback redirect (e.g. ?error=token)
