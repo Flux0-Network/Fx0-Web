@@ -23,7 +23,6 @@
     /* Sidebar */
     .dash-sidebar {
       width: 220px; flex-shrink: 0;
-      border-right: 1px solid var(--border);
       display: flex; flex-direction: column;
       overflow: hidden;
       background: var(--bg);
@@ -50,14 +49,11 @@
     @media (min-width: 701px) {
       .dash-top-bar {
         display: flex; align-items: center; height: 54px;
-        border-bottom: 1px solid var(--border); flex-shrink: 0;
-        background: var(--bg);
-        box-shadow: 0 1px 0 var(--border);
+        flex-shrink: 0; background: var(--bg);
       }
       .dash-top-bar-logo {
         width: 64px; flex-shrink: 0; display: flex; align-items: center;
         justify-content: center; height: 100%; text-decoration: none;
-        border-right: 1px solid var(--border);
       }
       .dash-top-bar-logo img { height: 24px; width: auto; opacity: .85; display: block; }
       .dash-top-bar-logo:hover img { opacity: 1; }
@@ -65,7 +61,6 @@
       .dash-top-bar-profile {
         display: flex; align-items: center; padding: 0 16px; cursor: pointer;
         position: relative; height: 100%; gap: 9px;
-        border-left: 1px solid var(--border);
         transition: background .15s;
       }
       .dash-top-bar-profile:hover { background: var(--surface); }
@@ -92,7 +87,6 @@
     }
     .dash-sidebar-profile {
       padding: 18px 16px 14px;
-      border-bottom: 1px solid var(--border);
       display: flex; flex-direction: column; gap: 6px;
     }
     .dash-sidebar-avatar { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
@@ -113,7 +107,7 @@
     .dash-sidenav-icon { width: 16px; height: 16px; flex-shrink: 0; opacity: .7; transition: opacity .12s; }
     .dash-sidenav-item:hover .dash-sidenav-icon { opacity: .9; }
     .dash-sidenav-item.active .dash-sidenav-icon { opacity: 1; }
-    .dash-sidebar-footer { padding: 12px 8px; border-top: 1px solid var(--border); }
+    .dash-sidebar-footer { padding: 12px 8px; }
     .dash-sidebar-footer a { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 0.855rem; color: var(--muted); text-decoration: none; transition: background .12s, color .12s; }
     .dash-sidebar-footer a:hover { background: var(--surface); color: var(--fg); }
 
@@ -147,7 +141,7 @@
     @media (max-width: 700px) {
       .dash-mobile-header {
         display: flex; align-items: center; justify-content: space-between;
-        padding: 10px 14px; border-bottom: 1px solid var(--border);
+        padding: 10px 14px;
         background: var(--bg); flex-shrink: 0; order: 0;
       }
       .dash-mobile-logo { height: 22px; width: auto; opacity: .8; }
@@ -166,7 +160,6 @@
       #view-dashboard { flex-direction: column; }
       .dash-sidebar {
         width: 100%; flex-direction: row;
-        border-right: none; border-top: 1px solid var(--border);
         order: 2; flex-shrink: 0;
       }
       .dash-sidebar-profile { display: none; }
