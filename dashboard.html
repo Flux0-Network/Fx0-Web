@@ -12,8 +12,12 @@
   <style>
     /* Full-screen app layout */
     .dash-page { overflow: hidden; height: 100vh; }
+    .dash-page .navbar { display: none; }
     .dash-page .footer { display: none; }
-    .dash-app-section { padding: 0 !important; margin-top: 60px; height: calc(100vh - 60px); overflow: hidden; }
+    .dash-app-section { padding: 0 !important; margin-top: 0; height: 100vh; overflow: hidden; }
+    .dash-logo-corner { position: fixed; top: 14px; right: 20px; z-index: 50; opacity: .7; transition: opacity .15s; }
+    .dash-logo-corner:hover { opacity: 1; }
+    .dash-logo-corner img { height: 28px; width: auto; display: block; }
     .dash-app-container { max-width: none !important; padding: 0 !important; height: 100%; display: flex; flex-direction: column; }
     #view-loading, #view-login { padding: 64px 32px; }
     #view-error { padding: 0 24px; }
@@ -70,6 +74,8 @@
   </style>
 </head>
 <body class="dash-page">
+
+  <a href="index.html" class="dash-logo-corner"><img src="logo.png" alt="Flux0" /></a>
 
   <nav class="navbar">
     <div class="nav-inner">
