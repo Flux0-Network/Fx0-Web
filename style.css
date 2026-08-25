@@ -475,7 +475,7 @@ body::after {
 .typewriter.done::after { display: none; }
 @keyframes tw-blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-/* Scroll indicator */
+/* Scroll indicator (desktop) */
 .scroll-indicator {
   position: absolute;
   bottom: 36px;
@@ -489,6 +489,20 @@ body::after {
   0%,100% { transform: translateX(-50%) translateY(0); opacity: 0.3; }
   50%      { transform: translateX(-50%) translateY(8px); opacity: 0.55; }
 }
+
+/* Scroll hint (mobile, under CTAs) */
+.hero-scroll-hint {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  margin-top: 28px;
+  color: rgba(255,255,255,0.3);
+  font-size: 0.8rem;
+  text-decoration: none;
+  width: fit-content;
+  animation: si-bounce 2s ease-in-out infinite;
+}
+.hero-scroll-hint svg { animation: none; }
 
 /* ── CARD EFFECTS ── */
 
@@ -2232,9 +2246,15 @@ kbd {
   .hero { padding: 80px 0; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
+  .hero-scroll-hint { display: flex; }
+  .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { letter-spacing: -0.025em; }
   .hero-sub { font-size: 0.9rem; }
+  /* stronger aurora on mobile */
+  .aurora--1 { background: rgba(0, 190, 120, 0.18); filter: blur(90px); }
+  .aurora--2 { background: rgba(110, 40, 220, 0.16); filter: blur(80px); }
+  .aurora--3 { background: rgba(20, 90, 220, 0.13); filter: blur(85px); }
 
   /* sections */
   .section { padding: 56px 0; }
