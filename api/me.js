@@ -1,5 +1,7 @@
 const { createHmac } = require('crypto');
 
+const ADMIN_IDS = (process.env.ADMIN_DISCORD_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
+
 module.exports = (req, res) => {
   const SESSION_SECRET = process.env.SESSION_SECRET;
 
@@ -36,5 +38,6 @@ module.exports = (req, res) => {
     username:    data.username,
     global_name: data.global_name,
     avatar:      data.avatar,
+    isAdmin:     ADMIN_IDS.length > 0 && ADMIN_IDS.includes(data.id),
   });
 };

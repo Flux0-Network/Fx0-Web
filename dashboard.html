@@ -20,6 +20,7 @@
       <ul class="nav-links">
         <li><a href="index.html">Home</a></li>
         <li><a href="dashboard.html" class="nav-active">Dashboard</a></li>
+        <li id="nav-admin-li" style="display:none"><a href="admin.html">Admin</a></li>
         <li class="nav-login" id="nav-login-li"><a href="dashboard.html">Login</a></li>
       </ul>
       <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
@@ -315,9 +316,11 @@
 
       const name = data.global_name || data.username || '—';
 
-      // Navbar: hide login, show avatar
+      // Navbar: hide login, show avatar, show admin link if applicable
       const navLoginLi = document.getElementById('nav-login-li');
       const navUserLink = document.getElementById('nav-user-link');
+      const navAdminLi = document.getElementById('nav-admin-li');
+      if (navAdminLi && data.isAdmin) navAdminLi.style.display = 'list-item';
       if (navLoginLi) navLoginLi.style.display = 'none';
       if (navUserLink) {
         if (data.avatar) {
