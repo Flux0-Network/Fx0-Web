@@ -346,14 +346,6 @@ body::after {
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
 }
 
-/* Prozess steps — glow */
-.prozess-step {
-  transition: background 0.2s, box-shadow 0.2s;
-}
-.prozess-step:hover {
-  background: var(--surface);
-  box-shadow: inset 1px 0 0 rgba(255,255,255,0.05), inset -1px 0 0 rgba(255,255,255,0.05);
-}
 
 /* FAQ items */
 .faq-item {
@@ -1986,6 +1978,8 @@ kbd {
   .products-grid { grid-template-columns: repeat(2,1fr); }
   .portfolio-grid { grid-template-columns: 1fr; }
   .prozess-grid { grid-template-columns: repeat(2, 1fr); }
+  .prozess-step:nth-child(2n) { border-right: none; }
+  .prozess-step:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--border); }
   .product-card {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
@@ -2051,7 +2045,9 @@ kbd {
   .products-grid { grid-template-columns: 1fr; }
   .pakete-grid { grid-template-columns: 1fr; }
   .portfolio-grid { grid-template-columns: 1fr; }
-  .prozess-grid { grid-template-columns: 1fr 1fr; }
+  .prozess-grid { grid-template-columns: 1fr; }
+  .prozess-step { border-right: none; border-bottom: 1px solid var(--border); }
+  .prozess-step:last-child { border-bottom: none; }
 
   /* product cards: single-column stack */
   .product-card { grid-template-columns: 1fr; padding: 20px; gap: 14px; }
