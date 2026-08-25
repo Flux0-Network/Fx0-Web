@@ -482,7 +482,7 @@ body::after {
 .footer-links a { font-size: 0.85rem; color: var(--muted); text-decoration: none; transition: color 0.15s; }
 .footer-links a:hover { color: var(--text); }
 .footer-bottom {
-  border-top: 1px solid var(--border); padding: 20px 0;
+  padding: 20px 0;
   display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
 }
 .footer-copy { font-size: 0.8rem; color: var(--dim); }
