@@ -29,13 +29,20 @@ async function kvCmd(...args) {
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
+  if (req.method !== 'GET') return res.status(405).json({ error: 'method_not_allowed' });
 
   const user = getSession(req);
   if (!user) return res.status(401).json({ error: 'not_authenticated' });
 
-  if (req.method !== 'GET') return res.status(405).json({ error: 'method_not_allowed' });
+  const [docsRaw, activityRaw] = await Promise.all([
+    kvCmd('GET', `flux0:docs:${user.id}`),
+    kvCmd('LRANGE', `flux0:activity:${user.id}`, 0, 19),
+  ]);
 
-  const raw = await kvCmd('GET', `flux0:docs:${user.id}`);
-  const docs = raw ? (typeof raw === 'string' ? JSON.parse(raw) : raw) : [];
-  return res.json({ docs });
+  const docs = docsRaw ? (typeof docsRaw === 'string' ? JSON.parse(docsRaw) : docsRaw) : [];
+  const events = (activityRaw || []).map(e => {
+    try { return typeof e === 'string' ? JSON.parse(e) : e; } catch { return null; }
+  }).filter(Boolean);
+
+  return res.json({ docs, events });
 };

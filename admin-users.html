@@ -353,7 +353,7 @@
         if (!name || !url) return;
         addBtn.disabled = true;
         try {
-          const r = await fetch('/api/admin-docs', {
+          const r = await fetch('/api/admin-users', {
             method: 'POST',
             credentials: 'include',
             headers: { 'Content-Type': 'application/json' },
@@ -397,7 +397,7 @@
       delBtn.title = 'Löschen';
       delBtn.addEventListener('click', async () => {
         if (!confirm('Dokument löschen?')) return;
-        const r = await fetch('/api/admin-docs', {
+        const r = await fetch('/api/admin-users', {
           method: 'DELETE',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
@@ -411,7 +411,7 @@
 
     async function loadDocs(userId, container, saveMsg) {
       try {
-        const r = await fetch(`/api/admin-docs?userId=${userId}`, { credentials: 'include' });
+        const r = await fetch(`/api/admin-users?userId=${userId}`, { credentials: 'include' });
         if (!r.ok) throw new Error();
         const { docs } = await r.json();
         container.innerHTML = '';
