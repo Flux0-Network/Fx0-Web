@@ -2246,7 +2246,7 @@ kbd {
   }
 
   /* hero */
-  .hero { padding: 100px 0 60px; align-items: flex-start; }
+  .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
   .hero-scroll-hint { display: flex; }
