@@ -58,13 +58,14 @@
     .dash-main { flex: 1; overflow: hidden; min-width: 0; display: flex; flex-direction: column; }
     .dash-panel { display: none; padding: 28px 32px; overflow-y: auto; flex: 1; min-height: 0; }
     .dash-panel.active { display: block; }
-    /* Admin iframe panel */
-    .dash-panel-iframe { padding: 0 !important; }
-    .dash-panel-iframe.active { display: flex; flex-direction: column; }
+    /* Admin panel */
+    .dash-panel-admin { padding: 0 !important; }
+    .dash-panel-admin.active { display: flex; flex-direction: column; }
     .dash-admin-subnav { display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0; padding: 0 4px; background: var(--bg); }
     .dash-admin-tab { padding: 10px 16px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-size: 0.85rem; color: var(--muted); transition: color .15s; }
     .dash-admin-tab.active { color: var(--fg); border-bottom-color: var(--fg); font-weight: 500; }
-    .dash-admin-frame { flex: 1; border: none; width: 100%; min-height: 0; display: block; }
+    .dash-admin-content { flex: 1; overflow-y: auto; }
+    .dash-admin-sub { min-height: 0; }
     .dash-panel-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 20px; color: var(--fg); }
     /* Desktop: hide logout from tab nav (sidebar footer handles it) */
     @media (min-width: 701px) { .dash-sidenav-logout { display: none !important; } }
@@ -748,39 +749,177 @@
         nav.appendChild(btn);
       });
 
-      // Admin section (iframe-based, no redirect)
+      // Admin section (native, no iframes)
       if (isAdmin) {
-        const adminPages = [
-          { label: 'Benutzer', src: '/admin-users.html' },
-          { label: 'Tickets', src: '/admin-tickets.html' },
-          { label: 'Logs', src: '/admin-logs.html' },
+        function aFetch(path, opts) {
+          return fetch(path, { credentials: 'include', ...opts });
+        }
+
+        function loadAdminUsers(container) {
+          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          aFetch('/api/admin-users').then(r => r.json()).then(({ users = [] }) => {
+            container.innerHTML = '';
+            if (!users.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Benutzer.</div>'; return; }
+            users.forEach(u => {
+              const name = u.global_name || u.username || '?';
+              const av = u.avatar
+                ? `<img src="https://cdn.discordapp.com/avatars/${u.id}/${u.avatar}.png?size=32" style="width:32px;height:32px;border-radius:50%;flex-shrink:0">`
+                : `<div style="width:32px;height:32px;border-radius:50%;background:var(--surface);display:flex;align-items:center;justify-content:center;font-size:0.8rem;font-weight:600;flex-shrink:0">${name[0]}</div>`;
+              const proj = u.project;
+              const statusLabels = ['Offen', 'In Arbeit', 'Fertig'];
+              const badge = proj
+                ? `<span style="font-size:0.7rem;padding:2px 8px;border-radius:10px;background:var(--surface);color:var(--muted);white-space:nowrap">${proj.paket || '—'} · ${statusLabels[proj.status] || 'Offen'}</span>`
+                : '<span style="font-size:0.7rem;color:var(--dim)">Keine Anfrage</span>';
+              const row = document.createElement('div');
+              row.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--border)';
+              row.innerHTML = `${av}<div style="flex:1;min-width:0"><div style="font-size:0.87rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${name}</div><div style="font-size:0.7rem;color:var(--dim)">${u.id}</div></div>${badge}`;
+              container.appendChild(row);
+            });
+          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+        }
+
+        function loadAdminTickets(container) {
+          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          aFetch('/api/admin-tickets').then(r => r.json()).then(({ tickets = [] }) => {
+            container.innerHTML = '';
+            if (!tickets.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Tickets.</div>'; return; }
+            tickets.forEach(t => {
+              const card = document.createElement('div');
+              card.style.cssText = 'border-bottom:1px solid var(--border)';
+              const name = t.global_name || t.username || '?';
+              const header = document.createElement('div');
+              header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer';
+              const isOpen = t.status !== 'closed';
+              header.innerHTML = `<div style="flex:1;min-width:0"><div style="font-size:0.87rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${t.subject}</div><div style="font-size:0.7rem;color:var(--dim)">${name} · ${new Date(t.createdAt).toLocaleDateString('de-DE')}</div></div><span style="font-size:0.7rem;padding:2px 8px;border-radius:10px;background:var(--surface);color:${isOpen ? '#3b82f6' : 'var(--muted)'};white-space:nowrap">${isOpen ? 'Offen' : 'Geschlossen'}</span><span class="tc-arrow" style="color:var(--muted);font-size:0.75rem">▾</span>`;
+              const body = document.createElement('div');
+              body.style.display = 'none';
+              body.style.padding = '0 16px 14px';
+              const initMsg = document.createElement('div');
+              initMsg.style.cssText = 'padding:8px 12px;background:var(--surface);border-radius:8px;font-size:0.83rem;margin:10px 0 8px;white-space:pre-wrap;word-break:break-word';
+              initMsg.textContent = t.message;
+              body.appendChild(initMsg);
+              (t.replies || []).forEach(rpl => {
+                const b = document.createElement('div');
+                const fromAdmin = rpl.from === 'admin';
+                b.style.cssText = `display:flex;margin-bottom:5px;justify-content:${fromAdmin ? 'flex-end' : 'flex-start'}`;
+                b.innerHTML = `<span style="padding:6px 11px;border-radius:10px;font-size:0.82rem;max-width:80%;background:${fromAdmin ? '#3b82f6' : 'var(--surface)'};color:${fromAdmin ? '#fff' : 'var(--fg)'};word-break:break-word">${rpl.text || rpl.message || ''}</span>`;
+                body.appendChild(b);
+              });
+              const replyRow = document.createElement('div');
+              replyRow.style.cssText = 'display:flex;gap:6px;margin-top:8px';
+              const replyInput = document.createElement('input');
+              replyInput.type = 'text';
+              replyInput.placeholder = 'Antwort schreiben...';
+              replyInput.style.cssText = 'flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--fg);font-size:0.83rem;min-width:0';
+              const replyBtn = document.createElement('button');
+              replyBtn.textContent = '→';
+              replyBtn.style.cssText = 'padding:7px 13px;border-radius:8px;background:#3b82f6;color:#fff;border:none;cursor:pointer;font-size:0.85rem;flex-shrink:0';
+              async function sendAdminReply() {
+                const msg = replyInput.value.trim();
+                if (!msg) return;
+                replyBtn.disabled = true;
+                const res = await aFetch('/api/admin-tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId: t.id, reply: msg }) });
+                if (res.ok) {
+                  const b = document.createElement('div');
+                  b.style.cssText = 'display:flex;margin-bottom:5px;justify-content:flex-end';
+                  b.innerHTML = `<span style="padding:6px 11px;border-radius:10px;font-size:0.82rem;max-width:80%;background:#3b82f6;color:#fff;word-break:break-word">${msg}</span>`;
+                  body.insertBefore(b, replyRow);
+                  replyInput.value = '';
+                }
+                replyBtn.disabled = false;
+              }
+              replyBtn.addEventListener('click', sendAdminReply);
+              replyInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); sendAdminReply(); } });
+              replyRow.appendChild(replyInput);
+              replyRow.appendChild(replyBtn);
+              body.appendChild(replyRow);
+              const closeBtn = document.createElement('button');
+              closeBtn.textContent = isOpen ? 'Ticket schließen' : 'Ticket öffnen';
+              closeBtn.style.cssText = 'margin-top:8px;padding:5px 10px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--muted);cursor:pointer;font-size:0.78rem';
+              closeBtn.addEventListener('click', async () => {
+                const newStatus = t.status === 'closed' ? 'open' : 'closed';
+                const res = await aFetch('/api/admin-tickets', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ticketId: t.id, status: newStatus }) });
+                if (res.ok) { t.status = newStatus; closeBtn.textContent = newStatus === 'closed' ? 'Ticket öffnen' : 'Ticket schließen'; }
+              });
+              body.appendChild(closeBtn);
+              header.addEventListener('click', () => {
+                const open = body.style.display !== 'none';
+                body.style.display = open ? 'none' : 'block';
+                const arrow = header.querySelector('.tc-arrow');
+                if (arrow) arrow.style.transform = open ? '' : 'rotate(180deg)';
+              });
+              card.appendChild(header);
+              card.appendChild(body);
+              container.appendChild(card);
+            });
+          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+        }
+
+        function loadAdminLogs(container) {
+          container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Lade...</div>';
+          aFetch('/api/admin-logs').then(r => r.json()).then(({ logs = [] }) => {
+            container.innerHTML = '';
+            if (!logs.length) { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Keine Logs.</div>'; return; }
+            logs.forEach((log, i) => {
+              const row = document.createElement('div');
+              row.style.cssText = `padding:8px 16px;font-size:0.78rem;font-family:monospace;${i > 0 ? 'border-top:1px solid var(--border)' : ''}`;
+              const lvl = (log.level || 'info').toUpperCase();
+              const lvlColor = log.level === 'error' ? '#ef4444' : log.level === 'warn' ? '#f59e0b' : 'var(--muted)';
+              const time = log.createdAt ? new Date(log.createdAt).toLocaleString('de-DE') : '';
+              row.innerHTML = `<span style="color:${lvlColor}">[${lvl}]</span> <span style="color:var(--dim)">${time}</span> ${log.message || JSON.stringify(log)}`;
+              container.appendChild(row);
+            });
+          }).catch(() => { container.innerHTML = '<div style="padding:20px;color:var(--muted);font-size:0.85rem">Fehler beim Laden.</div>'; });
+        }
+
+        const adminSubSections = [
+          { label: 'Benutzer', id: 'asub-users', loader: loadAdminUsers },
+          { label: 'Tickets', id: 'asub-tickets', loader: loadAdminTickets },
+          { label: 'Logs', id: 'asub-logs', loader: loadAdminLogs },
         ];
+
         const adminPanel = document.createElement('div');
         adminPanel.id = 'panel-admin';
-        adminPanel.className = 'dash-panel dash-panel-iframe' + (savedSection === 'panel-admin' ? ' active' : '');
+        adminPanel.className = 'dash-panel dash-panel-admin' + (savedSection === 'panel-admin' ? ' active' : '');
 
-        const subnav = document.createElement('div');
-        subnav.className = 'dash-admin-subnav';
+        const adminSubnav = document.createElement('div');
+        adminSubnav.className = 'dash-admin-subnav';
 
-        const frame = document.createElement('iframe');
-        frame.className = 'dash-admin-frame';
-        frame.src = adminPages[0].src;
+        const adminContent = document.createElement('div');
+        adminContent.className = 'dash-admin-content';
 
-        adminPages.forEach(({ label, src }, i) => {
+        let adminLoaded = {};
+        function showAdminSub(id, loader) {
+          adminContent.querySelectorAll('.dash-admin-sub').forEach(s => s.style.display = 'none');
+          let sub = adminContent.querySelector('#' + id);
+          if (!sub) {
+            sub = document.createElement('div');
+            sub.id = id;
+            sub.className = 'dash-admin-sub';
+            adminContent.appendChild(sub);
+            loader(sub);
+          } else {
+            sub.style.display = '';
+          }
+        }
+
+        adminSubSections.forEach(({ label, id, loader }, i) => {
           const tab = document.createElement('button');
           tab.textContent = label;
           tab.className = 'dash-admin-tab' + (i === 0 ? ' active' : '');
           tab.addEventListener('click', () => {
-            subnav.querySelectorAll('.dash-admin-tab').forEach(t => t.classList.remove('active'));
+            adminSubnav.querySelectorAll('.dash-admin-tab').forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            frame.src = src;
+            showAdminSub(id, loader);
           });
-          subnav.appendChild(tab);
+          adminSubnav.appendChild(tab);
         });
 
-        adminPanel.appendChild(subnav);
-        adminPanel.appendChild(frame);
+        adminPanel.appendChild(adminSubnav);
+        adminPanel.appendChild(adminContent);
         main.appendChild(adminPanel);
+
+        if (savedSection === 'panel-admin') showAdminSub(adminSubSections[0].id, adminSubSections[0].loader);
 
         const adminBtn = document.createElement('button');
         adminBtn.className = 'dash-sidenav-item' + (savedSection === 'panel-admin' ? ' active' : '');
@@ -792,6 +931,7 @@
           adminPanel.classList.add('active');
           adminBtn.classList.add('active');
           try { localStorage.setItem('flux0-dash-section', 'panel-admin'); } catch {}
+          if (!adminContent.querySelector('.dash-admin-sub')) showAdminSub(adminSubSections[0].id, adminSubSections[0].loader);
         });
         nav.appendChild(adminBtn);
       }
