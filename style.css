@@ -550,9 +550,10 @@ body::after {
 .cookie-close:hover { color: var(--text); }
 
 /* ── FAQ ── */
-.faq-grid { display: flex; flex-direction: column; gap: 8px; }
+.faq-grid { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 
-.faq-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); }
+.faq-item { background: var(--bg); border-bottom: 1px solid var(--border); }
+.faq-item:last-child { border-bottom: none; }
 
 .faq-item summary {
   list-style: none;
@@ -1056,7 +1057,7 @@ kbd {
   align-items: center;
   gap: 9px;
   padding: 10px 18px;
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 10px;
   text-decoration: none;
@@ -1577,7 +1578,7 @@ kbd {
   .paket-list--two-col { grid-template-columns: 1fr; }
 }
 .paket-card {
-  background: var(--surface);
+  background: var(--bg);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
@@ -1896,22 +1897,19 @@ kbd {
 .prozess-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
 }
 .prozess-step {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--bg);
   padding: 28px 24px;
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: border-color 0.2s, background 0.2s;
 }
-.prozess-step:hover {
-  border-color: rgba(255,255,255,0.18);
-  background: var(--surface);
-}
+.prozess-step:last-child { border-right: none; }
 .prozess-step-icon {
   width: 40px; height: 40px;
   border-radius: 10px;
