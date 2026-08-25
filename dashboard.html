@@ -80,8 +80,6 @@
     .dash-admin-content { flex: 1; overflow-y: auto; }
     .dash-admin-sub { min-height: 0; }
     .dash-panel-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -.03em; margin-bottom: 20px; color: var(--fg); }
-    /* Desktop: hide logout from tab nav (sidebar footer handles it) */
-    @media (min-width: 701px) { .dash-sidenav-logout { display: none !important; } }
     /* Mobile top header */
     .dash-mobile-header { display: none; }
     @media (max-width: 700px) {
@@ -981,13 +979,6 @@
         });
         nav.appendChild(adminBtn);
       }
-
-      // Mobile logout (desktop footer handles it)
-      const logoutNavBtn = document.createElement('a');
-      logoutNavBtn.href = '/api/logout';
-      logoutNavBtn.className = 'dash-sidenav-item dash-sidenav-logout';
-      logoutNavBtn.innerHTML = `<svg class="dash-sidenav-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span>Logout</span>`;
-      nav.appendChild(logoutNavBtn);
 
       sidebar.appendChild(nav);
 
