@@ -9,6 +9,20 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* Draggable blocks */
+    .dash-block { position: relative; transition: opacity .15s; }
+    .dash-block--dragging { opacity: .35; }
+    .dash-block--over { outline: 2px dashed var(--accent); outline-offset: 4px; border-radius: 12px; }
+    .dash-section-title { display: flex; align-items: center; gap: 8px; }
+    .dash-drag-handle { cursor: grab; color: var(--dim); flex-shrink: 0; display: flex; align-items: center; padding: 2px 4px; border-radius: 4px; opacity: .5; }
+    .dash-drag-handle:hover { opacity: 1; background: var(--surface); }
+    .dash-block-body { }
+    .dash-collapse-btn { background: none; border: none; cursor: pointer; color: var(--dim); display: flex; align-items: center; padding: 2px; margin-left: auto; border-radius: 4px; transition: transform .2s, opacity .15s; opacity: .6; }
+    .dash-collapse-btn:hover { opacity: 1; background: var(--surface); }
+    /* Chat bubbles */
+    .tc-arrow { transition: transform .2s; }
+  </style>
 </head>
 <body>
 
@@ -77,7 +91,7 @@
         </div>
 
         <!-- Projekt-Status -->
-        <div class="dash-projekt">
+        <div class="dash-projekt" id="block-projekt">
           <div class="dash-section-title">Mein Projekt</div>
           <div class="dash-projekt-card" id="dash-projekt-empty">
             <div class="dash-projekt-empty-icon">
@@ -148,7 +162,7 @@
         </div>
 
         <!-- Dokumente -->
-        <div class="dash-dokumente">
+        <div class="dash-dokumente" id="block-dokumente">
           <div class="dash-section-title">Dokumente</div>
           <div class="dash-dok-card" id="dash-dok-card">
             <div class="dash-dok-empty" id="dash-dok-empty">
@@ -202,7 +216,7 @@
         </div>
 
         <!-- Verbindungen -->
-        <div class="dash-connections">
+        <div class="dash-connections" id="block-verbindungen">
           <div class="dash-section-title">Verbindungen</div>
           <div class="dash-conn-grid">
 
@@ -399,7 +413,7 @@
       e.preventDefault();
       const btn = document.getElementById('anfrage-submit');
       const errEl = document.getElementById('anfrage-error');
-      const paket = (document.querySelector('input[name="paket"]:checked') || {}).value || '';
+      const paket = document.querySelector('input[name="paket"]')?.value || 'Individuell';
       const beschreibung = document.getElementById('anfrage-beschreibung').value.trim();
       const budget = document.getElementById('anfrage-budget').value.trim();
       errEl.style.display = 'none';
@@ -464,33 +478,215 @@
           wrap.style.display = 'block';
           const STATUS = { open: 'Offen', in_progress: 'In Bearbeitung', closed: 'Geschlossen' };
           const STATUS_COLOR = { open: '#f59e0b', in_progress: '#3b82f6', closed: '#22c55e' };
+
           json.tickets.forEach(t => {
             const card = document.createElement('div');
-            card.style.cssText = 'border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:var(--bg)';
+            card.style.cssText = 'border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--bg)';
+
+            // Header — click to toggle chat
             const header = document.createElement('div');
-            header.style.cssText = 'display:flex;align-items:center;gap:10px;margin-bottom:6px';
-            const statusDot = document.createElement('span');
-            statusDot.style.cssText = `width:8px;height:8px;border-radius:50%;background:${STATUS_COLOR[t.status]||'#888'};flex-shrink:0`;
-            const subjectEl = document.createElement('span');
-            subjectEl.style.cssText = 'font-size:0.88rem;font-weight:600;flex:1';
-            subjectEl.textContent = t.subject;
-            const statusEl = document.createElement('span');
-            statusEl.style.cssText = `font-size:0.72rem;font-weight:600;color:${STATUS_COLOR[t.status]||'#888'}`;
-            statusEl.textContent = STATUS[t.status] || t.status;
-            header.appendChild(statusDot);
-            header.appendChild(subjectEl);
-            header.appendChild(statusEl);
-            card.appendChild(header);
-            if (t.replies?.length) {
-              const lastReply = t.replies[t.replies.length - 1];
-              const replyEl = document.createElement('div');
-              replyEl.style.cssText = 'font-size:0.8rem;color:var(--dim);padding:8px 0 0;border-top:1px solid var(--border);margin-top:8px';
-              replyEl.textContent = `Antwort: ${lastReply.message}`;
-              card.appendChild(replyEl);
+            header.style.cssText = 'display:flex;align-items:center;gap:10px;padding:14px 16px;cursor:pointer;user-select:none';
+            header.innerHTML = `
+              <span style="width:8px;height:8px;border-radius:50%;background:${STATUS_COLOR[t.status]||'#888'};flex-shrink:0"></span>
+              <span style="font-size:0.88rem;font-weight:600;flex:1">${t.subject}</span>
+              <span style="font-size:0.72rem;font-weight:600;color:${STATUS_COLOR[t.status]||'#888'}">${STATUS[t.status]||t.status}</span>
+              <span class="tc-arrow" style="font-size:0.85rem;color:var(--dim);transition:transform .2s">▾</span>`;
+
+            // Chat body
+            const chatWrap = document.createElement('div');
+            chatWrap.style.cssText = 'display:none;border-top:1px solid var(--border)';
+
+            // Messages
+            const messages = document.createElement('div');
+            messages.style.cssText = 'display:flex;flex-direction:column;gap:8px;padding:16px;max-height:320px;overflow-y:auto';
+
+            function addBubble(from, text, date) {
+              const isUser = from === 'user';
+              const row = document.createElement('div');
+              row.style.cssText = `display:flex;flex-direction:column;align-items:${isUser ? 'flex-end' : 'flex-start'}`;
+              const bubble = document.createElement('div');
+              bubble.style.cssText = `max-width:80%;padding:9px 13px;border-radius:${isUser ? '14px 14px 4px 14px' : '14px 14px 14px 4px'};font-size:0.84rem;line-height:1.45;background:${isUser ? 'var(--accent)' : 'var(--surface)'};color:${isUser ? '#fff' : 'var(--fg)'};word-break:break-word`;
+              bubble.textContent = text;
+              const meta = document.createElement('div');
+              meta.style.cssText = 'font-size:0.68rem;color:var(--dim);margin-top:3px';
+              meta.textContent = `${isUser ? 'Du' : 'Support'} · ${new Date(date).toLocaleDateString('de-DE', {day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'})}`;
+              row.appendChild(bubble);
+              row.appendChild(meta);
+              messages.appendChild(row);
             }
+
+            // Original message as first bubble
+            addBubble('user', t.message, t.createdAt);
+            (t.replies || []).forEach(r => addBubble(r.from, r.message, r.createdAt));
+
+            chatWrap.appendChild(messages);
+
+            // Reply input (only if not closed)
+            if (t.status !== 'closed') {
+              const inputRow = document.createElement('div');
+              inputRow.style.cssText = 'display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--border);background:var(--surface-alt,var(--surface))';
+              const ta = document.createElement('textarea');
+              ta.rows = 1;
+              ta.placeholder = 'Nachricht schreiben…';
+              ta.style.cssText = 'flex:1;resize:none;padding:8px 12px;border:1px solid var(--border);border-radius:20px;background:var(--bg);color:var(--fg);font-size:0.83rem;font-family:inherit;line-height:1.4;max-height:120px;overflow-y:auto';
+              ta.addEventListener('input', () => { ta.style.height='auto'; ta.style.height=ta.scrollHeight+'px'; });
+              const sendBtn = document.createElement('button');
+              sendBtn.className = 'btn-primary';
+              sendBtn.textContent = '→';
+              sendBtn.title = 'Senden';
+              sendBtn.style.cssText = 'padding:8px 14px;border-radius:20px;font-size:0.9rem;flex-shrink:0;align-self:flex-end';
+
+              async function sendReply() {
+                const msg = ta.value.trim();
+                if (!msg) return;
+                sendBtn.disabled = true;
+                try {
+                  const r = await fetch('/api/ticket', {
+                    method: 'PATCH',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ticketId: t.id, message: msg }),
+                  });
+                  if (!r.ok) throw new Error();
+                  addBubble('user', msg, Date.now());
+                  messages.scrollTop = messages.scrollHeight;
+                  ta.value = '';
+                  ta.style.height = 'auto';
+                } catch { /* silent */ }
+                finally { sendBtn.disabled = false; }
+              }
+
+              sendBtn.addEventListener('click', sendReply);
+              ta.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendReply(); } });
+
+              inputRow.appendChild(ta);
+              inputRow.appendChild(sendBtn);
+              chatWrap.appendChild(inputRow);
+            }
+
+            // Toggle
+            header.addEventListener('click', () => {
+              const open = chatWrap.style.display !== 'none';
+              chatWrap.style.display = open ? 'none' : 'block';
+              header.querySelector('.tc-arrow').style.transform = open ? '' : 'rotate(180deg)';
+              if (!open) messages.scrollTop = messages.scrollHeight;
+            });
+
+            card.appendChild(header);
+            card.appendChild(chatWrap);
             list.appendChild(card);
           });
         }).catch(() => {});
+    }
+
+    // Dashboard blocks — drag to reorder, click title to collapse
+    const BLOCK_IDS = ['block-projekt','dash-anfrage','block-dokumente','dash-activity-section','dash-ticket-section','block-verbindungen'];
+
+    function saveDashLayout() {
+      const order = BLOCK_IDS.map(id => document.getElementById(id)).filter(Boolean).sort((a, b) => {
+        const els = Array.from(a.parentNode.children);
+        return els.indexOf(a) - els.indexOf(b);
+      }).map(el => el.id);
+      const collapsed = BLOCK_IDS.filter(id => {
+        const el = document.getElementById(id);
+        return el?.querySelector('.dash-block-body')?.style.display === 'none';
+      });
+      try { localStorage.setItem('flux0-dash-blocks', JSON.stringify({ order, collapsed })); } catch {}
+    }
+
+    function initDashBlocks() {
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem('flux0-dash-blocks') || '{}'); } catch {}
+
+      const container = document.getElementById('view-dashboard');
+      let dragSrc = null;
+
+      BLOCK_IDS.forEach(id => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        // Wrap content after the section title in dash-block-body
+        const titleEl = el.querySelector(':scope > .dash-section-title');
+        if (!titleEl) return;
+
+        el.classList.add('dash-block');
+        el.setAttribute('draggable', 'true');
+
+        // drag handle
+        const handle = document.createElement('span');
+        handle.className = 'dash-drag-handle';
+        handle.title = 'Verschieben';
+        handle.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="5" r="1.5"/><circle cx="15" cy="5" r="1.5"/><circle cx="9" cy="12" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="9" cy="19" r="1.5"/><circle cx="15" cy="19" r="1.5"/></svg>';
+        titleEl.prepend(handle);
+
+        // collapse button
+        const colBtn = document.createElement('button');
+        colBtn.className = 'dash-collapse-btn';
+        colBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>';
+        colBtn.title = 'Einklappen';
+        titleEl.appendChild(colBtn);
+
+        // body wrapper
+        const body = document.createElement('div');
+        body.className = 'dash-block-body';
+        let next = titleEl.nextElementSibling;
+        while (next) {
+          const sib = next.nextElementSibling;
+          body.appendChild(next);
+          next = sib;
+        }
+        el.appendChild(body);
+
+        // restore collapsed
+        if (saved.collapsed?.includes(id)) {
+          body.style.display = 'none';
+          colBtn.style.transform = 'rotate(-90deg)';
+        }
+
+        colBtn.addEventListener('click', e => {
+          e.stopPropagation();
+          const collapsed = body.style.display === 'none';
+          body.style.display = collapsed ? '' : 'none';
+          colBtn.style.transform = collapsed ? '' : 'rotate(-90deg)';
+          saveDashLayout();
+        });
+
+        // drag events
+        el.addEventListener('dragstart', e => {
+          dragSrc = el;
+          e.dataTransfer.effectAllowed = 'move';
+          setTimeout(() => el.classList.add('dash-block--dragging'), 0);
+        });
+        el.addEventListener('dragend', () => {
+          el.classList.remove('dash-block--dragging');
+          document.querySelectorAll('.dash-block--over').forEach(b => b.classList.remove('dash-block--over'));
+          saveDashLayout();
+        });
+        el.addEventListener('dragover', e => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          if (dragSrc && dragSrc !== el) el.classList.add('dash-block--over');
+        });
+        el.addEventListener('dragleave', () => el.classList.remove('dash-block--over'));
+        el.addEventListener('drop', e => {
+          e.preventDefault();
+          el.classList.remove('dash-block--over');
+          if (!dragSrc || dragSrc === el) return;
+          const els = Array.from(container.querySelectorAll('.dash-block'));
+          const srcIdx = els.indexOf(dragSrc);
+          const tgtIdx = els.indexOf(el);
+          if (srcIdx < tgtIdx) el.after(dragSrc); else el.before(dragSrc);
+          saveDashLayout();
+        });
+      });
+
+      // restore order
+      if (saved.order?.length) {
+        saved.order.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) container.appendChild(el);
+        });
+      }
     }
 
     // Show error from callback redirect (e.g. ?error=token)
@@ -555,6 +751,9 @@
               }
             }
           }).catch(() => {});
+
+        // Init draggable + collapsible blocks
+        initDashBlocks();
 
         // Load tickets
         loadTickets();

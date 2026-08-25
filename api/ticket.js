@@ -97,5 +97,20 @@ module.exports = async (req, res) => {
     return res.status(201).json({ ok: true, id: ticketId });
   }
 
+  // PATCH → user reply to own ticket
+  if (req.method === 'PATCH') {
+    if (!kvAvailable) return res.status(503).json({ error: 'kv_not_configured' });
+    const { ticketId, message } = req.body || {};
+    if (!ticketId || !message?.trim()) return res.status(400).json({ error: 'missing_fields' });
+    const raw = await kvCmd('GET', `flux0:ticket:${ticketId}`);
+    if (!raw) return res.status(404).json({ error: 'not_found' });
+    const ticket = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (ticket.userId !== user.id) return res.status(403).json({ error: 'forbidden' });
+    if (ticket.status === 'closed') return res.status(400).json({ error: 'ticket_closed' });
+    ticket.replies.push({ from: 'user', message: message.trim().slice(0, 2000), createdAt: Date.now() });
+    await kvCmd('SET', `flux0:ticket:${ticketId}`, JSON.stringify(ticket));
+    return res.json({ ok: true });
+  }
+
   return res.status(405).json({ error: 'method_not_allowed' });
 };
