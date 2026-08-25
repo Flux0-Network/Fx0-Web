@@ -280,10 +280,13 @@ body::after {
 
 /* ── HERO ── */
 .hero {
-  padding: 220px 0 320px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding: 80px 0;
   position: relative;
 }
-.hero .container { position: relative; z-index: 1; }
+.hero .container { position: relative; z-index: 1; width: 100%; }
 
 /* ── TEXT EFFECTS ── */
 
@@ -2030,7 +2033,7 @@ kbd {
   }
 
   /* hero */
-  .hero { padding: 160px 0 60px; }
+  .hero { padding: 80px 0; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { letter-spacing: -0.025em; }
   .hero-sub { font-size: 0.9rem; }
