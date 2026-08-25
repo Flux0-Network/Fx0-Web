@@ -1578,7 +1578,7 @@ kbd {
   .paket-list--two-col { grid-template-columns: 1fr; }
 }
 .paket-card {
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
