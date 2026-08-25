@@ -544,7 +544,7 @@ body::after {
 /* ── FAQ ── */
 .faq-grid { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
 
-.faq-item { background: var(--bg); border-bottom: 1px solid var(--border); }
+.faq-item { background: transparent; border-bottom: 1px solid var(--border); }
 .faq-item:last-child { border-bottom: none; }
 
 .faq-item summary {
