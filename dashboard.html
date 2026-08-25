@@ -28,6 +28,13 @@
       overflow: hidden;
       background: var(--bg);
     }
+    /* Sidebar logo (desktop only) */
+    .dash-sidebar-logo { display: none; }
+    @media (min-width: 701px) {
+      .dash-sidebar-logo { display: flex; align-items: center; padding: 16px 16px 12px; text-decoration: none; }
+      .dash-sidebar-logo img { height: 26px; width: auto; opacity: .85; display: block; }
+      .dash-sidebar-logo:hover img { opacity: 1; }
+    }
     /* Desktop: profile avatar top-right, not in sidebar */
     @media (min-width: 701px) { .dash-sidebar-profile { display: none !important; } }
     .dash-desk-profile { display: none; }
@@ -686,6 +693,13 @@
       // Sidebar container
       const sidebar = document.createElement('div');
       sidebar.className = 'dash-sidebar';
+
+      // Logo at top of sidebar (desktop only)
+      const sidebarLogo = document.createElement('a');
+      sidebarLogo.href = 'index.html';
+      sidebarLogo.className = 'dash-sidebar-logo';
+      sidebarLogo.innerHTML = '<img src="logo.png" alt="Flux0">';
+      sidebar.appendChild(sidebarLogo);
 
       // Profile in sidebar
       const profile = dashView.querySelector('.dash-profile');
