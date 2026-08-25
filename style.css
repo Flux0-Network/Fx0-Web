@@ -2272,22 +2272,21 @@ kbd {
 .design-services-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
   margin-top: 40px;
 }
 .design-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  background: var(--bg);
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: border-color 0.18s, box-shadow 0.18s;
+  border-right: 1px solid var(--border);
 }
-.design-card:hover {
-  border-color: var(--accent);
-  box-shadow: var(--shadow-sm);
+.design-card:last-child {
+  border-right: none;
 }
 .design-card-icon {
   width: 44px;
@@ -2325,7 +2324,11 @@ kbd {
 }
 @media (max-width: 900px) {
   .design-services-grid { grid-template-columns: repeat(2, 1fr); }
+  .design-card:nth-child(2n) { border-right: none; }
+  .design-card:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--border); }
 }
 @media (max-width: 560px) {
   .design-services-grid { grid-template-columns: 1fr; }
+  .design-card { border-right: none; border-bottom: 1px solid var(--border); }
+  .design-card:last-child { border-bottom: none; }
 }
