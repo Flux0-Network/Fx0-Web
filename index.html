@@ -566,6 +566,46 @@
 
   <script>
     (function () {
+      const revealSelectors = [
+        '.section-label-row',
+        '.section-intro',
+        '.feature-card',
+        '.paket-card',
+        '.prozess-step',
+        '.community-card',
+        '.logo-cloud-item',
+        '.faq-item',
+        '.design-preview-card',
+        '.mkt-card',
+        '.pakete-note',
+        '.tech-strip-label',
+        '.tech-strip-list',
+        '.cta-inner',
+      ];
+
+      const els = document.querySelectorAll(revealSelectors.join(','));
+      els.forEach(el => el.classList.add('reveal'));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      els.forEach((el, i) => {
+        const siblings = el.parentElement ? [...el.parentElement.children].filter(c => c.classList.contains(el.classList[0])) : [];
+        const idx = siblings.indexOf(el);
+        if (idx > 0) el.style.transitionDelay = (idx * 0.08) + 's';
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
       if (!localStorage.getItem('flux0-cookies-accepted')) {
         document.getElementById('cookie-notice').style.display = 'flex';
       }
