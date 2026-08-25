@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tickets — Flux0 Admin</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    .admin-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .admin-stat { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; text-align: center; }
+    .admin-stat-number { font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; margin-bottom: 6px; }
+    .admin-stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .admin-section-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 16px; }
+    .admin-filter-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+    .admin-filter-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+    .admin-chip { background: transparent; border: 1px solid var(--border); border-radius: 99px; padding: 6px 14px; font-size: 0.8rem; color: var(--muted); cursor: pointer; transition: all 0.15s; }
+    .admin-chip.active { background: var(--accent); color: #000; border-color: var(--accent); }
+    .admin-search { flex: 1; min-width: 180px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 0.85rem; color: var(--fg); outline: none; }
+    .admin-filter-count { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
+    .admin-ticket-list { display: flex; flex-direction: column; gap: 20px; }
+    .admin-ticket-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+    .admin-ticket-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .admin-ticket-user { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
+    .admin-req-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .admin-req-avatar-ph { width: 40px; height: 40px; border-radius: 50%; background: var(--border); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.95rem; color: var(--muted); }
+    .admin-ticket-name { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .admin-ticket-uid { font-size: 0.75rem; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+    .admin-ticket-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .admin-ticket-badge { padding: 4px 10px; border-radius: 99px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; border: 1px solid; }
+    .badge--open { color: #3b82f6; border-color: #3b82f633; background: #3b82f611; }
+    .badge--in_progress { color: #f59e0b; border-color: #f59e0b33; background: #f59e0b11; }
+    .badge--closed { color: var(--muted); border-color: var(--border); background: transparent; }
+    .admin-ticket-date { font-size: 0.75rem; color: var(--dim); }
+    .admin-ticket-subject { font-size: 1rem; font-weight: 600; margin-bottom: 8px; }
+    .admin-ticket-message { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 20px; white-space: pre-wrap; word-break: break-word; }
+    .admin-ticket-replies { border-top: 1px solid var(--border); padding-top: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .ticket-reply { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; font-size: 0.85rem; line-height: 1.55; }
+    .ticket-reply-meta { font-size: 0.72rem; color: var(--dim); margin-bottom: 4px; }
+    .ticket-reply--admin { border-color: rgba(255,255,255,0.1); background: rgba(255,255,255,0.04); }
+    .admin-reply-row { display: flex; flex-direction: column; gap: 8px; }
+    .admin-reply-textarea { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 0.85rem; color: var(--fg); resize: vertical; min-height: 80px; width: 100%; box-sizing: border-box; font-family: inherit; outline: none; }
+    .admin-reply-actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    .admin-status-btns { display: flex; gap: 6px; flex-wrap: wrap; }
+    .admin-status-btn { padding: 5px 12px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: transparent; color: var(--muted); transition: all 0.15s; }
+    .admin-status-btn.sel--open { color: #3b82f6; border-color: #3b82f6; background: #3b82f611; }
+    .admin-status-btn.sel--in_progress { color: #f59e0b; border-color: #f59e0b; background: #f59e0b11; }
+    .admin-status-btn.sel--closed { color: var(--muted); border-color: var(--border); background: var(--surface); }
+    .admin-save-msg { font-size: 0.8rem; color: #22c55e; }
+    .admin-no-access { text-align: center; padding: 80px 0; }
+    .admin-no-access h2 { font-size: 1.3rem; margin-bottom: 8px; }
+    .admin-no-access p { color: var(--muted); font-size: 0.9rem; }
+    .admin-empty { color: var(--dim); text-align: center; padding: 48px 0; font-size: 0.9rem; }
+    @media (max-width: 600px) { .admin-stats { grid-template-columns: 1fr; } .admin-ticket-header { flex-direction: column; } }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.png" alt="Flux0" class="logo-img"/>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="admin.html" class="nav-active">Admin</a></li>
+        <li class="nav-login" id="nav-login-li"><a href="dashboard.html">Login</a></li>
+      </ul>
+      <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
+      <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <section class="hero hero--small">
+    <div class="container">
+      <h1>Support Tickets</h1>
+      <p class="hero-sub">Alle Kundenanfragen und Support-Tickets auf einen Blick.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div id="view-loading" style="text-align:center;padding:64px 0;color:var(--dim);font-size:0.9rem">Wird geladen…</div>
+
+      <div id="view-no-access" class="admin-no-access" style="display:none">
+        <h2>Kein Zugang</h2>
+        <p>Du hast keinen Zugriff auf das Admin Panel.</p>
+        <a href="dashboard.html" class="btn-ghost" style="margin-top:16px;display:inline-flex">← Dashboard</a>
+      </div>
+
+      <div id="view-login" style="display:none;text-align:center;padding:64px 0">
+        <p style="color:var(--muted);margin-bottom:16px">Du musst eingeloggt sein.</p>
+        <a href="dashboard.html" class="btn-primary">Mit Discord einloggen →</a>
+      </div>
+
+      <div id="view-admin" style="display:none">
+
+        <div class="admin-tabs">
+          <a href="admin.html" class="admin-tab">Anfragen</a>
+          <a href="admin-tickets.html" class="admin-tab active">Tickets</a>
+          <a href="admin-logs.html" class="admin-tab">Login Logs</a>
+        </div>
+
+        <div class="admin-stats">
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-total">0</div>
+            <div class="admin-stat-label">Tickets gesamt</div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-open">0</div>
+            <div class="admin-stat-label">Offen</div>
+          </div>
+          <div class="admin-stat">
+            <div class="admin-stat-number" id="stat-closed">0</div>
+            <div class="admin-stat-label">Geschlossen</div>
+          </div>
+        </div>
+
+        <div class="admin-filter-bar">
+          <div class="admin-filter-chips">
+            <button class="admin-chip active" data-filter="all">Alle</button>
+            <button class="admin-chip" data-filter="open">Offen</button>
+            <button class="admin-chip" data-filter="in_progress">In Bearbeitung</button>
+            <button class="admin-chip" data-filter="closed">Geschlossen</button>
+          </div>
+          <input type="text" class="admin-search" id="admin-search" placeholder="Name oder Betreff suchen…" />
+          <span class="admin-filter-count" id="admin-filter-count"></span>
+        </div>
+
+        <div class="admin-section-title">Tickets</div>
+        <div class="admin-ticket-list" id="ticket-list"></div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom" style="border-top:1px solid var(--border);padding-top:24px">
+        <span class="footer-copy">© 2026 Flux0 · Admin Panel · intern</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    let allTickets = [];
+    let activeFilter = 'all';
+    let searchQuery = '';
+
+    const STATUS_LABELS = { open: 'Offen', in_progress: 'In Bearbeitung', closed: 'Geschlossen' };
+
+    function formatDate(ts) {
+      if (!ts) return '—';
+      return new Date(ts).toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+    }
+
+    function applyFilter() {
+      let list = allTickets;
+      if (activeFilter !== 'all') list = list.filter(t => t.status === activeFilter);
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        list = list.filter(t => {
+          const name = (t.global_name || t.username || '').toLowerCase();
+          const subj = (t.subject || '').toLowerCase();
+          return name.includes(q) || subj.includes(q);
+        });
+      }
+      const container = document.getElementById('ticket-list');
+      container.innerHTML = '';
+      document.getElementById('admin-filter-count').textContent = `${list.length} Ticket${list.length !== 1 ? 's' : ''}`;
+      if (list.length === 0) {
+        container.innerHTML = '<div class="admin-empty">Keine Tickets gefunden.</div>';
+      } else {
+        list.forEach(t => container.appendChild(renderCard(t)));
+      }
+    }
+
+    function buildAvatar(id, hash, name) {
+      if (hash) {
+        const img = document.createElement('img');
+        img.className = 'admin-req-avatar';
+        img.src = `https://cdn.discordapp.com/avatars/${id}/${hash}.png?size=64`;
+        img.alt = name;
+        return img;
+      }
+      const ph = document.createElement('div');
+      ph.className = 'admin-req-avatar-ph';
+      ph.textContent = (name || '?')[0].toUpperCase();
+      return ph;
+    }
+
+    function renderCard(ticket) {
+      const card = document.createElement('div');
+      card.className = 'admin-ticket-card';
+      const name = ticket.global_name || ticket.username || 'Unbekannt';
+      let currentStatus = ticket.status || 'open';
+
+      // Header
+      const header = document.createElement('div');
+      header.className = 'admin-ticket-header';
+
+      const userDiv = document.createElement('div');
+      userDiv.className = 'admin-ticket-user';
+      userDiv.appendChild(buildAvatar(ticket.userId, ticket.avatar, name));
+      const info = document.createElement('div');
+      info.innerHTML = `<div class="admin-ticket-name">${name}</div><div class="admin-ticket-uid">${ticket.userId}</div>`;
+      userDiv.appendChild(info);
+      header.appendChild(userDiv);
+
+      const meta = document.createElement('div');
+      meta.className = 'admin-ticket-meta';
+      const badge = document.createElement('span');
+      badge.className = `admin-ticket-badge badge--${currentStatus}`;
+      badge.id = `badge-${ticket.id}`;
+      badge.textContent = STATUS_LABELS[currentStatus] || currentStatus;
+      meta.appendChild(badge);
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'admin-ticket-date';
+      dateSpan.textContent = formatDate(ticket.createdAt);
+      meta.appendChild(dateSpan);
+      const dmLink = document.createElement('a');
+      dmLink.href = `https://discord.com/users/${ticket.userId}`;
+      dmLink.target = '_blank';
+      dmLink.rel = 'noopener';
+      dmLink.style.cssText = 'font-size:0.78rem;color:var(--muted);text-decoration:none';
+      dmLink.textContent = '↗ DM';
+      meta.appendChild(dmLink);
+      header.appendChild(meta);
+      card.appendChild(header);
+
+      // Subject + message
+      const subject = document.createElement('div');
+      subject.className = 'admin-ticket-subject';
+      subject.textContent = ticket.subject || '—';
+      card.appendChild(subject);
+
+      const msg = document.createElement('div');
+      msg.className = 'admin-ticket-message';
+      msg.textContent = ticket.message || '—';
+      card.appendChild(msg);
+
+      // Replies
+      const replies = ticket.replies || [];
+      if (replies.length > 0) {
+        const repliesDiv = document.createElement('div');
+        repliesDiv.className = 'admin-ticket-replies';
+        repliesDiv.id = `replies-${ticket.id}`;
+        replies.forEach(r => {
+          const el = document.createElement('div');
+          el.className = `ticket-reply${r.from === 'admin' ? ' ticket-reply--admin' : ''}`;
+          el.innerHTML = `<div class="ticket-reply-meta">${r.from === 'admin' ? 'Admin' : name} · ${formatDate(r.createdAt)}</div>${r.text}`;
+          repliesDiv.appendChild(el);
+        });
+        card.appendChild(repliesDiv);
+      } else {
+        const repliesDiv = document.createElement('div');
+        repliesDiv.className = 'admin-ticket-replies';
+        repliesDiv.id = `replies-${ticket.id}`;
+        repliesDiv.style.display = 'none';
+        card.appendChild(repliesDiv);
+      }
+
+      // Reply + status controls
+      const replyRow = document.createElement('div');
+      replyRow.className = 'admin-reply-row';
+
+      const textarea = document.createElement('textarea');
+      textarea.className = 'admin-reply-textarea';
+      textarea.placeholder = 'Antwort schreiben…';
+      replyRow.appendChild(textarea);
+
+      const actions = document.createElement('div');
+      actions.className = 'admin-reply-actions';
+
+      const statusBtns = document.createElement('div');
+      statusBtns.className = 'admin-status-btns';
+      ['open', 'in_progress', 'closed'].forEach(s => {
+        const btn = document.createElement('button');
+        btn.className = `admin-status-btn${currentStatus === s ? ` sel--${s}` : ''}`;
+        btn.dataset.status = s;
+        btn.textContent = STATUS_LABELS[s];
+        btn.addEventListener('click', () => {
+          currentStatus = s;
+          statusBtns.querySelectorAll('.admin-status-btn').forEach(b => {
+            b.className = `admin-status-btn${b.dataset.status === s ? ` sel--${s}` : ''}`;
+          });
+          const badgeEl = document.getElementById(`badge-${ticket.id}`);
+          if (badgeEl) { badgeEl.className = `admin-ticket-badge badge--${s}`; badgeEl.textContent = STATUS_LABELS[s]; }
+        });
+        statusBtns.appendChild(btn);
+      });
+      actions.appendChild(statusBtns);
+
+      const sendBtn = document.createElement('button');
+      sendBtn.className = 'btn-primary';
+      sendBtn.style.cssText = 'padding:8px 18px;font-size:0.85rem';
+      sendBtn.textContent = 'Senden →';
+
+      const saveMsg = document.createElement('span');
+      saveMsg.className = 'admin-save-msg';
+      saveMsg.style.display = 'none';
+
+      sendBtn.addEventListener('click', async () => {
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Sendet…';
+        saveMsg.style.display = 'none';
+        try {
+          const r = await fetch('/api/admin-tickets', {
+            method: 'POST',
+            credentials: 'include',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ticketId: ticket.id, status: currentStatus, reply: textarea.value }),
+          });
+          if (!r.ok) throw new Error('failed');
+
+          // Add reply to UI
+          if (textarea.value.trim()) {
+            let repliesDiv = document.getElementById(`replies-${ticket.id}`);
+            if (!repliesDiv) {
+              repliesDiv = document.createElement('div');
+              repliesDiv.className = 'admin-ticket-replies';
+              repliesDiv.id = `replies-${ticket.id}`;
+              card.insertBefore(repliesDiv, replyRow);
+            }
+            repliesDiv.style.display = '';
+            const el = document.createElement('div');
+            el.className = 'ticket-reply ticket-reply--admin';
+            el.innerHTML = `<div class="ticket-reply-meta">Admin · Jetzt</div>${textarea.value.trim()}`;
+            repliesDiv.appendChild(el);
+            textarea.value = '';
+          }
+
+          saveMsg.textContent = 'Gespeichert ✓';
+          saveMsg.style.color = '#22c55e';
+          saveMsg.style.display = 'inline';
+          setTimeout(() => { saveMsg.style.display = 'none'; }, 3000);
+        } catch {
+          saveMsg.textContent = 'Fehler';
+          saveMsg.style.color = '#ef4444';
+          saveMsg.style.display = 'inline';
+          setTimeout(() => { saveMsg.style.display = 'none'; }, 3000);
+        } finally {
+          sendBtn.disabled = false;
+          sendBtn.textContent = 'Senden →';
+        }
+      });
+
+      actions.appendChild(sendBtn);
+      actions.appendChild(saveMsg);
+      replyRow.appendChild(actions);
+      card.appendChild(replyRow);
+
+      return card;
+    }
+
+    // Nav init
+    function initNav(data) {
+      const navLoginLi = document.getElementById('nav-login-li');
+      const navUserLink = document.getElementById('nav-user-link');
+      const name = data.global_name || data.username || '—';
+      if (navLoginLi) navLoginLi.style.display = 'none';
+      if (navUserLink) {
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          navUserLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          navUserLink.appendChild(ph);
+        }
+        navUserLink.style.display = 'flex';
+      }
+    }
+
+    async function init() {
+      try {
+        const r = await fetch('/api/me', { credentials: 'include' });
+        if (!r.ok) throw new Error(r.status);
+        initNav(await r.json());
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-login').style.display = 'block';
+        return;
+      }
+
+      try {
+        const r = await fetch('/api/admin-tickets', { credentials: 'include' });
+        if (r.status === 403) {
+          document.getElementById('view-loading').style.display = 'none';
+          document.getElementById('view-no-access').style.display = 'block';
+          return;
+        }
+        if (!r.ok) throw new Error(r.status);
+        const json = await r.json();
+        allTickets = json.tickets || [];
+      } catch {
+        document.getElementById('view-loading').style.display = 'none';
+        document.getElementById('view-no-access').style.display = 'block';
+        return;
+      }
+
+      document.getElementById('view-loading').style.display = 'none';
+      document.getElementById('view-admin').style.display = 'block';
+
+      document.getElementById('stat-total').textContent = allTickets.length;
+      document.getElementById('stat-open').textContent = allTickets.filter(t => t.status === 'open' || t.status === 'in_progress').length;
+      document.getElementById('stat-closed').textContent = allTickets.filter(t => t.status === 'closed').length;
+
+      applyFilter();
+
+      document.querySelectorAll('.admin-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          document.querySelectorAll('.admin-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          activeFilter = chip.dataset.filter;
+          applyFilter();
+        });
+      });
+
+      document.getElementById('admin-search').addEventListener('input', e => {
+        searchQuery = e.target.value.trim();
+        applyFilter();
+      });
+    }
+
+    init();
+
+    // Cookie notice
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        const el = document.getElementById('cookie-notice');
+        if (el) el.style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        const el = document.getElementById('cookie-notice');
+        if (el) el.style.display = 'none';
+      }
+      document.getElementById('cookie-accept')?.addEventListener('click', accept);
+      document.getElementById('cookie-close')?.addEventListener('click', accept);
+    })();
+  </script>
+
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern. Mehr in unserer <a href="/impressum.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
+  </div>
+
+</body>
+</html>
