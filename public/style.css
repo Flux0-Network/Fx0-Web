@@ -1751,7 +1751,6 @@ kbd {
   padding: 6px 14px;
   border-radius: 99px;
   background: var(--surface);
-  border: 1px solid var(--border);
   font-size: 0.82rem;
   font-weight: 500;
   color: var(--muted);
