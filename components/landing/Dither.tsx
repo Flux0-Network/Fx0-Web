@@ -161,7 +161,7 @@ export default function Dither({
       raf = requestAnimationFrame(render);
     }
 
-    resize();
+    setTimeout(resize, 0);
     render();
 
     const ro = new ResizeObserver(resize);

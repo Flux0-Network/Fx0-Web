@@ -59,12 +59,12 @@ export default function HeroSection() {
         <Dither
           waveColor={[1, 1, 1]}
           backgroundColor={[0, 0, 0]}
-          colorNum={4}
-          waveAmplitude={0.28}
-          waveFrequency={2.5}
-          waveSpeed={0.4}
+          colorNum={2}
+          waveAmplitude={0.45}
+          waveFrequency={2}
+          waveSpeed={0.35}
           enableMouseInteraction={true}
-          mouseRadius={0.25}
+          mouseRadius={0.3}
         />
       </div>
       <div className="container hero-layout">
