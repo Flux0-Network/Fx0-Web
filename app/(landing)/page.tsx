@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
+import Dither from '@/components/landing/Dither';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import CookieNotice from '@/components/landing/CookieNotice';
@@ -31,6 +32,18 @@ export default function LandingPage() {
   return (
     <>
       <ScrollReveal />
+      <div className="dither-fixed" aria-hidden="true">
+        <Dither
+          waveColor={[1, 1, 1]}
+          backgroundColor={[0, 0, 0]}
+          colorNum={2}
+          waveAmplitude={0.45}
+          waveFrequency={2}
+          waveSpeed={0.35}
+          enableMouseInteraction={true}
+          mouseRadius={0.3}
+        />
+      </div>
       <Navbar />
       <HeroSection />
       <TechStrip />

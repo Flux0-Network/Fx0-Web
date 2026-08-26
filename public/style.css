@@ -56,7 +56,7 @@ body::after {
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
-.section { padding: 96px 0; }
+.section { padding: 96px 0; position: relative; z-index: 1; }
 
 /* ── NAVBAR ── */
 .navbar {
@@ -268,14 +268,16 @@ body::after {
   padding: 80px 0;
   position: relative;
 }
+.hero { position: relative; z-index: 1; }
 .hero .container { position: relative; z-index: 1; width: 100%; }
-.hero-dither-bg {
-  position: absolute;
+.dither-fixed {
+  position: fixed;
   inset: 0;
   z-index: 0;
-  opacity: 0.65;
+  opacity: 0.55;
+  pointer-events: none;
 }
-.hero-dither-bg canvas {
+.dither-fixed canvas {
   position: absolute !important;
   inset: 0 !important;
   width: 100% !important;
