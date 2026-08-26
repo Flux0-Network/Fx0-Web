@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AuroraBackground from '@/components/landing/AuroraBackground';
+import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import CookieNotice from '@/components/landing/CookieNotice';
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function LandingPage() {
   return (
     <>
-      <AuroraBackground />
+      <ScrollReveal />
       <Navbar />
       <HeroSection />
       <TechStrip />

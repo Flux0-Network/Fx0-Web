@@ -53,56 +53,6 @@ body::after {
 }
 
 /* ── GLOW ORBS ── */
-.glow-orb {
-  position: fixed;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-}
-.glow-orb--tl {
-  width: 900px; height: 900px;
-  top: -300px; left: -350px;
-  background: rgba(255,255,255,0.08);
-  filter: blur(180px);
-}
-.glow-orb--tr {
-  width: 700px; height: 700px;
-  top: -200px; right: -300px;
-  background: rgba(255,255,255,0.05);
-  filter: blur(160px);
-}
-
-/* ── AURORA ── */
-.aurora-wrap {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  overflow: hidden;
-}
-.aurora {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(130px);
-}
-.aurora--1 {
-  width: 900px; height: 350px;
-  top: -80px; left: 5%;
-  background: rgba(0, 190, 120, 0.1);
-  will-change: transform;
-}
-.aurora--2 {
-  width: 650px; height: 280px;
-  top: 60px; right: 0%;
-  background: rgba(110, 40, 220, 0.09);
-  will-change: transform;
-}
-.aurora--3 {
-  width: 750px; height: 300px;
-  top: 120px; left: 28%;
-  background: rgba(20, 90, 220, 0.07);
-  will-change: transform;
-}
 
 .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
 
@@ -2253,10 +2203,6 @@ kbd {
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { letter-spacing: -0.025em; }
   .hero-sub { font-size: 0.9rem; }
-  /* stronger aurora on mobile */
-  .aurora--1 { background: rgba(0, 190, 120, 0.18); filter: blur(90px); }
-  .aurora--2 { background: rgba(110, 40, 220, 0.16); filter: blur(80px); }
-  .aurora--3 { background: rgba(20, 90, 220, 0.13); filter: blur(85px); }
 
   /* sections */
   .section { padding: 56px 0; }
