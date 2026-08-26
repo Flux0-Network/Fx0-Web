@@ -12,71 +12,59 @@ interface DitherProps {
   waveAmplitude?: number;
   waveFrequency?: number;
   waveSpeed?: number;
-  className?: string;
 }
 
-const vert = `
+const VERT = `
 attribute vec2 position;
-void main() {
-  gl_Position = vec4(position, 0.0, 1.0);
-}
+void main() { gl_Position = vec4(position, 0.0, 1.0); }
 `;
 
-const frag = `
+const FRAG = `
 precision mediump float;
-
 uniform float time;
 uniform vec2 resolution;
 uniform vec2 mouse;
 uniform float mouseRadius;
-uniform bool enableMouseInteraction;
+uniform bool enableMouse;
 uniform int colorNum;
 uniform float waveAmplitude;
 uniform float waveFrequency;
 uniform float waveSpeed;
 uniform vec3 waveColor;
-uniform vec3 backgroundColor;
+uniform vec3 bgColor;
 
-float bayer2(vec2 a) {
-  a = floor(a);
-  return fract(dot(a, vec2(0.5, a.y * 0.75)));
-}
-float bayer4(vec2 a)  { return mix(bayer2(a * 0.5)  * 0.25, bayer2(a),  0.75) * 0.66667; }
-float bayer8(vec2 a)  { return mix(bayer4(a * 0.5)  * 0.25, bayer4(a),  0.75) * 0.66667; }
-float bayer16(vec2 a) { return mix(bayer8(a * 0.5)  * 0.25, bayer8(a),  0.75) * 0.66667; }
-float bayer32(vec2 a) { return mix(bayer16(a * 0.5) * 0.25, bayer16(a), 0.75) * 0.66667; }
+float bayer2(vec2 a){a=floor(a);return fract(dot(a,vec2(0.5,a.y*.75)));}
+float bayer4(vec2 a){return mix(bayer2(a*.5)*.25,bayer2(a),.75)*.66667;}
+float bayer8(vec2 a){return mix(bayer4(a*.5)*.25,bayer4(a),.75)*.66667;}
+float bayer16(vec2 a){return mix(bayer8(a*.5)*.25,bayer8(a),.75)*.66667;}
+float bayer32(vec2 a){return mix(bayer16(a*.5)*.25,bayer16(a),.75)*.66667;}
 
-void main() {
-  vec2 uv  = gl_FragCoord.xy / resolution;
-  vec2 px  = gl_FragCoord.xy;
+void main(){
+  vec2 uv=gl_FragCoord.xy/resolution;
+  vec2 px=gl_FragCoord.xy;
 
-  float wave = 0.0;
-  for (int i = 1; i <= 4; i++) {
-    float fi = float(i);
-    wave += sin(uv.x * waveFrequency * fi * 6.28318 + time * waveSpeed + fi * 1.047)
-          * waveAmplitude / fi;
-    wave += sin(uv.y * waveFrequency * fi * 6.28318 * 0.7 - time * waveSpeed * 0.8 + fi * 0.523)
-          * waveAmplitude * 0.4 / fi;
+  float w=0.0;
+  for(int i=1;i<=4;i++){
+    float f=float(i);
+    w+=sin(uv.x*waveFrequency*f*6.283+time*waveSpeed+f*1.047)*waveAmplitude/f;
+    w+=sin(uv.y*waveFrequency*f*4.712-time*waveSpeed*.8+f*.524)*waveAmplitude*.4/f;
   }
-  wave = wave * 0.5 + 0.5;
+  w=w*.5+.5;
 
-  if (enableMouseInteraction) {
-    vec2 mUV = vec2(mouse.x / resolution.x, 1.0 - mouse.y / resolution.y);
-    float dist = distance(uv, mUV);
-    float influence = 1.0 - smoothstep(0.0, mouseRadius, dist);
-    wave = mix(wave, 1.0, influence * 0.6);
+  if(enableMouse){
+    vec2 m=vec2(mouse.x/resolution.x,1.-mouse.y/resolution.y);
+    float d=distance(uv,m);
+    w=mix(w,1.,(.6)*(1.-smoothstep(0.,mouseRadius,d)));
   }
 
-  float dither = bayer32(px);
-  float steps  = float(colorNum) - 1.0;
-  float q      = floor(wave * steps + dither) / steps;
-
-  vec3 color = mix(backgroundColor, waveColor, clamp(q, 0.0, 1.0));
-  gl_FragColor = vec4(color, 1.0);
+  float d=bayer32(px);
+  float steps=float(colorNum)-1.;
+  float q=floor(w*steps+d)/steps;
+  gl_FragColor=vec4(mix(bgColor,waveColor,clamp(q,0.,1.)),1.);
 }
 `;
 
-function compileShader(gl: WebGLRenderingContext, type: number, src: string) {
+function mkShader(gl: WebGLRenderingContext, type: number, src: string) {
   const s = gl.createShader(type)!;
   gl.shaderSource(s, src);
   gl.compileShader(s);
@@ -89,87 +77,95 @@ export default function Dither({
   disableAnimation = false,
   enableMouseInteraction = true,
   mouseRadius = 0.3,
-  colorNum = 4,
-  waveAmplitude = 0.3,
-  waveFrequency = 3,
-  waveSpeed = 0.5,
-  className,
+  colorNum = 2,
+  waveAmplitude = 0.45,
+  waveFrequency = 2,
+  waveSpeed = 0.35,
 }: DitherProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const mouse = useRef<[number, number]>([0, 0]);
+  const ref = useRef<HTMLCanvasElement>(null);
+  const mouse = useRef<[number, number]>([9999, 9999]);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+    const canvas = ref.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext('webgl');
+    // Safari needs experimental-webgl fallback
+    const gl = (
+      canvas.getContext('webgl') ||
+      canvas.getContext('experimental-webgl')
+    ) as WebGLRenderingContext | null;
     if (!gl) return;
 
-    const program = gl.createProgram()!;
-    gl.attachShader(program, compileShader(gl, gl.VERTEX_SHADER, vert));
-    gl.attachShader(program, compileShader(gl, gl.FRAGMENT_SHADER, frag));
-    gl.linkProgram(program);
-    gl.useProgram(program);
+    const prog = gl.createProgram()!;
+    gl.attachShader(prog, mkShader(gl, gl.VERTEX_SHADER, VERT));
+    gl.attachShader(prog, mkShader(gl, gl.FRAGMENT_SHADER, FRAG));
+    gl.linkProgram(prog);
+    gl.useProgram(prog);
 
     const buf = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, buf);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
-
-    const pos = gl.getAttribLocation(program, 'position');
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,1,-1,-1,1,1,1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(prog, 'position');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
     const u = {
-      time:                    gl.getUniformLocation(program, 'time'),
-      resolution:              gl.getUniformLocation(program, 'resolution'),
-      mouse:                   gl.getUniformLocation(program, 'mouse'),
-      mouseRadius:             gl.getUniformLocation(program, 'mouseRadius'),
-      enableMouseInteraction:  gl.getUniformLocation(program, 'enableMouseInteraction'),
-      colorNum:                gl.getUniformLocation(program, 'colorNum'),
-      waveAmplitude:           gl.getUniformLocation(program, 'waveAmplitude'),
-      waveFrequency:           gl.getUniformLocation(program, 'waveFrequency'),
-      waveSpeed:               gl.getUniformLocation(program, 'waveSpeed'),
-      waveColor:               gl.getUniformLocation(program, 'waveColor'),
-      backgroundColor:         gl.getUniformLocation(program, 'backgroundColor'),
+      time:        gl.getUniformLocation(prog, 'time'),
+      resolution:  gl.getUniformLocation(prog, 'resolution'),
+      mouse:       gl.getUniformLocation(prog, 'mouse'),
+      mouseRadius: gl.getUniformLocation(prog, 'mouseRadius'),
+      enableMouse: gl.getUniformLocation(prog, 'enableMouse'),
+      colorNum:    gl.getUniformLocation(prog, 'colorNum'),
+      waveAmp:     gl.getUniformLocation(prog, 'waveAmplitude'),
+      waveFreq:    gl.getUniformLocation(prog, 'waveFrequency'),
+      waveSpeed:   gl.getUniformLocation(prog, 'waveSpeed'),
+      waveColor:   gl.getUniformLocation(prog, 'waveColor'),
+      bgColor:     gl.getUniformLocation(prog, 'bgColor'),
     };
 
-    let raf: number;
-    let start = performance.now();
+    let raf = 0;
+    let start = 0;
 
     function resize() {
-      const dpr = window.devicePixelRatio || 1;
-      const parent = canvas!.parentElement ?? canvas!;
-      canvas!.width  = parent.offsetWidth  * dpr;
-      canvas!.height = parent.offsetHeight * dpr;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = canvas!.offsetWidth  || canvas!.parentElement?.offsetWidth  || window.innerWidth;
+      const h = canvas!.offsetHeight || canvas!.parentElement?.offsetHeight || window.innerHeight;
+      canvas!.width  = w * dpr;
+      canvas!.height = h * dpr;
       gl!.viewport(0, 0, canvas!.width, canvas!.height);
     }
 
-    function render() {
-      const t = disableAnimation ? 0 : (performance.now() - start) / 1000;
+    function draw(ts: number) {
+      const t = disableAnimation ? 0 : (ts - start) / 1000;
       gl!.uniform1f(u.time, t);
       gl!.uniform2f(u.resolution, canvas!.width, canvas!.height);
       gl!.uniform2f(u.mouse, mouse.current[0], mouse.current[1]);
       gl!.uniform1f(u.mouseRadius, mouseRadius);
-      gl!.uniform1i(u.enableMouseInteraction, enableMouseInteraction ? 1 : 0);
+      gl!.uniform1i(u.enableMouse, enableMouseInteraction ? 1 : 0);
       gl!.uniform1i(u.colorNum, colorNum);
-      gl!.uniform1f(u.waveAmplitude, waveAmplitude);
-      gl!.uniform1f(u.waveFrequency, waveFrequency);
+      gl!.uniform1f(u.waveAmp, waveAmplitude);
+      gl!.uniform1f(u.waveFreq, waveFrequency);
       gl!.uniform1f(u.waveSpeed, waveSpeed);
       gl!.uniform3fv(u.waveColor, waveColor);
-      gl!.uniform3fv(u.backgroundColor, backgroundColor);
+      gl!.uniform3fv(u.bgColor, backgroundColor);
       gl!.drawArrays(gl!.TRIANGLE_STRIP, 0, 4);
-      raf = requestAnimationFrame(render);
+      raf = requestAnimationFrame(draw);
     }
 
-    setTimeout(resize, 0);
-    render();
+    // Wait for layout before reading dimensions
+    raf = requestAnimationFrame(ts => {
+      start = ts;
+      resize();
+      draw(ts);
+    });
 
     const ro = new ResizeObserver(resize);
-    ro.observe(canvas);
+    ro.observe(canvas.parentElement ?? canvas);
+    window.addEventListener('resize', resize);
 
     function onMouse(e: MouseEvent) {
       const r = canvas!.getBoundingClientRect();
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
       mouse.current = [(e.clientX - r.left) * dpr, (e.clientY - r.top) * dpr];
     }
     if (enableMouseInteraction) canvas.addEventListener('mousemove', onMouse);
@@ -177,14 +173,14 @@ export default function Dither({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      window.removeEventListener('resize', resize);
       if (enableMouseInteraction) canvas.removeEventListener('mousemove', onMouse);
     };
   }, [disableAnimation, enableMouseInteraction, mouseRadius, colorNum, waveAmplitude, waveFrequency, waveSpeed, waveColor, backgroundColor]);
 
   return (
     <canvas
-      ref={canvasRef}
-      className={className}
+      ref={ref}
       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
     />
   );
