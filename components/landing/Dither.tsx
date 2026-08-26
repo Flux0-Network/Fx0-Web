@@ -138,8 +138,9 @@ export default function Dither({
 
     function resize() {
       const dpr = window.devicePixelRatio || 1;
-      canvas!.width  = canvas!.offsetWidth  * dpr;
-      canvas!.height = canvas!.offsetHeight * dpr;
+      const parent = canvas!.parentElement ?? canvas!;
+      canvas!.width  = parent.offsetWidth  * dpr;
+      canvas!.height = parent.offsetHeight * dpr;
       gl!.viewport(0, 0, canvas!.width, canvas!.height);
     }
 
@@ -184,7 +185,7 @@ export default function Dither({
     <canvas
       ref={canvasRef}
       className={className}
-      style={{ display: 'block', width: '100%', height: '100%' }}
+      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }}
     />
   );
 }

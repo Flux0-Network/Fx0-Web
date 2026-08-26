@@ -323,10 +323,14 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.18;
-  pointer-events: none;
+  opacity: 0.22;
 }
-.hero-dither-bg canvas { width: 100% !important; height: 100% !important; }
+.hero-dither-bg canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
 
 /* Hero 2-column layout */
 .hero-layout {
