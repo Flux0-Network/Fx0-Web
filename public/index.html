@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flux Network — Webdesign & Entwicklung</title>
+  <meta name="description" content="Flux Network baut professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt — von der ersten Idee bis zum Launch." />
+
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://flux0.dev/" />
+  <meta property="og:title"       content="Flux Network — Webdesign & Entwicklung" />
+  <meta property="og:description" content="Professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt." />
+  <meta property="og:image"       content="https://flux0.dev/og-image.png" />
+  <meta property="og:image:width"  content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="Flux Network" />
+  <meta property="og:locale"      content="de_DE" />
+
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@flux0dev" />
+  <meta name="twitter:title"       content="Flux Network — Webdesign & Entwicklung" />
+  <meta name="twitter:description" content="Professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt." />
+  <meta name="twitter:image"       content="https://flux0.dev/og-image.png" />
+
+  <link rel="canonical" href="https://flux0.dev/" />
+  <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="glow-orb glow-orb--tl" aria-hidden="true"></div>
+  <div class="glow-orb glow-orb--tr" aria-hidden="true"></div>
+  <div class="aurora-wrap" aria-hidden="true">
+    <div class="aurora aurora--1"></div>
+    <div class="aurora aurora--2"></div>
+    <div class="aurora aurora--3"></div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo">
+        <img src="logo1.png" alt="Flux Network" class="logo-img" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="#pakete">Pakete</a></li>
+        <li><a href="#prozess">Prozess</a></li>
+        <li><a href="design.html">Design</a></li>
+        <li><a href="#products">Produkte</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="community.html">Community</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="dashboard.html" class="btn-join" id="nav-login-btn">Login</a>
+        <a href="dashboard.html" class="nav-user-link" id="nav-user-link" style="display:none"></a>
+        <button class="nav-toggle" aria-label="Menü"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-layout">
+      <div class="hero-text">
+        <h1>Deine Website.<br /><span class="typewriter">Professionell. Fertig.</span></h1>
+        <p class="hero-sub">Wir bauen moderne Webseiten für Unternehmen, Freelancer und Projekte — von der ersten Idee bis zum Launch. Schnell, sauber, auf den Punkt.</p>
+        <div class="hero-ctas">
+          <a href="https://discord.gg/D9GwqWpwHT" class="btn-primary" target="_blank" rel="noopener">Angebot anfragen →</a>
+          <a href="#pakete" class="btn-ghost">Pakete ansehen</a>
+        </div>
+        <a href="#pakete" class="hero-scroll-hint" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          Mehr erfahren
+        </a>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hv-scene">
+
+          <!-- Floating badge top -->
+          <div class="hv-card hv-card--tl float-a">
+            <div class="hv-card-dot" style="background:#28c840"></div>
+            <span>Live Preview</span>
+          </div>
+
+          <!-- Website preview card -->
+          <div class="wp-card">
+            <div class="wp-bar">
+              <span class="browser-dot" style="background:#ff5f57"></span>
+              <span class="browser-dot" style="background:#febc2e"></span>
+              <span class="browser-dot" style="background:#28c840"></span>
+              <div class="wp-url">mein-projekt.flux0.dev</div>
+            </div>
+            <div class="wp-body">
+              <!-- mini nav -->
+              <div class="wp-nav">
+                <div class="wp-nav-logo"></div>
+                <div class="wp-nav-links">
+                  <div class="wp-nl"></div>
+                  <div class="wp-nl"></div>
+                  <div class="wp-nl"></div>
+                </div>
+                <div class="wp-nav-btn"></div>
+              </div>
+              <!-- mini hero -->
+              <div class="wp-hero">
+                <div class="wp-glow"></div>
+                <div class="wp-label"></div>
+                <div class="wp-h1"></div>
+                <div class="wp-h1 wp-h1--b"></div>
+                <div class="wp-sub"></div>
+                <div class="wp-sub wp-sub--s"></div>
+                <div class="wp-ctas">
+                  <div class="wp-btn wp-btn--p"></div>
+                  <div class="wp-btn"></div>
+                </div>
+              </div>
+              <!-- mini cards row -->
+              <div class="wp-cards">
+                <div class="wp-mc"><div class="wp-mc-icon"></div><div class="wp-mc-line"></div><div class="wp-mc-line wp-mc-line--s"></div></div>
+                <div class="wp-mc"><div class="wp-mc-icon"></div><div class="wp-mc-line"></div><div class="wp-mc-line wp-mc-line--s"></div></div>
+                <div class="wp-mc"><div class="wp-mc-icon"></div><div class="wp-mc-line"></div><div class="wp-mc-line wp-mc-line--s"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating badge bottom -->
+          <div class="hv-card hv-card--br float-b">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/></svg>
+            <span>Launch in ∅ 5 Tagen</span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="scroll-indicator" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </div>
+  </section>
+
+  <!-- TECH STRIP -->
+  <section class="tech-strip">
+    <div class="container">
+      <p class="tech-strip-label">Womit wir bauen</p>
+      <div class="tech-strip-list">
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 180 180" fill="none"><mask id="mask0" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180"><circle cx="90" cy="90" r="90" fill="black"/></mask><g mask="url(#mask0)"><circle cx="90" cy="90" r="90" fill="black"/><path d="M149.508 157.52L69.142 54H54V125.97H66.1847V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="url(#paint0_linear)"/><rect x="115" y="54" width="12" height="72" fill="url(#paint1_linear)"/><defs><linearGradient id="paint0_linear" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></linearGradient><linearGradient id="paint1_linear" x1="121" y1="54" x2="120.799" y2="106.875" gradientUnits="userSpaceOnUse"><stop stop-color="white"/><stop offset="1" stop-color="white" stop-opacity="0"/></linearGradient></defs></g></svg>
+          Next.js
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#61DAFB" opacity="0.15"/><circle cx="12" cy="12" r="2.5" fill="#61DAFB"/><ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" stroke-width="1.5" fill="none"/><ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" stroke-width="1.5" fill="none" transform="rotate(120 12 12)"/></svg>
+          React
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M1 6l11-4 11 4-11 4L1 6z" fill="#38BDF8" opacity="0.8"/><path d="M1 12l11 4 11-4" stroke="#38BDF8" stroke-width="1.5" fill="none"/><path d="M1 18l11 4 11-4" stroke="#38BDF8" stroke-width="1" fill="none" opacity="0.5"/></svg>
+          Tailwind CSS
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 15l4-8 4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.5 12h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          TypeScript
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="2" y="2" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.7"/><rect x="13" y="2" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.5"/><rect x="2" y="13" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.5"/><rect x="13" y="13" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.3"/></svg>
+          shadcn/ui
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#6366f1" stroke-width="1.5"/><path d="M8 12h8M12 8v8" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Headless UI
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Float UI
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><polygon points="12,2 22,19 2,19" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          HeroUI
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="4" fill="#1fb2a6" opacity="0.8"/><circle cx="12" cy="12" r="9" stroke="#1fb2a6" stroke-width="1.5" fill="none"/></svg>
+          DaisyUI
+        </span>
+        <span class="tech-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="currentColor" stroke-width="1.5"/></svg>
+          Vercel
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAKETE -->
+  <section id="pakete" class="section">
+    <div class="container">
+      <div class="section-label-row">
+        <span class="dot dot--gelb"></span>
+        PAKETE
+      </div>
+      <div class="section-intro">
+        <h2 class="section-title">Was wir dir bauen.</h2>
+        <p class="section-sub">Kein Einheitspaket — jedes Projekt ist anders. Wir besprechen deine Anforderungen und machen dir ein Angebot, das passt.</p>
+      </div>
+
+      <div class="paket-individuell-wrap">
+        <div class="paket-card paket-card--wide">
+          <div class="paket-card-top">
+            <div>
+              <span class="paket-name">Individuell</span>
+              <p class="paket-tagline">Maßgeschneidert für dein Projekt — Landingpage, Multipage, Web-App oder alles dazwischen.</p>
+            </div>
+            <div class="paket-price">
+              <span class="paket-price-from">Preis auf</span>
+              <span class="paket-price-value">Anfrage</span>
+            </div>
+          </div>
+          <ul class="paket-list paket-list--two-col">
+            <li><span class="paket-check paket-check--accent">✓</span> Landingpage bis Multipage-Site</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Logo-Design & Branding</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Mobile-optimiert & barrierefrei</li>
+            <li><span class="paket-check paket-check--accent">✓</span> SEO-Optimierung (Basic bis Full)</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Next.js + Tailwind + shadcn/ui</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Kontaktformular & Integrationen</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Animationen & Micro-Interactions</li>
+            <li><span class="paket-check paket-check--accent">✓</span> Support bis Launch & darüber hinaus</li>
+          </ul>
+          <a href="https://discord.gg/D9GwqWpwHT" class="btn-primary" target="_blank" rel="noopener">Jetzt anfragen →</a>
+        </div>
+      </div>
+      <p class="pakete-note">Alle Preise zzgl. MwSt. — Lieferzeit je nach Projektumfang.</p>
+    </div>
+  </section>
+
+  <!-- PROZESS -->
+  <section id="prozess" class="section">
+    <div class="container">
+      <div class="section-label-row">
+        <span class="dot dot--grün"></span>
+        PROZESS
+      </div>
+      <div class="section-intro">
+        <h2 class="section-title">So läuft's ab.</h2>
+        <p class="section-sub">Kein Figma, kein hin und her mit Mockups — du siehst dein Design sofort live im echten Browser und gibst direkt Feedback.</p>
+      </div>
+      <div class="prozess-grid">
+
+        <div class="prozess-step">
+          <div class="prozess-step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Erstgespräch</h3>
+          <p>Wir reden kurz über dein Projekt — was du brauchst, was du dir vorstellst, welches Budget du hast. Kostenlos, unverbindlich, kein Verkaufsdruck.</p>
+          <span class="prozess-step-note">Kostenlos · Discord oder E-Mail</span>
+        </div>
+
+        <div class="prozess-step">
+          <div class="prozess-step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Direkt live</h3>
+          <p>Statt Figma-Mockups deployen wir das Design direkt als Vorschau-URL — du siehst Layout, Farben und Animationen sofort so, wie sie am Ende aussehen.</p>
+          <span class="prozess-step-note">Live-Preview · Kein Figma</span>
+        </div>
+
+        <div class="prozess-step">
+          <div class="prozess-step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="m9 11 3 3L22 4"/></svg>
+          </div>
+          <h3>Feedback & Feinschliff</h3>
+          <p>Du gibst direkt auf der laufenden Seite Feedback — wir passen an, deployen sofort wieder. Keine langen Abstimmungsschleifen, Änderungen sind in Minuten sichtbar.</p>
+          <span class="prozess-step-note">Iterativ · Schnelle Anpassungen</span>
+        </div>
+
+        <div class="prozess-step">
+          <div class="prozess-step-icon">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </div>
+          <h3>Launch & Übergabe</h3>
+          <p>Wenn alles sitzt, geht die Seite auf deine Domain live. Wir richten Hosting und DNS ein und du bekommst eine vollständige Einweisung — fertig.</p>
+          <span class="prozess-step-note">Hosting-Setup & Übergabe inklusive</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- REFERENZEN -->
+  <section class="logo-cloud-section referenzen-section">
+    <div class="container">
+      <p class="logo-cloud-label">Von uns gebaut — live im Netz</p>
+      <div class="logo-cloud">
+
+        <a href="https://erdmann-webpage.vercel.app/" class="logo-cloud-item ref-item" target="_blank" rel="noopener">
+          <span class="ref-favicon" style="background:#0f172a;color:#fff">E</span>
+          <span class="ref-info">
+            <span class="ref-name">Erdmann</span>
+            <span class="ref-url">erdmann-webpage.vercel.app</span>
+          </span>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="opacity:.4;flex-shrink:0"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        </a>
+
+        <a href="https://discord.gg/D9GwqWpwHT" class="logo-cloud-item logo-cloud-item--add" target="_blank" rel="noopener">
+          <span class="logo-cloud-plus">+</span>
+          <span>Dein Projekt hier</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DESIGN STUDIO -->
+  <section id="design" class="section">
+    <div class="container">
+      <div class="section-label-row">
+        <span class="dot dot--blau"></span>
+        DESIGN STUDIO
+      </div>
+      <div class="section-intro">
+        <h2 class="section-title">Nicht nur Code.</h2>
+        <p class="section-sub">Wir designen auch — Logos, Banner, Social Media Grafiken und komplette Brand Identities. Alles aus einer Hand.</p>
+      </div>
+      <div class="design-services-grid">
+
+        <div class="design-card">
+          <div class="design-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          </div>
+          <div class="design-card-title">Logo Design</div>
+          <div class="design-card-desc">Wortmarke, Bildmarke oder Kombination — professionell, zeitlos, skalierbar.</div>
+          <span class="design-card-tag">Auf Anfrage</span>
+        </div>
+
+        <div class="design-card">
+          <div class="design-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <div class="design-card-title">Banner & Ads</div>
+          <div class="design-card-desc">Social Media Banner, Web Ads und Hero-Grafiken — für jeden Kanal im richtigen Format.</div>
+          <span class="design-card-tag">Auf Anfrage</span>
+        </div>
+
+        <div class="design-card">
+          <div class="design-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>
+          </div>
+          <div class="design-card-title">Social Media Kit</div>
+          <div class="design-card-desc">Templates für Instagram, X und Discord — konsistent, editierbar, sofort einsetzbar.</div>
+          <span class="design-card-tag">Auf Anfrage</span>
+        </div>
+
+        <div class="design-card">
+          <div class="design-card-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="10.5" r="2.5"/><circle cx="8.5" cy="7.5" r="2.5"/><circle cx="6.5" cy="12.5" r="2.5"/><path d="M12 20a2 2 0 0 0 2-2v-1H10v1a2 2 0 0 0 2 2z"/><path d="M10 17H14"/></svg>
+          </div>
+          <div class="design-card-title">Brand Identity</div>
+          <div class="design-card-desc">Logo, Farben, Typografie, Guidelines — dein komplettes Branding in einem Paket.</div>
+          <span class="design-card-tag">Auf Anfrage</span>
+        </div>
+
+      </div>
+      <div style="text-align:center;margin-top:40px">
+        <a href="design.html" class="btn-primary">Design Services ansehen →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products" class="section">
+    <div class="container">
+      <div class="section-label-row">
+        <span class="dot"></span>
+        PRODUKTE
+      </div>
+      <div class="section-intro">
+        <h2 class="section-title">Gebaut von Flux Network.</h2>
+        <p class="section-sub">Neben Webdesign entwickeln wir eigene digitale Produkte und Plattformen.</p>
+      </div>
+      <div class="products-list">
+
+        <div class="product-card">
+          <div class="product-card-left">
+            <div class="product-icon"><img src="lumaspace-icon.png" alt="LumaSpace" class="product-logo-icon"/></div>
+            <div>
+              <h3 class="product-name">LumaSpace</h3>
+              <span class="product-status product-status--live">Live</span>
+            </div>
+          </div>
+          <p class="product-desc">Intelligente Produktivitäts- und Planungssysteme für Teams, Fokusarbeit und automatisierte Workflows. KI-gestützt, kollaborativ, schnell.</p>
+          <ul class="product-tags">
+            <li>AI Planning</li>
+            <li>Realtime Collaboration</li>
+            <li>Task Orchestration</li>
+            <li>Focus & Scheduling</li>
+          </ul>
+          <a href="https://lumaspace.de/" class="btn-primary" target="_blank" rel="noopener">Öffnen →</a>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-left">
+            <div class="product-icon"><img src="flowwave-icon.png" alt="FlowWave" class="product-logo-icon"/></div>
+            <div>
+              <h3 class="product-name">FlowWave</h3>
+              <span class="product-status product-status--dev">Open Beta</span>
+            </div>
+          </div>
+          <p class="product-desc">Visueller Discord-Bot-Builder auf Basis von pycord v2 — erstelle leistungsstarke Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten in Minuten einrichten.</p>
+          <ul class="product-tags">
+            <li>pycord v2</li>
+            <li>Slash Commands</li>
+            <li>Bot Builder</li>
+            <li>Visual Editor</li>
+          </ul>
+          <a href="https://flowwave.app" class="btn-primary" target="_blank" rel="noopener">Öffnen →</a>
+        </div>
+
+        <div class="product-card">
+          <div class="product-card-left">
+            <div class="product-icon"><img src="lyqdex-icon.PNG" alt="LyqDex" class="product-logo-icon"/></div>
+            <div>
+              <h3 class="product-name">LyqDex</h3>
+              <span class="product-status product-status--dev">In Entwicklung</span>
+            </div>
+          </div>
+          <p class="product-desc">Dezentrales Exchange-Protokoll mit Fokus auf Liquidität, Effizienz und Transparenz. Onchain-Infrastruktur für die nächste Generation von DeFi.</p>
+          <ul class="product-tags">
+            <li>Onchain DEX</li>
+            <li>Liquidity Pools</li>
+            <li>Streaming Transactions</li>
+            <li>DeFi Analytics</li>
+          </ul>
+          <a href="https://lyqdex.io" target="_blank" rel="noopener" class="btn-primary">Öffnen →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCORD PARTNER / LOGO CLOUD -->
+  <section class="logo-cloud-section">
+    <div class="container">
+      <p class="logo-cloud-label">Discord Partner & befreundete Server</p>
+      <div class="logo-cloud">
+
+        <a href="https://discord.gg/WV3GCj3CaU" class="logo-cloud-item" target="_blank" rel="noopener">
+          <img
+            src="https://cdn.discordapp.com/icons/1435694704116105350/775702c0577f7d3d5134c4138858cfdf.webp?size=64"
+            alt="Freunde finden in deiner Nähe - DACH"
+            class="logo-cloud-avatar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+          />
+          <span class="logo-cloud-avatar-fallback">F</span>
+          <span>Freunde finden DACH</span>
+        </a>
+
+        <a href="https://discord.gg/busbahnhof" class="logo-cloud-item" target="_blank" rel="noopener">
+          <img
+            src=""
+            alt="Busbahnhof"
+            class="logo-cloud-avatar"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+            id="busbahnhof-avatar"
+          />
+          <span class="logo-cloud-avatar-fallback" id="busbahnhof-fallback" style="background:#5865f2">B</span>
+          <span>Busbahnhof</span>
+        </a>
+
+        <a href="https://discord.gg/yqQutP6EKV" class="logo-cloud-item logo-cloud-item--add" target="_blank" rel="noopener">
+          <span class="logo-cloud-plus">+</span>
+          <span>Partner werden</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="container">
+      <div class="section-label-row">
+        <span class="dot dot--gelb"></span>
+        FAQ
+      </div>
+      <div class="section-intro">
+        <h2 class="section-title">Häufige Fragen</h2>
+        <p class="section-sub">Alles was du wissen musst — bevor du anfragst.</p>
+      </div>
+      <div class="faq-grid">
+
+        <details class="faq-item">
+          <summary>Was kostet eine Website bei euch?</summary>
+          <p>Das hängt vom Umfang ab. Die Pakete starten ab 400 € (Launch, 1 Seite) und gehen bis ab 1.500 € (Advanced, bis zu 9 Seiten). Bei individuellen Anforderungen erstellen wir dir ein maßgeschneidertes Angebot.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Wie lange dauert die Entwicklung?</summary>
+          <p>Beim Launch-Paket ca. 1 Woche, beim Advanced-Paket ca. 2 Wochen — je nach Komplexität und wie schnell Feedback kommt. Wir kommunizieren transparent über den Fortschritt.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Welche Technologien verwendet ihr?</summary>
+          <p>Wir bauen hauptsächlich mit Next.js, React, TypeScript, Tailwind CSS und shadcn/ui. Das Design läuft in Figma. Hosting läuft in der Regel über Vercel — schnell, zuverlässig, skalierbar.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Kann ich die Website nach dem Launch selbst bearbeiten?</summary>
+          <p>Ja. Wir geben dir eine vollständige Einweisung und können auf Wunsch ein einfaches CMS (z.B. Sanity oder Contentlayer) integrieren, sodass du Inhalte selbst pflegen kannst.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Was brauche ich, um anzufangen?</summary>
+          <p>Einfach auf Discord melden und kurz beschreiben was du dir vorstellst. Wir klären alles im Gespräch — du brauchst nichts weiter vorzubereiten.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Gibt es laufende Kosten?</summary>
+          <p>Für Hosting über Vercel gibt es einen großzügigen kostenlosen Plan, der für die meisten Projekte reicht. Bei größeren Anforderungen fallen kleine monatliche Kosten an — wir beraten dich dabei ehrlich.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Was passiert, wenn ich nach dem Launch etwas ändern will?</summary>
+          <p>Kleine Anpassungen machen wir gerne unkompliziert. Für größere Änderungen oder laufende Betreuung bieten wir individuelle Wartungsverträge an — sprich uns einfach an.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>Habt ihr auch eigene Produkte?</summary>
+          <p>Ja — neben Webdesign entwickeln wir unter dem Flux Network eigene digitale Produkte wie LumaSpace (KI-Produktivitätstool) und FlowWave (Discord-Bot-Builder). Mehr dazu weiter oben auf der Seite.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta section">
+    <div class="container">
+      <div class="cta-inner">
+        <div class="section-label-row">
+          <span class="dot dot--grün"></span>
+          BEREIT?
+        </div>
+        <h2>Lass uns deine Website bauen.</h2>
+        <p>Schreib uns auf Discord — kostenloses Erstgespräch, kein Verkaufsdruck, direkte Antworten.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:4px">
+          <a href="https://discord.gg/D9GwqWpwHT" class="btn-primary" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 71 55" fill="currentColor"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.7 37.7 0 0 0 25.5.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.7 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31 .3 43.7a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.6 5.3 24.1 5.3 35.5 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47.1 47.1 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1c1.5-15.2-2.5-28-10.6-39.7a.2.2 0 0 0-.1-.1ZM23.7 36.1c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.7 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
+            Discord joinen
+          </a>
+          <a href="#pakete" class="btn-ghost">Pakete ansehen</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo"><img src="logo.png" alt="Flux Network" class="logo-img"/></a>
+          <p class="footer-tagline">Professionelle Webseiten & digitale Produkte. Gebaut von Flux Network.</p>
+          <div class="footer-socials">
+            <a href="https://discord.gg/D9GwqWpwHT" target="_blank" rel="noopener" aria-label="Discord">
+              <svg viewBox="0 0 71 55" aria-hidden="true"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.5.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.7 37.7 0 0 0 25.5.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.7 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31 .3 43.7a.2.2 0 0 0 .1.1 58.8 58.8 0 0 0 17.7 9 .2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4l1.1-.8a.2.2 0 0 1 .2 0c11.6 5.3 24.1 5.3 35.5 0a.2.2 0 0 1 .2 0l1.1.8a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47.1 47.1 0 0 0 3.6 5.9.2.2 0 0 0 .2.1 58.6 58.6 0 0 0 17.8-9 .2.2 0 0 0 .1-.1c1.5-15.2-2.5-28-10.6-39.7a.2.2 0 0 0-.1-.1ZM23.7 36.1c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Zm23.7 0c-3.5 0-6.4-3.2-6.4-7.2s2.8-7.2 6.4-7.2c3.6 0 6.5 3.3 6.4 7.2 0 4-2.8 7.2-6.4 7.2Z"/></svg>
+            </a>
+            <a href="https://instagram.com/flux0.dev" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zM18.5 6a1.1 1.1 0 1 1-1.1 1.1A1.1 1.1 0 0 1 18.5 6z"/></svg>
+            </a>
+            <a href="https://twitter.com/flux0dev" target="_blank" rel="noopener" aria-label="X (Twitter)">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3h5.2l4.4 6.3L17.5 3H21l-7.7 10.5L21.5 21h-5.2l-4.8-6.8L6.5 21H3l7.9-10.6L3 3z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Services</div>
+          <ul class="footer-links">
+            <li><a href="#pakete">Webdesign</a></li>
+            <li><a href="design.html">Design Studio</a></li>
+            <li><a href="#prozess">Prozess</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Produkte</div>
+          <ul class="footer-links">
+            <li><a href="https://lumaspace.de/" target="_blank" rel="noopener">LumaSpace</a></li>
+            <li><a href="https://flowwave.app" target="_blank" rel="noopener">FlowWave</a></li>
+            <li><a href="https://lyqdex.io" target="_blank" rel="noopener">LyqDex</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <div class="footer-col-title">Links</div>
+          <ul class="footer-links">
+            <li><a href="community.html">Community</a></li>
+            <li><a href="docs.html">Dokumentation</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="impressum.html">Impressum</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 Flux Network · flux0.dev</span>
+        <span class="footer-powered">Powered by <strong>Flux Network</strong></span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    fetch('/api/me', { credentials: 'include' })
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (!data) return;
+        const loginBtn  = document.getElementById('nav-login-btn');
+        const userLink  = document.getElementById('nav-user-link');
+        const name = data.global_name || data.username || '?';
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (data.avatar) {
+          const img = document.createElement('img');
+          img.className = 'nav-user-avatar';
+          img.src = `https://cdn.discordapp.com/avatars/${data.id}/${data.avatar}.png?size=64`;
+          img.alt = name;
+          userLink.appendChild(img);
+        } else {
+          const ph = document.createElement('div');
+          ph.className = 'nav-user-placeholder';
+          ph.textContent = name[0].toUpperCase();
+          userLink.appendChild(ph);
+        }
+        userLink.style.display = 'flex';
+      })
+      .catch(() => {});
+  </script>
+
+  <div class="cookie-notice" id="cookie-notice" style="display:none">
+    <p>Wir verwenden Cookies, um die Webseite zu verbessern. Mehr in unserer <a href="/impressum.html">Datenschutzerklärung</a>.</p>
+    <div class="cookie-notice-actions">
+      <button class="cookie-accept" id="cookie-accept">Akzeptieren</button>
+      <button class="cookie-close" id="cookie-close">✕</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const tw = document.querySelector('.hero h1 .typewriter');
+      if (tw) {
+        const text = tw.textContent.trim();
+        tw.textContent = '';
+        let i = 0;
+        function type() {
+          if (i < text.length) { tw.textContent += text[i++]; setTimeout(type, 55); }
+          else { tw.classList.add('done'); }
+        }
+        setTimeout(type, 500);
+      }
+    })();
+    (function () {
+      const orbs = [
+        { el: document.querySelector('.aurora--1'), sx: 0.10, sy: 0.06, amp: 70, freq: 0.00045, phase: 0   },
+        { el: document.querySelector('.aurora--2'), sx: -0.08, sy: -0.05, amp: 55, freq: 0.00035, phase: 2.1 },
+        { el: document.querySelector('.aurora--3'), sx: 0.06, sy: 0.08,  amp: 45, freq: 0.00028, phase: 4.3 },
+      ];
+      function animateAurora(t) {
+        const sy = window.scrollY;
+        orbs.forEach(o => {
+          if (!o.el) return;
+          const dx = Math.sin(t * o.freq + o.phase) * o.amp;
+          const dy = Math.cos(t * o.freq * 0.65 + o.phase) * o.amp * 0.55;
+          o.el.style.transform = `translate(${dx + sy * o.sx}px, ${dy + sy * o.sy}px)`;
+        });
+        requestAnimationFrame(animateAurora);
+      }
+      requestAnimationFrame(animateAurora);
+    })();
+    (function () {
+      const card = document.querySelector('.wp-card');
+      if (!card) return;
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const dx = (e.clientX - r.left - r.width  / 2) / (r.width  / 2);
+        const dy = (e.clientY - r.top  - r.height / 2) / (r.height / 2);
+        card.style.transform = `perspective(900px) rotateX(${(-dy * 7).toFixed(2)}deg) rotateY(${(dx * 7).toFixed(2)}deg)`;
+        card.style.setProperty('--mx', ((e.clientX - r.left) / r.width  * 100).toFixed(1) + '%');
+        card.style.setProperty('--my', ((e.clientY - r.top)  / r.height * 100).toFixed(1) + '%');
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+      });
+    })();
+    (function () {
+      const revealSelectors = [
+        '.section-label-row',
+        '.section-intro',
+        '.feature-card',
+        '.paket-card',
+        '.prozess-step',
+        '.community-card',
+        '.logo-cloud-item',
+        '.faq-item',
+        '.design-preview-card',
+        '.mkt-card',
+        '.pakete-note',
+        '.tech-strip-label',
+        '.tech-strip-list',
+        '.cta-inner',
+      ];
+
+      const els = document.querySelectorAll(revealSelectors.join(','));
+      els.forEach(el => el.classList.add('reveal'));
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+          } else {
+            entry.target.classList.remove('in-view');
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+      els.forEach((el, i) => {
+        const siblings = el.parentElement ? [...el.parentElement.children].filter(c => c.classList.contains(el.classList[0])) : [];
+        const idx = siblings.indexOf(el);
+        if (idx > 0) el.style.transitionDelay = (idx * 0.08) + 's';
+        observer.observe(el);
+      });
+    })();
+  </script>
+
+  <script>
+    (function () {
+      if (!localStorage.getItem('flux0-cookies-accepted')) {
+        document.getElementById('cookie-notice').style.display = 'flex';
+      }
+      function accept() {
+        localStorage.setItem('flux0-cookies-accepted', '1');
+        document.getElementById('cookie-notice').style.display = 'none';
+      }
+      document.getElementById('cookie-accept').addEventListener('click', accept);
+      document.getElementById('cookie-close').addEventListener('click', accept);
+    })();
+  </script>
+
+</body>
+</html>
