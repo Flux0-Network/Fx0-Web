@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Dither from './Dither';
 
 export default function HeroSection() {
   const twRef = useRef<HTMLSpanElement>(null);
@@ -53,7 +54,19 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="hero">
+    <section className="hero" style={{ overflow: 'hidden' }}>
+      <div className="hero-dither-bg" aria-hidden="true">
+        <Dither
+          waveColor={[1, 1, 1]}
+          backgroundColor={[0, 0, 0]}
+          colorNum={2}
+          waveAmplitude={0.45}
+          waveFrequency={2}
+          waveSpeed={0.35}
+          enableMouseInteraction={true}
+          mouseRadius={0.3}
+        />
+      </div>
       <div className="container hero-layout">
         <div className="hero-text">
           <h1>
