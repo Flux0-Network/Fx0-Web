@@ -46,8 +46,9 @@ void main(){
   float w=0.0;
   for(int i=1;i<=4;i++){
     float f=float(i);
-    w+=sin(uv.x*waveFrequency*f*6.283+time*waveSpeed+f*1.047)*waveAmplitude/f;
-    w+=sin(uv.y*waveFrequency*f*4.712-time*waveSpeed*.8+f*.524)*waveAmplitude*.4/f;
+    w+=sin(uv.x*waveFrequency*f*3.14159+time*waveSpeed+f*1.047)*waveAmplitude/f;
+    w+=sin(uv.y*waveFrequency*f*2.35619-time*waveSpeed*.8+f*.524)*waveAmplitude*.6/f;
+    w+=sin((uv.x+uv.y)*waveFrequency*f*2.0+time*waveSpeed*.6)*waveAmplitude*.3/f;
   }
   w=w*.5+.5;
 
