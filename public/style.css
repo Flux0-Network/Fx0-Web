@@ -23,7 +23,7 @@
 
 html { scroll-behavior: smooth; }
 body {
-  font-family: var(--font-space, 'Space Grotesk', system-ui, sans-serif);
+  font-family: var(--font-space, 'Manrope', system-ui, sans-serif);
   background: #000000;
   color: var(--text);
   line-height: 1.6;
