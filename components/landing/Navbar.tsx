@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -11,9 +11,18 @@ interface MeData {
   global_name?: string;
 }
 
+const NAV_LINKS = [
+  { href: '#pakete',    label: 'Pakete' },
+  { href: '#prozess',   label: 'Prozess' },
+  { href: '#products',  label: 'Produkte' },
+  { href: '/community.html', label: 'Community' },
+];
+
 export default function Navbar() {
-  const [user, setUser] = useState<MeData | null>(null);
+  const [user, setUser]       = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/me', { credentials: 'include' })
@@ -22,56 +31,94 @@ export default function Navbar() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    function onClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener('mousedown', onClickOutside);
+    return () => document.removeEventListener('mousedown', onClickOutside);
+  }, [menuOpen]);
+
   const displayName = user ? (user.global_name || user.username) : null;
 
   return (
-    <nav className="navbar">
-      <div className="nav-inner">
-        <Link href="/" className="logo">
-          <Image src="/logo1.png" alt="Flux Network" className="logo-img" width={120} height={32} priority />
+    <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}`} aria-label="Navigation">
+      <div className="nav-pill" ref={menuRef}>
+        {/* Logo */}
+        <Link href="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+          <Image src="/logo1.png" alt="Flux Network" width={96} height={24} priority />
         </Link>
 
-        <ul className={`nav-links${menuOpen ? ' open' : ''}`}>
-          {[
-            { href: '#pakete', label: 'Pakete' },
-            { href: '#prozess', label: 'Prozess' },
-            { href: '/design.html', label: 'Design' },
-            { href: '#products', label: 'Produkte' },
-            { href: '/docs.html', label: 'Docs' },
-            { href: '/community.html', label: 'Community' },
-          ].map(link => (
+        {/* Desktop links */}
+        <ul className="nav-links" role="list">
+          {NAV_LINKS.map(link => (
             <li key={link.href}>
-              <a href={link.href} onClick={() => setMenuOpen(false)}>{link.label}</a>
+              <a href={link.href} className="nav-link">{link.label}</a>
             </li>
           ))}
         </ul>
 
-        <div className="nav-right">
+        {/* Right side */}
+        <div className="nav-end">
           {user ? (
-            <Link href="/dashboard" className="nav-user-link">
+            <Link href="/dashboard" className="nav-user-link" title={displayName ?? 'Dashboard'}>
               {user.avatar ? (
                 <Image
                   src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`}
                   alt={displayName ?? ''}
-                  width={32}
-                  height={32}
-                  className="nav-user-avatar"
+                  width={28}
+                  height={28}
+                  className="nav-avatar"
                 />
               ) : (
-                <div className="nav-user-placeholder">{displayName?.[0]?.toUpperCase() ?? '?'}</div>
+                <div className="nav-avatar-placeholder">{displayName?.[0]?.toUpperCase() ?? '?'}</div>
               )}
             </Link>
           ) : (
-            <Link href="/dashboard" className="btn-join">Login</Link>
+            <a href="https://discord.gg/D9GwqWpwHT" className="nav-cta" target="_blank" rel="noopener">
+              Angebot anfragen
+            </a>
           )}
+
+          {/* Hamburger */}
           <button
-            className="nav-toggle"
-            aria-label="Menü"
+            className={`nav-toggle${menuOpen ? ' nav-toggle--open' : ''}`}
+            aria-label="Menü öffnen"
+            aria-expanded={menuOpen}
             onClick={() => setMenuOpen(v => !v)}
           >
             <span /><span /><span />
           </button>
         </div>
+
+        {/* Mobile dropdown */}
+        {menuOpen && (
+          <div className="nav-mobile-menu">
+            {NAV_LINKS.map(link => (
+              <a key={link.href} href={link.href} className="nav-mobile-link" onClick={() => setMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+            <a
+              href="https://discord.gg/D9GwqWpwHT"
+              className="nav-mobile-cta"
+              target="_blank"
+              rel="noopener"
+              onClick={() => setMenuOpen(false)}
+            >
+              Angebot anfragen →
+            </a>
+          </div>
+        )}
       </div>
     </nav>
   );
