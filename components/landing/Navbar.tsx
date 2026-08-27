@@ -84,9 +84,12 @@ export default function Navbar() {
               )}
             </Link>
           ) : (
-            <a href="https://discord.gg/D9GwqWpwHT" className="nav-cta" target="_blank" rel="noopener">
-              Angebot anfragen
-            </a>
+            <>
+              <Link href="/dashboard" className="nav-login-link">Login</Link>
+              <a href="https://discord.gg/D9GwqWpwHT" className="nav-cta" target="_blank" rel="noopener">
+                Angebot anfragen
+              </a>
+            </>
           )}
 
           {/* Hamburger */}
@@ -96,7 +99,7 @@ export default function Navbar() {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(v => !v)}
           >
-            <span /><span /><span />
+            <span /><span />
           </button>
         </div>
 

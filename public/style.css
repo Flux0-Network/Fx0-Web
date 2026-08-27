@@ -177,11 +177,22 @@ body::after {
   flex-shrink: 0;
 }
 
+.nav-login-link {
+  text-decoration: none;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.84rem;
+  font-weight: 500;
+  padding: 6px 10px;
+  white-space: nowrap;
+  transition: color 0.15s;
+}
+.nav-login-link:hover { color: rgba(255,255,255,0.85); }
+
 .nav-toggle {
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 4.5px;
+  gap: 5px;
   background: none;
   border: none;
   cursor: pointer;
@@ -192,15 +203,14 @@ body::after {
 .nav-toggle:hover { background: rgba(255,255,255,0.08); }
 .nav-toggle span {
   display: block;
-  width: 18px; height: 1.5px;
-  background: rgba(255,255,255,0.7);
+  width: 22px; height: 2px;
+  background: rgba(255,255,255,0.85);
   border-radius: 2px;
   transition: transform 0.2s, opacity 0.2s;
   transform-origin: center;
 }
-.nav-toggle--open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
-.nav-toggle--open span:nth-child(2) { opacity: 0; }
-.nav-toggle--open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+.nav-toggle--open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle--open span:nth-child(2) { transform: translateY(-0px) rotate(-45deg); }
 
 .nav-mobile-menu {
   position: absolute;
@@ -2226,11 +2236,28 @@ kbd {
 @media (max-width: 640px) {
   .container { padding: 0 16px; }
 
-  /* navbar */
-  .navbar { top: 12px; width: calc(100% - 24px); }
+  /* navbar — flat full-width bar on mobile, like Framer */
+  .navbar {
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: none;
+    width: 100%;
+    max-width: none;
+  }
+  .nav-pill {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    height: 60px;
+    padding: 0 16px;
+    background: rgba(0, 0, 0, 0.88);
+  }
   .nav-links { display: none; }
-  .nav-cta  { display: none; }
   .nav-toggle { display: flex; }
+  .nav-login-link { font-size: 0.82rem; }
+  .nav-cta { font-size: 0.78rem; padding: 7px 13px; }
 
   /* hero */
   .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
