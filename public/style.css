@@ -349,7 +349,7 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.6;
+  opacity: 0.85;
 }
 .hero-dither-bg canvas {
   position: absolute !important;

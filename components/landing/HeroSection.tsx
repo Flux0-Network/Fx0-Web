@@ -57,10 +57,10 @@ export default function HeroSection() {
     <section className="hero" style={{ overflowX: 'hidden' }}>
       <div className="hero-dither-bg" aria-hidden="true">
         <Dither
-          waveColor={[0.5, 0.5, 0.5]}
-          colorNum={4}
+          waveColor={[0.85, 0.85, 0.85]}
+          colorNum={5}
           pixelSize={2}
-          waveAmplitude={0.3}
+          waveAmplitude={0.4}
           waveFrequency={3}
           waveSpeed={0.15}
           enableMouseInteraction={true}
