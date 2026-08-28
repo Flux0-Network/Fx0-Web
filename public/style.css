@@ -347,12 +347,13 @@ body::after {
 .hero .container { position: relative; z-index: 2; width: 100%; }
 .above-fold-wrapper {
   position: relative;
+  overflow: hidden;
 }
 .above-fold-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.38;
+  opacity: 0.55;
   pointer-events: none;
 }
 .above-fold-bg canvas,
