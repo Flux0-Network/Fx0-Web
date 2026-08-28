@@ -372,9 +372,10 @@ body::after {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  width: 100%;
 }
-.hero-text { display: flex; flex-direction: column; align-items: flex-start; }
-.hero-sub { text-align: left; }
+.hero-text { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
+.hero-sub { text-align: left; max-width: 560px; }
 
 /* Hero Visual — Terminal + Floating Cards */
 .hero-visual {
