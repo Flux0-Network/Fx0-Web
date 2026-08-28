@@ -58,11 +58,9 @@ export default function HeroSection() {
       <div className="hero-dither-bg" aria-hidden="true">
         <LiquidChrome
           baseColor={[0.1, 0.1, 0.1]}
-          speed={0.2}
-          amplitude={0.5}
-          frequencyX={3}
-          frequencyY={2}
-          interactive={true}
+          speed={0.3}
+          amplitude={0.3}
+          interactive
         />
       </div>
       <div className="container hero-layout">
