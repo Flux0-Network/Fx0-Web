@@ -58,8 +58,8 @@ export default function HeroSection() {
       <div className="hero-dither-bg" aria-hidden="true">
         <Dither
           waveColor={[0.5, 0.5, 0.5]}
-          backgroundColor={[0, 0, 0]}
           colorNum={4}
+          pixelSize={2}
           waveAmplitude={0.3}
           waveFrequency={3}
           waveSpeed={0.05}
