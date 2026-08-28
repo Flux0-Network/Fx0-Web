@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import Dither from './Dither';
+import LiquidChrome from './LiquidChrome';
 
 export default function HeroSection() {
   const twRef = useRef<HTMLSpanElement>(null);
@@ -54,17 +54,14 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="hero" style={{ overflow: 'hidden' }}>
+    <section className="hero" style={{ overflowX: 'hidden' }}>
       <div className="hero-dither-bg" aria-hidden="true">
-        <Dither
-          waveColor={[0.5, 0.5, 0.5]}
-          colorNum={4}
-          pixelSize={2}
-          waveAmplitude={0.3}
-          waveFrequency={3}
-          waveSpeed={0.15}
-          enableMouseInteraction={true}
-          mouseRadius={0.3}
+        <LiquidChrome
+          speed={0.3}
+          amplitude={0.5}
+          frequencyX={2.5}
+          frequencyY={2.5}
+          interactive={true}
         />
       </div>
       <div className="container hero-layout">

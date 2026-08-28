@@ -349,7 +349,7 @@ body::after {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 .hero-dither-bg canvas {
   position: absolute !important;
@@ -2274,7 +2274,7 @@ kbd {
   .hero-scroll-hint { display: flex; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
-  .hero h1 { letter-spacing: -0.025em; }
+  .hero h1 { font-size: clamp(1.6rem, 5.5vw, 2.4rem); letter-spacing: -0.025em; word-break: break-word; }
   .hero-sub { font-size: 0.9rem; }
 
   /* sections */
@@ -2348,7 +2348,7 @@ kbd {
 
 /* Small phones (≤ 400px) */
 @media (max-width: 400px) {
-  .hero h1 { font-size: 2.1rem; }
+  .hero h1 { font-size: clamp(1.4rem, 5vw, 1.8rem); }
   .hero-label { font-size: 0.6rem; }
   .product-icon { width: 40px; height: 40px; font-size: 1rem; }
   .docs-mobile-toggle span { display: none; }
