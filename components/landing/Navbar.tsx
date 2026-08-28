@@ -22,6 +22,7 @@ export default function Navbar() {
   const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,6 +36,13 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 700);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
   }, []);
 
   useEffect(() => {
@@ -103,7 +111,7 @@ export default function Navbar() {
         {/* Desktop links */}
         <ul
           style={{
-            display: 'flex',
+            display: isMobile ? 'none' : 'flex',
             listStyle: 'none',
             gap: '2px',
             flex: 1,
@@ -111,7 +119,6 @@ export default function Navbar() {
             margin: 0,
             padding: 0,
           }}
-          className="nav-desktop-links"
         >
           {NAV_LINKS.map(link => (
             <li key={link.href}>
@@ -163,13 +170,14 @@ export default function Navbar() {
             </Link>
           ) : (
             <>
-              <a
-                href="/dashboard"
-                className="nav-login-text"
-                style={{ textDecoration: 'none', color: 'rgba(255,255,255,0.45)', fontSize: '0.84rem', fontWeight: 500, whiteSpace: 'nowrap', padding: '4px 6px' }}
-              >
-                Login
-              </a>
+              {!isMobile && (
+                <a
+                  href="/dashboard"
+                  style={{ textDecoration: 'none', color: 'rgba(255,255,255,0.45)', fontSize: '0.84rem', fontWeight: 500, whiteSpace: 'nowrap', padding: '4px 6px' }}
+                >
+                  Login
+                </a>
+              )}
               <a
                 href="https://discord.gg/D9GwqWpwHT"
                 target="_blank"
@@ -180,15 +188,15 @@ export default function Navbar() {
                   textDecoration: 'none',
                   background: '#fff',
                   color: '#000',
-                  fontSize: '0.8rem',
+                  fontSize: isMobile ? '0.78rem' : '0.8rem',
                   fontWeight: 700,
-                  padding: '7px 14px',
+                  padding: isMobile ? '6px 11px' : '7px 14px',
                   borderRadius: '10px',
                   whiteSpace: 'nowrap',
                   letterSpacing: '-0.01em',
                 }}
               >
-                Angebot anfragen
+                {isMobile ? 'Anfragen' : 'Angebot anfragen'}
               </a>
             </>
           )}
