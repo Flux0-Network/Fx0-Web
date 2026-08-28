@@ -367,17 +367,15 @@ body::after {
   height: 100% !important;
 }
 
-/* Hero centered layout */
+/* Hero left layout */
 .hero-layout {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
-  max-width: 760px;
-  margin: 0 auto;
+  align-items: flex-start;
+  max-width: 680px;
 }
-.hero-text { display: flex; flex-direction: column; align-items: center; }
-.hero-sub { text-align: center; }
+.hero-text { display: flex; flex-direction: column; align-items: flex-start; }
+.hero-sub { text-align: left; }
 
 /* Hero Visual — Terminal + Floating Cards */
 .hero-visual {
