@@ -62,7 +62,7 @@ export default function HeroSection() {
           pixelSize={2}
           waveAmplitude={0.3}
           waveFrequency={3}
-          waveSpeed={0.05}
+          waveSpeed={0.15}
           enableMouseInteraction={true}
           mouseRadius={0.3}
         />

@@ -55,7 +55,14 @@ export default function Navbar() {
       <div className="nav-pill" ref={menuRef}>
         {/* Logo */}
         <Link href="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
-          <Image src="/logo1.png" alt="Flux Network" width={96} height={24} priority />
+          <Image
+            src="/logo1.png"
+            alt="Flux Network"
+            width={120}
+            height={32}
+            priority
+            style={{ height: '24px', width: 'auto', display: 'block' }}
+          />
         </Link>
 
         {/* Desktop links */}
