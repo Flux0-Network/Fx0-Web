@@ -637,17 +637,13 @@ body::after {
 
 .hero h1 {
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
-  font-size: clamp(3rem, 7.5vw, 5.8rem);
+  font-size: clamp(3.6rem, 9vw, 7rem);
   font-weight: 900;
-  line-height: 1.05;
+  line-height: 1.02;
   letter-spacing: -0.045em;
   margin-bottom: 20px;
-  background: linear-gradient(180deg, #ffffff 20%, #777777 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: #ffffff;
 }
-.hero h1 span { -webkit-text-fill-color: transparent; }
 
 .hero-sub {
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
@@ -2344,7 +2340,7 @@ kbd {
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
-  .hero h1 { font-size: clamp(2.1rem, 7vw, 3rem); letter-spacing: -0.03em; word-break: break-word; }
+  .hero h1 { font-size: clamp(2.6rem, 9vw, 3.6rem); letter-spacing: -0.03em; word-break: break-word; }
   .hero-sub { font-size: 1rem; text-align: center; }
   .hero-text { text-align: center; align-items: center; }
   .hero-ctas { justify-content: center; }
@@ -2420,7 +2416,7 @@ kbd {
 
 /* Small phones (≤ 400px) */
 @media (max-width: 400px) {
-  .hero h1 { font-size: clamp(1.85rem, 6.5vw, 2.4rem); }
+  .hero h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
   .hero-label { font-size: 0.6rem; }
   .product-icon { width: 40px; height: 40px; font-size: 1rem; }
   .docs-mobile-toggle span { display: none; }
