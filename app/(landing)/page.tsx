@@ -165,11 +165,15 @@ const TECH_ITEMS = [
 function TechStrip() {
   return (
     <section className="tech-strip">
-      <div className="container">
-        <p className="tech-strip-label">Womit wir bauen</p>
-        <div className="tech-strip-list">
-          {TECH_ITEMS.map(t => (
-            <span key={t.label} className="tech-item">
+      <p className="tech-strip-label">Womit wir bauen</p>
+      <div className="tech-strip-track-wrapper">
+        <div className="tech-strip-track">
+          {[...TECH_ITEMS, ...TECH_ITEMS].map((t, i) => (
+            <span
+              key={i}
+              className="tech-item"
+              aria-hidden={i >= TECH_ITEMS.length ? true : undefined}
+            >
               {t.icon}
               {t.label}
             </span>

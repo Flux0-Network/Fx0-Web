@@ -1768,7 +1768,8 @@ kbd {
 
 /* ── TECH STRIP ── */
 .tech-strip {
-  padding: 32px 0 40px;
+  padding: 40px 0 48px;
+  overflow: hidden;
 }
 .tech-strip-label {
   font-size: 0.72rem;
@@ -1776,24 +1777,55 @@ kbd {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--dim);
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  text-align: center;
 }
-.tech-strip-list {
+.tech-strip-track-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.tech-strip-track-wrapper::before,
+.tech-strip-track-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  z-index: 2;
+  pointer-events: none;
+}
+.tech-strip-track-wrapper::before {
+  left: 0;
+  background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
+}
+.tech-strip-track-wrapper::after {
+  right: 0;
+  background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
+}
+.tech-strip-track {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 0;
+  width: max-content;
+  animation: tech-marquee 28s linear infinite;
+}
+.tech-strip-track:hover { animation-play-state: paused; }
+@keyframes tech-marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 .tech-item {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  padding: 6px 14px;
-  border-radius: 99px;
-  background: var(--surface);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--muted);
+  gap: 8px;
+  padding: 0 28px;
+  height: 44px;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+  white-space: nowrap;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
 }
+.tech-item svg { opacity: 0.8; }
 
 /* ── PAKETE ── */
 .paket-individuell-wrap {
