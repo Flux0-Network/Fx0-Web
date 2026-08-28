@@ -525,14 +525,14 @@ body::after {
 
 /* Scroll hint (mobile, under CTAs) */
 .hero-scroll-hint {
-  display: none;
+  display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  margin-top: 28px;
   color: rgba(255,255,255,0.3);
   font-size: 0.8rem;
   text-decoration: none;
-  width: fit-content;
+  width: 100%;
   animation: hint-bounce 2s ease-in-out infinite;
 }
 @keyframes hint-bounce {
@@ -1792,23 +1792,6 @@ kbd {
   position: relative;
   overflow: hidden;
 }
-.tech-strip-track-wrapper::before,
-.tech-strip-track-wrapper::after {
-  content: '';
-  position: absolute;
-  top: 0; bottom: 0;
-  width: 120px;
-  z-index: 2;
-  pointer-events: none;
-}
-.tech-strip-track-wrapper::before {
-  left: 0;
-  background: linear-gradient(to right, var(--bg) 0%, transparent 100%);
-}
-.tech-strip-track-wrapper::after {
-  right: 0;
-  background: linear-gradient(to left, var(--bg) 0%, transparent 100%);
-}
 .tech-strip-track {
   display: flex;
   gap: 0;
@@ -2311,7 +2294,6 @@ kbd {
   .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
-  .hero-scroll-hint { display: flex; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { font-size: clamp(1.6rem, 5.5vw, 2.4rem); letter-spacing: -0.025em; word-break: break-word; }
