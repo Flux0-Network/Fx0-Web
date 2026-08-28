@@ -57,10 +57,11 @@ export default function HeroSection() {
     <section className="hero" style={{ overflowX: 'hidden' }}>
       <div className="hero-dither-bg" aria-hidden="true">
         <LiquidChrome
-          speed={0.3}
+          baseColor={[0.1, 0.1, 0.1]}
+          speed={0.2}
           amplitude={0.5}
-          frequencyX={2.5}
-          frequencyY={2.5}
+          frequencyX={3}
+          frequencyY={2}
           interactive={true}
         />
       </div>

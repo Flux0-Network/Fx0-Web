@@ -18,6 +18,7 @@
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.5",
     "next": "^16.3.3",
+    "ogl": "^1.0.11",
     "postcss": "^8.5.26",
     "postprocessing": "^6.39.4",
     "react": "^19.2.8",
