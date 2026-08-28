@@ -2244,20 +2244,28 @@ kbd {
     transform: none;
     width: 100%;
     max-width: none;
+    pointer-events: all;
   }
   .nav-pill {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
     border-radius: 0;
     border-left: none;
     border-right: none;
     border-top: none;
     height: 60px;
     padding: 0 16px;
-    background: rgba(0, 0, 0, 0.88);
+    background: rgba(0, 0, 0, 0.92);
+    gap: 0;
   }
+  .nav-logo { margin-right: auto; }
   .nav-links { display: none; }
+  .nav-end { gap: 10px; margin-left: 0; }
   .nav-toggle { display: flex; }
-  .nav-login-link { font-size: 0.82rem; }
-  .nav-cta { font-size: 0.78rem; padding: 7px 13px; }
+  .nav-login-link { font-size: 0.82rem; padding: 6px 8px; }
+  .nav-cta { font-size: 0.78rem; padding: 7px 12px; }
 
   /* hero */
   .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
