@@ -16,6 +16,7 @@ const NAV_LINKS = [
   { href: '#prozess',        label: 'Prozess' },
   { href: '#products',       label: 'Produkte' },
   { href: '/community.html', label: 'Community' },
+  { href: '/docs',           label: 'Docs' },
 ];
 
 export default function Navbar() {
@@ -169,36 +170,24 @@ export default function Navbar() {
               )}
             </Link>
           ) : (
-            <>
-              {!isMobile && (
-                <a
-                  href="/dashboard"
-                  style={{ textDecoration: 'none', color: 'rgba(255,255,255,0.45)', fontSize: '0.84rem', fontWeight: 500, whiteSpace: 'nowrap', padding: '4px 6px' }}
-                >
-                  Login
-                </a>
-              )}
-              <a
-                href="https://discord.gg/D9GwqWpwHT"
-                target="_blank"
-                rel="noopener"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  textDecoration: 'none',
-                  background: '#fff',
-                  color: '#000',
-                  fontSize: isMobile ? '0.78rem' : '0.8rem',
-                  fontWeight: 700,
-                  padding: isMobile ? '6px 11px' : '7px 14px',
-                  borderRadius: '10px',
-                  whiteSpace: 'nowrap',
-                  letterSpacing: '-0.01em',
-                }}
-              >
-                {isMobile ? 'Anfragen' : 'Angebot anfragen'}
-              </a>
-            </>
+            <a
+              href="/dashboard"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                textDecoration: 'none',
+                background: '#fff',
+                color: '#000',
+                fontSize: '0.8rem',
+                fontWeight: 700,
+                padding: isMobile ? '6px 11px' : '7px 14px',
+                borderRadius: '10px',
+                whiteSpace: 'nowrap',
+                letterSpacing: '-0.01em',
+              }}
+            >
+              Login
+            </a>
           )}
 
           {/* Hamburger */}
@@ -278,9 +267,7 @@ export default function Navbar() {
               </a>
             ))}
             <a
-              href="https://discord.gg/D9GwqWpwHT"
-              target="_blank"
-              rel="noopener"
+              href="/dashboard"
               onClick={() => setMenuOpen(false)}
               style={{
                 display: 'block',
@@ -295,7 +282,7 @@ export default function Navbar() {
                 marginTop: '6px',
               }}
             >
-              Angebot anfragen →
+              Login
             </a>
           </div>
         )}
