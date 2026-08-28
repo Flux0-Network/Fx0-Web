@@ -12,14 +12,14 @@ interface MeData {
 }
 
 const NAV_LINKS = [
-  { href: '#pakete',    label: 'Pakete' },
-  { href: '#prozess',   label: 'Prozess' },
-  { href: '#products',  label: 'Produkte' },
+  { href: '#pakete',         label: 'Pakete' },
+  { href: '#prozess',        label: 'Prozess' },
+  { href: '#products',       label: 'Produkte' },
   { href: '/community.html', label: 'Community' },
 ];
 
 export default function Navbar() {
-  const [user, setUser]       = useState<MeData | null>(null);
+  const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -39,61 +39,155 @@ export default function Navbar() {
 
   useEffect(() => {
     if (!menuOpen) return;
-    function onClickOutside(e: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+    function onOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node))
         setMenuOpen(false);
-      }
     }
-    document.addEventListener('mousedown', onClickOutside);
-    return () => document.removeEventListener('mousedown', onClickOutside);
+    document.addEventListener('mousedown', onOutside);
+    return () => document.removeEventListener('mousedown', onOutside);
   }, [menuOpen]);
 
   const displayName = user ? (user.global_name || user.username) : null;
 
   return (
-    <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}`} aria-label="Navigation">
-      <div className="nav-pill" ref={menuRef}>
+    <nav
+      style={{
+        position: 'fixed',
+        top: '16px',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: 'calc(100% - 32px)',
+        maxWidth: '860px',
+        zIndex: 100,
+      }}
+      aria-label="Navigation"
+    >
+      <div
+        ref={menuRef}
+        style={{
+          position: 'relative',
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          flexWrap: 'nowrap',
+          height: '52px',
+          padding: '0 8px 0 16px',
+          background: scrolled
+            ? 'rgba(8, 8, 8, 0.92)'
+            : 'rgba(12, 12, 12, 0.76)',
+          border: '1px solid rgba(255,255,255,0.09)',
+          borderRadius: '16px',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+          boxShadow: '0 2px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05)',
+          transition: 'background 0.3s',
+          gap: '4px',
+        }}
+      >
         {/* Logo */}
-        <Link href="/" className="nav-logo" onClick={() => setMenuOpen(false)}>
+        <Link
+          href="/"
+          onClick={() => setMenuOpen(false)}
+          style={{ display: 'flex', alignItems: 'center', flexShrink: 0, textDecoration: 'none', marginRight: '8px' }}
+        >
           <Image
             src="/logo1.png"
             alt="Flux Network"
             width={120}
             height={32}
             priority
-            style={{ height: '24px', width: 'auto', display: 'block' }}
+            style={{ height: '22px', width: 'auto', display: 'block' }}
           />
         </Link>
 
         {/* Desktop links */}
-        <ul className="nav-links" role="list">
+        <ul
+          style={{
+            display: 'flex',
+            listStyle: 'none',
+            gap: '2px',
+            flex: 1,
+            justifyContent: 'center',
+            margin: 0,
+            padding: 0,
+          }}
+          className="nav-desktop-links"
+        >
           {NAV_LINKS.map(link => (
             <li key={link.href}>
-              <a href={link.href} className="nav-link">{link.label}</a>
+              <a
+                href={link.href}
+                style={{
+                  textDecoration: 'none',
+                  color: 'rgba(255,255,255,0.55)',
+                  fontSize: '0.84rem',
+                  fontWeight: 500,
+                  padding: '6px 12px',
+                  borderRadius: '10px',
+                  display: 'block',
+                  transition: 'color 0.15s, background 0.15s',
+                  whiteSpace: 'nowrap',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.95)';
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.07)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.55)';
+                  (e.currentTarget as HTMLElement).style.background = 'transparent';
+                }}
+              >
+                {link.label}
+              </a>
             </li>
           ))}
         </ul>
 
         {/* Right side */}
-        <div className="nav-end">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: 'auto' }}>
           {user ? (
-            <Link href="/dashboard" className="nav-user-link" title={displayName ?? 'Dashboard'}>
+            <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
               {user.avatar ? (
                 <Image
                   src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`}
                   alt={displayName ?? ''}
                   width={28}
                   height={28}
-                  className="nav-avatar"
+                  style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover', border: '1.5px solid rgba(255,255,255,0.2)', display: 'block' }}
                 />
               ) : (
-                <div className="nav-avatar-placeholder">{displayName?.[0]?.toUpperCase() ?? '?'}</div>
+                <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#fff', color: '#000', fontSize: '0.75rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  {displayName?.[0]?.toUpperCase() ?? '?'}
+                </div>
               )}
             </Link>
           ) : (
             <>
-              <Link href="/dashboard" className="nav-login-link">Login</Link>
-              <a href="https://discord.gg/D9GwqWpwHT" className="nav-cta" target="_blank" rel="noopener">
+              <a
+                href="/dashboard"
+                className="nav-login-text"
+                style={{ textDecoration: 'none', color: 'rgba(255,255,255,0.45)', fontSize: '0.84rem', fontWeight: 500, whiteSpace: 'nowrap', padding: '4px 6px' }}
+              >
+                Login
+              </a>
+              <a
+                href="https://discord.gg/D9GwqWpwHT"
+                target="_blank"
+                rel="noopener"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  textDecoration: 'none',
+                  background: '#fff',
+                  color: '#000',
+                  fontSize: '0.8rem',
+                  fontWeight: 700,
+                  padding: '7px 14px',
+                  borderRadius: '10px',
+                  whiteSpace: 'nowrap',
+                  letterSpacing: '-0.01em',
+                }}
+              >
                 Angebot anfragen
               </a>
             </>
@@ -101,29 +195,97 @@ export default function Navbar() {
 
           {/* Hamburger */}
           <button
-            className={`nav-toggle${menuOpen ? ' nav-toggle--open' : ''}`}
-            aria-label="Menü öffnen"
+            aria-label="Menü"
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(v => !v)}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              gap: '5px',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '6px',
+              borderRadius: '8px',
+              flexShrink: 0,
+            }}
+            className="nav-hamburger"
           >
-            <span /><span />
+            <span style={{
+              display: 'block', width: '18px', height: '1.5px',
+              background: 'rgba(255,255,255,0.8)', borderRadius: '2px',
+              transform: menuOpen ? 'translateY(6.5px) rotate(45deg)' : 'none',
+              transition: 'transform 0.2s',
+            }} />
+            <span style={{
+              display: 'block', width: '18px', height: '1.5px',
+              background: 'rgba(255,255,255,0.8)', borderRadius: '2px',
+              opacity: menuOpen ? 0 : 1,
+              transition: 'opacity 0.2s',
+            }} />
+            <span style={{
+              display: 'block', width: '18px', height: '1.5px',
+              background: 'rgba(255,255,255,0.8)', borderRadius: '2px',
+              transform: menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
+              transition: 'transform 0.2s',
+            }} />
           </button>
         </div>
 
         {/* Mobile dropdown */}
         {menuOpen && (
-          <div className="nav-mobile-menu">
+          <div style={{
+            position: 'absolute',
+            top: 'calc(100% + 10px)',
+            left: 0, right: 0,
+            background: 'rgba(8, 8, 8, 0.96)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            borderRadius: '14px',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            padding: '8px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '2px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            animation: 'navMenuIn 0.15s ease',
+          }}>
             {NAV_LINKS.map(link => (
-              <a key={link.href} href={link.href} className="nav-mobile-link" onClick={() => setMenuOpen(false)}>
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  textDecoration: 'none',
+                  color: 'rgba(255,255,255,0.65)',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  transition: 'color 0.15s, background 0.15s',
+                }}
+              >
                 {link.label}
               </a>
             ))}
             <a
               href="https://discord.gg/D9GwqWpwHT"
-              className="nav-mobile-cta"
               target="_blank"
               rel="noopener"
               onClick={() => setMenuOpen(false)}
+              style={{
+                display: 'block',
+                textDecoration: 'none',
+                textAlign: 'center',
+                background: '#fff',
+                color: '#000',
+                fontSize: '0.875rem',
+                fontWeight: 700,
+                padding: '11px 14px',
+                borderRadius: '10px',
+                marginTop: '6px',
+              }}
             >
               Angebot anfragen →
             </a>
