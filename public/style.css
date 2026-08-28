@@ -349,7 +349,7 @@ body::after {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 220px;
+  height: 360px;
   background: linear-gradient(to bottom, transparent 0%, #000000 100%);
   pointer-events: none;
   z-index: 2;
@@ -666,6 +666,7 @@ body::after {
   letter-spacing: -0.045em;
   margin-bottom: 20px;
   color: #ffffff;
+  text-shadow: 0 0 40px rgba(0,0,0,0.95), 0 2px 12px rgba(0,0,0,0.9);
 }
 
 .hero-sub {
@@ -675,6 +676,7 @@ body::after {
   font-size: 1.05rem;
   line-height: 1.75;
   margin-bottom: 36px;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
 }
 .hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
 
