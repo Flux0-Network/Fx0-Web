@@ -176,14 +176,15 @@ export default function Navbar() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 textDecoration: 'none',
-                background: '#fff',
-                color: '#000',
+                background: 'transparent',
+                color: '#ffffff',
                 fontSize: '0.8rem',
                 fontWeight: 700,
                 padding: isMobile ? '6px 11px' : '7px 14px',
                 borderRadius: '10px',
                 whiteSpace: 'nowrap',
                 letterSpacing: '-0.01em',
+                border: '1px solid rgba(255,255,255,0.35)',
               }}
             >
               Login
@@ -273,13 +274,14 @@ export default function Navbar() {
                 display: 'block',
                 textDecoration: 'none',
                 textAlign: 'center',
-                background: '#fff',
-                color: '#000',
+                background: 'transparent',
+                color: '#ffffff',
                 fontSize: '0.875rem',
                 fontWeight: 700,
                 padding: '11px 14px',
                 borderRadius: '10px',
                 marginTop: '6px',
+                border: '1px solid rgba(255,255,255,0.35)',
               }}
             >
               Login

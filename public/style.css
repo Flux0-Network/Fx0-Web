@@ -265,18 +265,21 @@ body::after {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #ffffff;
-  color: #000000;
+  background: transparent;
+  color: #ffffff;
   padding: 10px 20px;
   border-radius: var(--radius);
   font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
-  transition: background 0.15s, opacity 0.15s;
-  border: none;
+  transition: background 0.18s, border-color 0.18s;
+  border: 1px solid rgba(255,255,255,0.35);
   cursor: pointer;
 }
-.btn-primary:hover { background: #e4e4e4; }
+.btn-primary:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.65);
+}
 
 .btn-outline-white {
   display: inline-flex;
