@@ -78,11 +78,12 @@ export default function ParticlesOcean({ style, ...props }: Props) {
     const mesh = new Mesh(gl, { geometry, program, mode: gl.POINTS });
 
     function resize() {
+      if (!container) return;
       renderer.setSize(container.offsetWidth, container.offsetHeight);
     }
     window.addEventListener('resize', resize);
     resize();
-    container.appendChild(gl.canvas);
+    container!.appendChild(gl.canvas);
 
     let raf: number;
     function tick(t: number) {
