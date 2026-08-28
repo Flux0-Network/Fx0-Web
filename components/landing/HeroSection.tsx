@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import LiquidChrome from './LiquidChrome';
 
 export default function HeroSection() {
   const twRef = useRef<HTMLSpanElement>(null);
@@ -55,15 +54,7 @@ export default function HeroSection() {
 
   return (
     <section className="hero" style={{ overflowX: 'hidden' }}>
-      <div className="hero-dither-bg" aria-hidden="true">
-        <LiquidChrome
-          baseColor={[0.1, 0.1, 0.1]}
-          speed={0.3}
-          amplitude={0.3}
-          interactive
-        />
-      </div>
-      <div className="container hero-layout">
+<div className="container hero-layout">
         <div className="hero-text">
           <h1>
             Deine Website.<br />

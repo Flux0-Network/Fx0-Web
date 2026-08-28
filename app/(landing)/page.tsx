@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
+import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 
@@ -32,8 +33,11 @@ export default function LandingPage() {
     <>
       <ScrollReveal />
       <Navbar />
-      <HeroSection />
-      <TechStrip />
+      <div className="above-fold-wrapper">
+        <AboveFoldBg />
+        <HeroSection />
+        <TechStrip />
+      </div>
       <PaketeSection />
       <ProzessSection />
       <ReferenzenSection />

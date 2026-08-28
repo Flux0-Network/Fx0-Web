@@ -345,13 +345,17 @@ body::after {
 }
 .hero { position: relative; z-index: 1; }
 .hero .container { position: relative; z-index: 2; width: 100%; }
-.hero-dither-bg {
+.above-fold-wrapper {
+  position: relative;
+}
+.above-fold-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
   opacity: 0.38;
   pointer-events: none;
 }
+.above-fold-bg canvas,
 .hero-dither-bg canvas,
 .liquidChrome-container canvas {
   position: absolute !important;
@@ -359,12 +363,12 @@ body::after {
   width: 100% !important;
   height: 100% !important;
 }
-.hero::after {
+.above-fold-wrapper::after {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: radial-gradient(ellipse 80% 60% at 30% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+  background: radial-gradient(ellipse 80% 60% at 30% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 100%);
   pointer-events: none;
 }
 
@@ -1779,6 +1783,8 @@ kbd {
 .tech-strip {
   padding: 40px 0 48px;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
 }
 .tech-strip-label {
   font-size: 0.72rem;
