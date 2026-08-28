@@ -22,7 +22,7 @@ export default function Navbar() {
   const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

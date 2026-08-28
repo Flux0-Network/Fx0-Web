@@ -344,12 +344,13 @@ body::after {
   position: relative;
 }
 .hero { position: relative; z-index: 1; }
-.hero .container { position: relative; z-index: 1; width: 100%; }
+.hero .container { position: relative; z-index: 2; width: 100%; }
 .hero-dither-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.7;
+  opacity: 0.38;
+  pointer-events: none;
 }
 .hero-dither-bg canvas,
 .liquidChrome-container canvas {
@@ -357,6 +358,14 @@ body::after {
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(ellipse 80% 60% at 30% 50%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.55) 100%);
+  pointer-events: none;
 }
 
 /* Hero 2-column layout */
