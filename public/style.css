@@ -657,7 +657,53 @@ body::after {
   line-height: 1.75;
   margin-bottom: 36px;
 }
-.hero-ctas { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+/* ── GLASS BUTTONS (hero only) ── */
+.btn-glass {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  padding: 11px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.18s, border-color 0.18s;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.btn-glass:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.42);
+}
+.btn-glass-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 11px 18px;
+  border-radius: 12px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: background 0.18s, color 0.18s, border-color 0.18s;
+  white-space: nowrap;
+}
+.btn-glass-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.28);
+}
 
 /* ── FEATURES ── */
 .features-grid {
@@ -2298,8 +2344,10 @@ kbd {
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
-  .hero h1 { font-size: clamp(1.8rem, 6vw, 2.6rem); letter-spacing: -0.03em; word-break: break-word; }
-  .hero-sub { font-size: 0.95rem; }
+  .hero h1 { font-size: clamp(2.1rem, 7vw, 3rem); letter-spacing: -0.03em; word-break: break-word; }
+  .hero-sub { font-size: 1rem; text-align: center; }
+  .hero-text { text-align: center; align-items: center; }
+  .hero-ctas { justify-content: center; }
 
   /* sections */
   .section { padding: 56px 0; }
@@ -2372,7 +2420,7 @@ kbd {
 
 /* Small phones (≤ 400px) */
 @media (max-width: 400px) {
-  .hero h1 { font-size: clamp(1.6rem, 5.5vw, 2rem); }
+  .hero h1 { font-size: clamp(1.85rem, 6.5vw, 2.4rem); }
   .hero-label { font-size: 0.6rem; }
   .product-icon { width: 40px; height: 40px; font-size: 1rem; }
   .docs-mobile-toggle span { display: none; }
