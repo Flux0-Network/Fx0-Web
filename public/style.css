@@ -500,12 +500,19 @@ body::after {
 
 /* Hero h1 sehr subtiler Glow */
 /* Typewriter */
-.typewriter { color: #ffffff; -webkit-text-fill-color: #ffffff; }
-.typewriter::after {
+.hero h1 .typewriter {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: none !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+}
+.hero h1 .typewriter::after {
   content: '|';
   display: inline-block;
   margin-left: 1px;
-  -webkit-text-fill-color: rgba(255,255,255,0.6);
+  color: rgba(255,255,255,0.5);
+  -webkit-text-fill-color: rgba(255,255,255,0.5);
   animation: tw-blink 0.65s step-end infinite;
 }
 .typewriter.done::after { display: none; }
