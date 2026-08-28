@@ -649,7 +649,7 @@ body::after {
 
 .hero h1 {
   font-family: var(--font-inter, 'Inter', system-ui, sans-serif);
-  font-size: clamp(3.6rem, 9vw, 7rem);
+  font-size: clamp(2.8rem, 5.5vw, 5rem);
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: -0.045em;
