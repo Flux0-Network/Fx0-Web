@@ -57,14 +57,14 @@ export default function HeroSection() {
     <section className="hero" style={{ overflow: 'hidden' }}>
       <div className="hero-dither-bg" aria-hidden="true">
         <Dither
-          waveColor={[1, 1, 1]}
+          waveColor={[0.5, 0.5, 0.5]}
           backgroundColor={[0, 0, 0]}
           colorNum={4}
           waveAmplitude={0.3}
-          waveFrequency={1.2}
-          waveSpeed={0.25}
+          waveFrequency={3}
+          waveSpeed={0.05}
           enableMouseInteraction={true}
-          mouseRadius={0.35}
+          mouseRadius={0.3}
         />
       </div>
       <div className="container hero-layout">
