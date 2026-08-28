@@ -12,11 +12,7 @@ interface MeData {
 }
 
 const NAV_LINKS = [
-  { href: '#pakete',         label: 'Pakete' },
-  { href: '#prozess',        label: 'Prozess' },
-  { href: '#products',       label: 'Produkte' },
-  { href: '/community.html', label: 'Community' },
-  { href: '/docs',           label: 'Docs' },
+  { href: '/docs', label: 'Docs' },
 ];
 
 export default function Navbar() {
@@ -112,7 +108,7 @@ export default function Navbar() {
         {/* Desktop links */}
         <ul
           style={{
-            display: isMobile ? 'none' : 'flex',
+            display: 'flex',
             listStyle: 'none',
             gap: '2px',
             flex: 1,
