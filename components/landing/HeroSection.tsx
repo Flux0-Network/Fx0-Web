@@ -64,10 +64,10 @@ export default function HeroSection() {
             Wir bauen moderne Webseiten für Unternehmen, Freelancer und Projekte — von der ersten Idee bis zum Launch. Schnell, sauber, auf den Punkt.
           </p>
           <div className="hero-ctas">
-            <a href="https://discord.gg/D9GwqWpwHT" className="btn-glass" target="_blank" rel="noopener">
+            <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
               Angebot anfragen →
             </a>
-            <a href="#pakete" className="btn-glass-outline">Pakete ansehen</a>
+            <a href="#pakete" className="btn-ghost">Pakete ansehen</a>
           </div>
         </div>
 

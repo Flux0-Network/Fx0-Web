@@ -496,7 +496,8 @@ body::after {
 /* ── TEXT EFFECTS ── */
 
 /* Hero h1 sehr subtiler Glow */
-/* Typewriter cursor */
+/* Typewriter */
+.typewriter { color: #ffffff; -webkit-text-fill-color: #ffffff; }
 .typewriter::after {
   content: '|';
   display: inline-block;
