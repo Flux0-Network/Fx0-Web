@@ -34,7 +34,7 @@ export default function HeroSection() {
             <span ref={twRef} className="typewriter">Tools. Produkte. Indikatoren.</span>
           </h1>
           <p className="hero-sub">
-            Wir bauen digitale Produkte, Developer-Frameworks und Trading-Tools — von der Idee bis zum Launch.
+            Software, die bleibt. Produkte, Frameworks und Indikatoren — gebaut von Entwicklern, für Entwickler.
           </p>
           <div className="hero-ctas">
             <a href="#products" className="btn-primary">

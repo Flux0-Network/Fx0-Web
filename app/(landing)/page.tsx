@@ -63,7 +63,7 @@ function Vex0Section() {
             </div>
             <h2 className="section-title">Copy.<br />Paste.<br />Done.</h2>
             <p className="section-sub">
-              Vex0 ist unser Open-Source Component Framework — ähnlich wie shadcn/ui, aber von Flux Network. Komponenten, die du direkt in dein Projekt kopierst und anpasst. Kein Lock-in, kein Overhead.
+              Das Open-Source Component Framework von Flux Network. Komponenten kopieren, einfügen, fertig — kein Wrapper, kein Lock-in. Dein Code, deine Regeln.
             </p>
             <a href="/docs" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
               Docs ansehen →
@@ -110,7 +110,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          Visuell designen, im Code arbeiten, Komponenten aus Radix UI & shadcn/ui importieren — alles in einem Tool.
+          Der Website-Builder, der Code versteht. Jede Library importierbar — visuell designen, im Code verfeinern.
         </p>
         <a
           href="https://vylder.dev"
@@ -131,7 +131,7 @@ const PRODUCTS = [
     name: 'LumaSpace',
     status: 'Live',
     statusClass: 'product-status--live',
-    desc: 'Intelligente Produktivitäts- und Planungssysteme für Teams, Fokusarbeit und automatisierte Workflows. KI-gestützt, kollaborativ, schnell.',
+    desc: 'KI-gestützte Produktivitätssysteme für Teams und Solo-Worker. Planung, Fokusarbeit und automatisierte Workflows — in einer Plattform.',
     tags: ['AI Planning', 'Realtime Collaboration', 'Task Orchestration', 'Focus & Scheduling'],
     href: 'https://lumaspace.de/',
   },
@@ -140,7 +140,7 @@ const PRODUCTS = [
     name: 'FlowWave',
     status: 'Open Beta',
     statusClass: 'product-status--dev',
-    desc: 'Visueller Discord-Bot-Builder auf Basis von pycord v2 — erstelle leistungsstarke Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten in Minuten einrichten.',
+    desc: 'Discord-Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.',
     tags: ['pycord v2', 'Slash Commands', 'Bot Builder', 'Visual Editor'],
     href: 'https://flowwave.app',
   },
@@ -149,7 +149,7 @@ const PRODUCTS = [
     name: 'LyqDex',
     status: 'In Entwicklung',
     statusClass: 'product-status--dev',
-    desc: 'Dezentrales Exchange-Protokoll mit Fokus auf Liquidität, Effizienz und Transparenz. Onchain-Infrastruktur für die nächste Generation von DeFi.',
+    desc: 'Onchain-Exchange-Protokoll der nächsten Generation. Fokus auf Liquidität, Effizienz und vollständige Transparenz — gebaut für die Zukunft von DeFi.',
     tags: ['Onchain DEX', 'Liquidity Pools', 'Streaming Transactions', 'DeFi Analytics'],
     href: 'https://lyqdex.io',
   },
@@ -158,7 +158,7 @@ const PRODUCTS = [
     name: 'Vex0',
     status: 'In Entwicklung',
     statusClass: 'product-status--dev',
-    desc: 'Open-Source Component Framework für React — ähnlich wie shadcn/ui, aber von Flux Network. Komponenten direkt ins Projekt kopieren und anpassen. Kein Lock-in, kein Overhead.',
+    desc: 'Das Component Framework von Flux Network. Einfach kopieren, einfügen, anpassen — kein Wrapper-Overhead, kein Lock-in. Funktioniert mit jedem React-Projekt.',
     tags: ['React', 'Open Source', 'Components', 'TypeScript'],
     href: '/docs',
   },
@@ -167,8 +167,8 @@ const PRODUCTS = [
     name: 'Vylder',
     status: 'Coming Soon',
     statusClass: 'product-status--dev',
-    desc: 'Visuell bauen und gleichzeitig im Code arbeiten — in einem Tool. Importiere Komponenten aus Radix UI, shadcn/ui und mehr direkt in deinen visuellen Editor.',
-    tags: ['Visual Builder', 'Code Editor', 'Radix UI', 'shadcn/ui', 'Component Import'],
+    desc: 'Der Website-Builder, der Code versteht. Visuell designen, im Code verfeinern — und jede beliebige Library direkt importieren. Radix UI, shadcn/ui, dein eigenes Package. Kein Limit.',
+    tags: ['Visual Builder', 'Code Editor', 'Any Library', 'No-Code & Code'],
     href: 'https://vylder.dev',
   },
 ];
@@ -182,8 +182,8 @@ function ProductsSection() {
           PRODUKTE
         </div>
         <div className="section-intro">
-          <h2 className="section-title">Gebaut von Flux Network.</h2>
-          <p className="section-sub">Digitale Produkte und Plattformen, entwickelt von Flux Network.</p>
+          <h2 className="section-title">Was wir bauen.</h2>
+          <p className="section-sub">Fünf Produkte. Unterschiedliche Domänen. Derselbe Anspruch.</p>
         </div>
         <div className="products-list">
           {PRODUCTS.map(p => (
@@ -251,11 +251,11 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Was ist Vex0?',
-    a: 'Vex0 ist unser Open-Source Component Framework — ähnlich wie shadcn/ui, aber von Flux Network entwickelt. Komponenten die du direkt in dein Projekt kopieren und anpassen kannst.',
+    a: 'Vex0 ist das Open-Source Component Framework von Flux Network. Komponenten einfach kopieren, ins Projekt einfügen und anpassen — kein Wrapper, kein Lock-in.',
   },
   {
     q: 'Was ist Vylder?',
-    a: 'Vylder ist unser visueller Website-Builder — du kannst deine Seite visuell designen oder direkt im Code arbeiten, und Komponenten aus Radix UI, shadcn/ui u.v.m. importieren. Alles in einem Tool. Mehr auf vylder.dev.',
+    a: 'Vylder ist unser visueller Website-Builder — visuell designen, im Code verfeinern, und jede beliebige Library importieren. Radix UI, shadcn/ui, dein eigenes Package. Mehr auf vylder.dev.',
   },
   {
     q: 'Was sind die TradingView-Indikatoren?',
@@ -281,7 +281,7 @@ function FaqSection() {
         </div>
         <div className="section-intro">
           <h2 className="section-title">Häufige Fragen</h2>
-          <p className="section-sub">Alles was du wissen musst — bevor du anfragst.</p>
+          <p className="section-sub">Kurz, klar — alles, was du wissen musst.</p>
         </div>
         <div className="faq-grid">
           {FAQ_ITEMS.map(item => (
@@ -311,8 +311,8 @@ function CtaSection() {
             <span className="dot dot--grün" />
             BEREIT?
           </div>
-          <h2>Bleib auf dem Laufenden.</h2>
-          <p>Tritt unserem Discord bei — Early Access, Beta-Releases und Updates zu allen Produkten als Erstes.</p>
+          <h2>Als Erstes dabei sein.</h2>
+          <p>Im Discord kriegst du Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten — bevor alle anderen.</p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
             <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
               <DiscordIcon /> Discord joinen
