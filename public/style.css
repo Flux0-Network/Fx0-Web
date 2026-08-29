@@ -348,6 +348,17 @@ body::after {
   display: flex;
   flex-direction: column;
 }
+.above-fold-wrapper::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, #000000);
+  pointer-events: none;
+  z-index: 2;
+}
 .hero {
   flex: 1;
   display: flex;
