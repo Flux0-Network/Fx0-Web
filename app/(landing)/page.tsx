@@ -110,7 +110,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          Mit Code bauen, visuell verfeinern — volle Designkontrolle in einem Tool.
+          Visuell designen, im Code arbeiten, Komponenten aus Radix UI & shadcn/ui importieren — alles in einem Tool.
         </p>
         <a
           href="https://vylder.dev"
@@ -167,8 +167,8 @@ const PRODUCTS = [
     name: 'Vylder',
     status: 'Coming Soon',
     statusClass: 'product-status--dev',
-    desc: 'Visueller Website-Builder von Flux Network. Mit Code bauen, visuell verfeinern — volle Designkontrolle in einem Tool.',
-    tags: ['Visual Builder', 'Code & Design', 'No-Code', 'Website Builder'],
+    desc: 'Visuell bauen und gleichzeitig im Code arbeiten — in einem Tool. Importiere Komponenten aus Radix UI, shadcn/ui und mehr direkt in deinen visuellen Editor.',
+    tags: ['Visual Builder', 'Code Editor', 'Radix UI', 'shadcn/ui', 'Component Import'],
     href: 'https://vylder.dev',
   },
 ];
@@ -255,7 +255,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Was ist Vylder?',
-    a: 'Vylder ist unser visueller Website-Builder — mit Code bauen, visuell verfeinern, volle Designkontrolle. Mehr Infos auf vylder.dev.',
+    a: 'Vylder ist unser visueller Website-Builder — du kannst deine Seite visuell designen oder direkt im Code arbeiten, und Komponenten aus Radix UI, shadcn/ui u.v.m. importieren. Alles in einem Tool. Mehr auf vylder.dev.',
   },
   {
     q: 'Was sind die TradingView-Indikatoren?',
