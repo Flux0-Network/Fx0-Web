@@ -1866,6 +1866,7 @@ kbd {
   gap: 72px;
   align-items: center;
 }
+.vex0-split > * { min-width: 0; }
 .code-block {
   background: #0a0a0a;
   border: 1px solid var(--border);
@@ -1972,6 +1973,12 @@ kbd {
   flex-shrink: 0;
 }
 .vylder-notify:hover { color: #ffffff; }
+@media (max-width: 640px) {
+  .vylder-card-wrap { padding: 20px 16px; }
+  .vylder-card { flex-direction: column; align-items: flex-start; padding: 16px 18px; gap: 12px; }
+  .vylder-desc { min-width: 0; flex: unset; }
+  .vylder-notify { align-self: flex-start; }
+}
 
 /* ── PAKETE ── */
 .paket-individuell-wrap {
@@ -2447,6 +2454,7 @@ kbd {
   .nav-cta { font-size: 0.78rem; padding: 7px 12px; }
 
   /* hero */
+  .above-fold-wrapper { min-height: auto; }
   .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
