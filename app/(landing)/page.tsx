@@ -7,13 +7,13 @@ import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 
 export const metadata: Metadata = {
-  title: 'Flux Network — Webdesign & Entwicklung',
-  description: 'Flux Network baut professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt — von der ersten Idee bis zum Launch.',
+  title: 'Flux Network — Tools. Produkte. Indikatoren.',
+  description: 'Flux Network baut digitale Produkte, Developer-Frameworks und TradingView-Indikatoren. LumaSpace, FlowWave, Vex0 und mehr.',
   openGraph: {
     type: 'website',
     url: 'https://flux0.dev/',
-    title: 'Flux Network — Webdesign & Entwicklung',
-    description: 'Professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt.',
+    title: 'Flux Network — Tools. Produkte. Indikatoren.',
+    description: 'Digitale Produkte, Developer-Frameworks und Trading-Tools von Flux Network.',
     images: [{ url: 'https://flux0.dev/og-image.png', width: 1200, height: 630 }],
     siteName: 'Flux Network',
     locale: 'de_DE',
@@ -21,8 +21,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@flux0dev',
-    title: 'Flux Network — Webdesign & Entwicklung',
-    description: 'Professionelle Webseiten für Unternehmen, Freelancer und Projekte. Modern, schnell, auf den Punkt.',
+    title: 'Flux Network — Tools. Produkte. Indikatoren.',
+    description: 'Digitale Produkte, Developer-Frameworks und Trading-Tools von Flux Network.',
     images: ['https://flux0.dev/og-image.png'],
   },
   alternates: { canonical: 'https://flux0.dev/' },
@@ -38,10 +38,6 @@ export default function LandingPage() {
         <HeroSection />
         <TechStrip />
       </div>
-      <PaketeSection />
-      <ProzessSection />
-      <ReferenzenSection />
-      <DesignStudioSection />
       <ProductsSection />
       <PartnersSection />
       <FaqSection />
@@ -194,227 +190,6 @@ function TechStrip() {
   );
 }
 
-const PAKET_FEATURES = [
-  'Landingpage bis Multipage-Site',
-  'Logo-Design & Branding',
-  'Mobile-optimiert & barrierefrei',
-  'SEO-Optimierung (Basic bis Full)',
-  'Next.js + Tailwind + shadcn/ui',
-  'Kontaktformular & Integrationen',
-  'Animationen & Micro-Interactions',
-  'Support bis Launch & darüber hinaus',
-];
-
-function PaketeSection() {
-  return (
-    <section id="pakete" className="section">
-      <div className="container">
-        <div className="section-label-row">
-          <span className="dot dot--gelb" />
-          PAKETE
-        </div>
-        <div className="section-intro">
-          <h2 className="section-title">Was wir dir bauen.</h2>
-          <p className="section-sub">Kein Einheitspaket — jedes Projekt ist anders. Wir besprechen deine Anforderungen und machen dir ein Angebot, das passt.</p>
-        </div>
-        <div className="paket-individuell-wrap">
-          <div className="paket-card paket-card--wide">
-            <div className="paket-card-top">
-              <div>
-                <span className="paket-name">Individuell</span>
-                <p className="paket-tagline">Maßgeschneidert für dein Projekt — Landingpage, Multipage, Web-App oder alles dazwischen.</p>
-              </div>
-              <div className="paket-price">
-                <span className="paket-price-from">Preis auf</span>
-                <span className="paket-price-value">Anfrage</span>
-              </div>
-            </div>
-            <ul className="paket-list paket-list--two-col">
-              {PAKET_FEATURES.map(f => (
-                <li key={f}><span className="paket-check paket-check--accent">✓</span> {f}</li>
-              ))}
-            </ul>
-            <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">Jetzt anfragen →</a>
-          </div>
-        </div>
-        <p className="pakete-note">Alle Preise zzgl. MwSt. — Lieferzeit je nach Projektumfang.</p>
-      </div>
-    </section>
-  );
-}
-
-const PROZESS_STEPS = [
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-      </svg>
-    ),
-    title: 'Erstgespräch',
-    text: 'Wir reden kurz über dein Projekt — was du brauchst, was du dir vorstellst, welches Budget du hast. Kostenlos, unverbindlich, kein Verkaufsdruck.',
-    note: 'Kostenlos · Discord oder E-Mail',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="3" width="20" height="14" rx="2" /><path d="M8 21h8M12 17v4" />
-      </svg>
-    ),
-    title: 'Direkt live',
-    text: 'Statt Figma-Mockups deployen wir das Design direkt als Vorschau-URL — du siehst Layout, Farben und Animationen sofort so, wie sie am Ende aussehen.',
-    note: 'Live-Preview · Kein Figma',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        <path d="m9 11 3 3L22 4" />
-      </svg>
-    ),
-    title: 'Feedback & Feinschliff',
-    text: 'Du gibst direkt auf der laufenden Seite Feedback — wir passen an, deployen sofort wieder. Keine langen Abstimmungsschleifen, Änderungen sind in Minuten sichtbar.',
-    note: 'Iterativ · Schnelle Anpassungen',
-  },
-  {
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <path d="m22 2-7 20-4-9-9-4Z" /><path d="M22 2 11 13" />
-      </svg>
-    ),
-    title: 'Launch & Übergabe',
-    text: 'Wenn alles sitzt, geht die Seite auf deine Domain live. Wir richten Hosting und DNS ein und du bekommst eine vollständige Einweisung — fertig.',
-    note: 'Hosting-Setup & Übergabe inklusive',
-  },
-];
-
-function ProzessSection() {
-  return (
-    <section id="prozess" className="section">
-      <div className="container">
-        <div className="section-label-row">
-          <span className="dot dot--grün" />
-          PROZESS
-        </div>
-        <div className="section-intro">
-          <h2 className="section-title">So läuft&apos;s ab.</h2>
-          <p className="section-sub">Kein Figma, kein hin und her mit Mockups — du siehst dein Design sofort live im echten Browser und gibst direkt Feedback.</p>
-        </div>
-        <div className="prozess-grid">
-          {PROZESS_STEPS.map(s => (
-            <div key={s.title} className="prozess-step">
-              <div className="prozess-step-icon">{s.icon}</div>
-              <h3>{s.title}</h3>
-              <p>{s.text}</p>
-              <span className="prozess-step-note">{s.note}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function ReferenzenSection() {
-  return (
-    <section className="logo-cloud-section referenzen-section">
-      <div className="container">
-        <p className="logo-cloud-label">Von uns gebaut — live im Netz</p>
-        <div className="logo-cloud">
-          <a href="https://erdmann-webpage.vercel.app/" className="logo-cloud-item ref-item" target="_blank" rel="noopener">
-            <span className="ref-favicon" style={{ background: '#0f172a', color: '#fff' }}>E</span>
-            <span className="ref-info">
-              <span className="ref-name">Erdmann</span>
-              <span className="ref-url">erdmann-webpage.vercel.app</span>
-            </span>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ opacity: 0.4, flexShrink: 0 }}>
-              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-              <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
-            </svg>
-          </a>
-          <a href="https://discord.gg/D9GwqWpwHT" className="logo-cloud-item logo-cloud-item--add" target="_blank" rel="noopener">
-            <span className="logo-cloud-plus">+</span>
-            <span>Dein Projekt hier</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-const DESIGN_CARDS = [
-  {
-    title: 'Logo Design',
-    desc: 'Wortmarke, Bildmarke oder Kombination — professionell, zeitlos, skalierbar.',
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M12 20h9" /><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Banner & Ads',
-    desc: 'Social Media Banner, Web Ads und Hero-Grafiken — für jeden Kanal im richtigen Format.',
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="3" y="3" width="18" height="18" rx="2" />
-        <circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Social Media Kit',
-    desc: 'Templates für Instagram, X und Discord — konsistent, editierbar, sofort einsetzbar.',
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="2" width="9" height="9" rx="1" />
-        <rect x="13" y="2" width="9" height="9" rx="1" />
-        <rect x="2" y="13" width="9" height="9" rx="1" />
-        <rect x="13" y="13" width="9" height="9" rx="1" />
-      </svg>
-    ),
-  },
-  {
-    title: 'Brand Identity',
-    desc: 'Logo, Farben, Typografie, Guidelines — dein komplettes Branding in einem Paket.',
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-        <circle cx="13.5" cy="6.5" r="2.5" /><circle cx="17.5" cy="10.5" r="2.5" />
-        <circle cx="8.5" cy="7.5" r="2.5" /><circle cx="6.5" cy="12.5" r="2.5" />
-        <path d="M12 20a2 2 0 0 0 2-2v-1H10v1a2 2 0 0 0 2 2z" /><path d="M10 17H14" />
-      </svg>
-    ),
-  },
-];
-
-function DesignStudioSection() {
-  return (
-    <section id="design" className="section">
-      <div className="container">
-        <div className="section-label-row">
-          <span className="dot dot--blau" />
-          DESIGN STUDIO
-        </div>
-        <div className="section-intro">
-          <h2 className="section-title">Nicht nur Code.</h2>
-          <p className="section-sub">Wir designen auch — Logos, Banner, Social Media Grafiken und komplette Brand Identities. Alles aus einer Hand.</p>
-        </div>
-        <div className="design-services-grid">
-          {DESIGN_CARDS.map(c => (
-            <div key={c.title} className="design-card">
-              <div className="design-card-icon">{c.icon}</div>
-              <div className="design-card-title">{c.title}</div>
-              <div className="design-card-desc">{c.desc}</div>
-              <span className="design-card-tag">Auf Anfrage</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ textAlign: 'center', marginTop: 40 }}>
-          <a href="/design.html" className="btn-primary">Design Services ansehen →</a>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 const PRODUCTS = [
   {
@@ -515,36 +290,28 @@ function PartnersSection() {
 
 const FAQ_ITEMS = [
   {
-    q: 'Was kostet eine Website bei euch?',
-    a: 'Das hängt vom Umfang ab. Die Pakete starten ab 400 € (Launch, 1 Seite) und gehen bis ab 1.500 € (Advanced, bis zu 9 Seiten). Bei individuellen Anforderungen erstellen wir dir ein maßgeschneidertes Angebot.',
+    q: 'Was ist Flux Network?',
+    a: 'Flux Network ist ein digitales Produktstudio — wir bauen eigene Software-Produkte, Developer-Frameworks, TradingView-Indikatoren und Tools für die nächste Generation.',
   },
   {
-    q: 'Wie lange dauert die Entwicklung?',
-    a: 'Beim Launch-Paket ca. 1 Woche, beim Advanced-Paket ca. 2 Wochen — je nach Komplexität und wie schnell Feedback kommt. Wir kommunizieren transparent über den Fortschritt.',
+    q: 'Was ist Vex0?',
+    a: 'Vex0 ist unser Open-Source Component Framework — ähnlich wie shadcn/ui, aber von Flux Network entwickelt. Komponenten die du direkt in dein Projekt kopieren und anpassen kannst.',
   },
   {
-    q: 'Welche Technologien verwendet ihr?',
-    a: 'Wir bauen hauptsächlich mit Next.js, React, TypeScript, Tailwind CSS und shadcn/ui. Hosting läuft in der Regel über Vercel — schnell, zuverlässig, skalierbar.',
+    q: 'Was ist Vylder?',
+    a: 'Vylder ist unser visueller Website-Builder — eine Alternative zu Framer, die wir aktuell entwickeln. Mehr Infos kommen bald.',
   },
   {
-    q: 'Kann ich die Website nach dem Launch selbst bearbeiten?',
-    a: 'Ja. Wir geben dir eine vollständige Einweisung und können auf Wunsch ein einfaches CMS (z.B. Sanity oder Contentlayer) integrieren, sodass du Inhalte selbst pflegen kannst.',
+    q: 'Was sind die TradingView-Indikatoren?',
+    a: 'Wir entwickeln Pine Script Indikatoren und Strategien für TradingView — von einfachen Overlay-Indikatoren bis zu kompletten automatisierten Strategien. Coming Soon.',
   },
   {
-    q: 'Was brauche ich, um anzufangen?',
-    a: 'Einfach auf Discord melden und kurz beschreiben was du dir vorstellst. Wir klären alles im Gespräch — du brauchst nichts weiter vorzubereiten.',
+    q: 'Wie kann ich auf dem Laufenden bleiben?',
+    a: 'Tritt unserem Discord bei — dort posten wir Updates zu allen Produkten, Early Access und Beta-Releases als Erstes.',
   },
   {
-    q: 'Gibt es laufende Kosten?',
-    a: 'Für Hosting über Vercel gibt es einen großzügigen kostenlosen Plan, der für die meisten Projekte reicht. Bei größeren Anforderungen fallen kleine monatliche Kosten an — wir beraten dich dabei ehrlich.',
-  },
-  {
-    q: 'Was passiert, wenn ich nach dem Launch etwas ändern will?',
-    a: 'Kleine Anpassungen machen wir gerne unkompliziert. Für größere Änderungen oder laufende Betreuung bieten wir individuelle Wartungsverträge an — sprich uns einfach an.',
-  },
-  {
-    q: 'Habt ihr auch eigene Produkte?',
-    a: 'Ja — neben Webdesign entwickeln wir unter dem Flux Network eigene digitale Produkte wie LumaSpace (KI-Produktivitätstool) und FlowWave (Discord-Bot-Builder). Mehr dazu weiter oben auf der Seite.',
+    q: 'Sind die Produkte kostenlos?',
+    a: 'Vex0 ist Open Source und kostenlos. Für LumaSpace, FlowWave und die Indikatoren gibt es kostenlose und kostenpflichtige Pläne — je nach Produkt unterschiedlich.',
   },
 ];
 
@@ -588,8 +355,8 @@ function CtaSection() {
             <span className="dot dot--grün" />
             BEREIT?
           </div>
-          <h2>Lass uns deine Website bauen.</h2>
-          <p>Schreib uns auf Discord — kostenloses Erstgespräch, kein Verkaufsdruck, direkte Antworten.</p>
+          <h2>Bleib auf dem Laufenden.</h2>
+          <p>Tritt unserem Discord bei — Early Access, Beta-Releases und Updates zu allen Produkten als Erstes.</p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
             <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
               <DiscordIcon /> Discord joinen
