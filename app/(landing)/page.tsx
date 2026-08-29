@@ -56,7 +56,7 @@ function Vex0Section() {
     <section className="vex0-section section">
       <div className="container">
         <div className="vex0-split">
-          <div className="vex0-text reveal">
+          <div className="vex0-text">
             <div className="section-label-row">
               <span className="dot" />
               VEX0 FRAMEWORK
@@ -69,7 +69,7 @@ function Vex0Section() {
               Docs ansehen →
             </a>
           </div>
-          <div className="vex0-code reveal">
+          <div className="vex0-code">
             <div className="code-block">
               <div className="code-block-header">
                 <span className="code-block-filename">example.tsx</span>
