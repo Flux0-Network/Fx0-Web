@@ -36,8 +36,8 @@ export default function LandingPage() {
       <div className="above-fold-wrapper">
         <AboveFoldBg />
         <HeroSection />
-        <TechStrip />
       </div>
+      <Vex0Section />
       <ProductsSection />
       <PartnersSection />
       <FaqSection />
@@ -50,146 +50,55 @@ export default function LandingPage() {
 
 // ── Static sections ────────────────────────────────────────────────────────
 
-const TECH_ITEMS = [
-  {
-    label: 'Next.js',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 180 180" fill="none">
-        <mask id="nxt" style={{ maskType: 'alpha' as const }} maskUnits="userSpaceOnUse" x="0" y="0" width="180" height="180">
-          <circle cx="90" cy="90" r="90" fill="black" />
-        </mask>
-        <g mask="url(#nxt)">
-          <circle cx="90" cy="90" r="90" fill="black" />
-          <path d="M149.508 157.52L69.142 54H54V125.97H66.1847V69.3836L139.999 164.845C143.333 162.614 146.509 160.165 149.508 157.52Z" fill="url(#nxtg1)" />
-          <rect x="115" y="54" width="12" height="72" fill="url(#nxtg2)" />
-          <defs>
-            <linearGradient id="nxtg1" x1="109" y1="116.5" x2="144.5" y2="160.5" gradientUnits="userSpaceOnUse">
-              <stop stopColor="white" /><stop offset="1" stopColor="white" stopOpacity="0" />
-            </linearGradient>
-            <linearGradient id="nxtg2" x1="121" y1="54" x2="120.799" y2="106.875" gradientUnits="userSpaceOnUse">
-              <stop stopColor="white" /><stop offset="1" stopColor="white" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </g>
-      </svg>
-    ),
-  },
-  {
-    label: 'React',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" fill="#61DAFB" opacity="0.15" />
-        <circle cx="12" cy="12" r="2.5" fill="#61DAFB" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.5" fill="none" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.5" fill="none" transform="rotate(60 12 12)" />
-        <ellipse cx="12" cy="12" rx="10" ry="4" stroke="#61DAFB" strokeWidth="1.5" fill="none" transform="rotate(120 12 12)" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Tailwind CSS',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M1 6l11-4 11 4-11 4L1 6z" fill="#38BDF8" opacity="0.8" />
-        <path d="M1 12l11 4 11-4" stroke="#38BDF8" strokeWidth="1.5" fill="none" />
-        <path d="M1 18l11 4 11-4" stroke="#38BDF8" strokeWidth="1" fill="none" opacity="0.5" />
-      </svg>
-    ),
-  },
-  {
-    label: 'TypeScript',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 15l4-8 4 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M9.5 12h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: 'shadcn/ui',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <rect x="2" y="2" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.7" />
-        <rect x="13" y="2" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.5" />
-        <rect x="2" y="13" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.5" />
-        <rect x="13" y="13" width="9" height="9" rx="1.5" fill="currentColor" opacity="0.3" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Headless UI',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="9" stroke="#6366f1" strokeWidth="1.5" />
-        <path d="M8 12h8M12 8v8" stroke="#6366f1" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Float UI',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M3 12h18M3 6h18M3 18h18" stroke="#f97316" strokeWidth="1.5" strokeLinecap="round" />
-      </svg>
-    ),
-  },
-  {
-    label: 'HeroUI',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <polygon points="12,2 22,19 2,19" fill="none" stroke="#a855f7" strokeWidth="1.5" strokeLinejoin="round" />
-      </svg>
-    ),
-  },
-  {
-    label: 'DaisyUI',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="4" fill="#1fb2a6" opacity="0.8" />
-        <circle cx="12" cy="12" r="9" stroke="#1fb2a6" strokeWidth="1.5" fill="none" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Vercel',
-    icon: (
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
-    ),
-  },
-];
-
-function TechStrip() {
+function Vex0Section() {
   return (
-    <section className="tech-strip">
-      <p className="tech-strip-label">Womit wir bauen</p>
-      <div className="tech-strip-track-wrapper">
-        <div className="tech-strip-track">
-          {[...TECH_ITEMS, ...TECH_ITEMS].map((t, i) => (
-            <span
-              key={i}
-              className="tech-item"
-              aria-hidden={i >= TECH_ITEMS.length ? true : undefined}
-            >
-              {t.icon}
-              {t.label}
-            </span>
-          ))}
+    <section className="vex0-section section">
+      <div className="container">
+        <div className="vex0-split">
+          <div className="vex0-text reveal">
+            <div className="section-label-row">
+              <span className="dot" />
+              VEX0 FRAMEWORK
+            </div>
+            <h2 className="section-title">Copy.<br />Paste.<br />Done.</h2>
+            <p className="section-sub">
+              Vex0 ist unser Open-Source Component Framework — ähnlich wie shadcn/ui, aber von Flux Network. Komponenten, die du direkt in dein Projekt kopierst und anpasst. Kein Lock-in, kein Overhead.
+            </p>
+            <a href="/docs" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              Docs ansehen →
+            </a>
+          </div>
+          <div className="vex0-code reveal">
+            <div className="code-block">
+              <div className="code-block-header">
+                <span className="code-block-filename">example.tsx</span>
+                <div className="code-block-dots">
+                  <span /><span /><span />
+                </div>
+              </div>
+              <pre><code>{`import { Button } from "@/components/vex0/button"
+import { Card, CardContent } from "@/components/vex0/card"
+
+export function Example() {
+  return (
+    <Card>
+      <CardContent>
+        <h3>Flux Network</h3>
+        <p>Tools. Produkte. Indikatoren.</p>
+        <Button variant="outline">
+          Mehr erfahren →
+        </Button>
+      </CardContent>
+    </Card>
+  )
+}`}</code></pre>
+            </div>
+          </div>
         </div>
       </div>
-      <a href="#pakete" className="hero-scroll-hint" style={{ marginTop: '28px' }} aria-hidden="true">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <polyline points="6 9 12 15 18 9" />
-        </svg>
-        Mehr erfahren
-      </a>
     </section>
   );
 }
-
 
 const PRODUCTS = [
   {
@@ -231,7 +140,7 @@ function ProductsSection() {
         </div>
         <div className="section-intro">
           <h2 className="section-title">Gebaut von Flux Network.</h2>
-          <p className="section-sub">Neben Webdesign entwickeln wir eigene digitale Produkte und Plattformen.</p>
+          <p className="section-sub">Digitale Produkte und Plattformen, entwickelt von Flux Network.</p>
         </div>
         <div className="products-list">
           {PRODUCTS.map(p => (
@@ -361,7 +270,7 @@ function CtaSection() {
             <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
               <DiscordIcon /> Discord joinen
             </a>
-            <a href="#pakete" className="btn-ghost">Pakete ansehen</a>
+            <a href="#products" className="btn-ghost">Produkte ansehen</a>
           </div>
         </div>
       </div>

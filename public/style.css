@@ -1830,51 +1830,59 @@ kbd {
 .error-actions { display: flex; gap: 14px; margin-top: 36px; flex-wrap: wrap; }
 .error-terminal { margin-top: 32px; padding: 16px 18px; border-radius: 12px; background: #121212; border: 1px solid #262626; font-family: 'JetBrains Mono', monospace; font-size: .82rem; color: #525252; overflow: auto; }
 
-/* ── TECH STRIP ── */
-.tech-strip {
-  padding: 40px 0 56px;
-  overflow: hidden;
-  position: relative;
-  z-index: 1;
-  text-align: center;
+/* ── VEX0 SECTION ── */
+.vex0-section {
+  border-top: 1px solid var(--border);
 }
-.tech-strip-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--dim);
-  margin-bottom: 20px;
-  text-align: center;
-}
-.tech-strip-track-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-.tech-strip-track {
-  display: flex;
-  gap: 0;
-  width: max-content;
-  animation: tech-marquee 28s linear infinite;
-}
-.tech-strip-track:hover { animation-play-state: paused; }
-@keyframes tech-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-.tech-item {
-  display: inline-flex;
+.vex0-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 72px;
   align-items: center;
-  gap: 9px;
-  padding: 0 52px;
-  height: 48px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
-  white-space: nowrap;
-  flex-shrink: 0;
 }
-.tech-item svg { opacity: 0.55; flex-shrink: 0; }
+.code-block {
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.code-block-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #111;
+}
+.code-block-filename {
+  font-size: 0.74rem;
+  color: var(--dim);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+}
+.code-block-dots {
+  display: flex;
+  gap: 6px;
+}
+.code-block-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-md);
+}
+.code-block pre {
+  padding: 22px 20px;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', 'Fira Code', 'Menlo', monospace;
+  font-size: 0.8rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.7);
+}
+@media (max-width: 860px) {
+  .vex0-split {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
 
 /* ── PAKETE ── */
 .paket-individuell-wrap {
