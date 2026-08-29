@@ -113,12 +113,12 @@ function VylderCard() {
           Mit Code bauen, visuell verfeinern — volle Designkontrolle in einem Tool.
         </p>
         <a
-          href="https://discord.gg/D9GwqWpwHT"
+          href="https://vylder.dev"
           className="vylder-notify"
           target="_blank"
           rel="noopener"
         >
-          Benachrichtigt werden →
+          vylder.dev →
         </a>
       </div>
     </div>
@@ -233,7 +233,7 @@ const FAQ_ITEMS = [
   },
   {
     q: 'Was ist Vylder?',
-    a: 'Vylder ist unser visueller Website-Builder — eine Alternative zu Framer, die wir aktuell entwickeln. Mehr Infos kommen bald.',
+    a: 'Vylder ist unser visueller Website-Builder — mit Code bauen, visuell verfeinern, volle Designkontrolle. Mehr Infos auf vylder.dev.',
   },
   {
     q: 'Was sind die TradingView-Indikatoren?',
