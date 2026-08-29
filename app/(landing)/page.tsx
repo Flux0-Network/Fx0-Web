@@ -36,6 +36,7 @@ export default function LandingPage() {
       <div className="above-fold-wrapper">
         <AboveFoldBg />
         <HeroSection />
+        <VylderCard />
       </div>
       <Vex0Section />
       <ProductsSection />
@@ -97,6 +98,30 @@ export function Example() {
         </div>
       </div>
     </section>
+  );
+}
+
+function VylderCard() {
+  return (
+    <div className="vylder-card-wrap">
+      <div className="vylder-card">
+        <div className="vylder-card-top">
+          <span className="vylder-badge">Coming Soon</span>
+          <span className="vylder-name">Vylder</span>
+        </div>
+        <p className="vylder-desc">
+          Der visuelle Website-Builder von Flux Network — eine Alternative zu Framer. Seiten bauen ohne Code, mit vollem Designkontrolle.
+        </p>
+        <a
+          href="https://discord.gg/D9GwqWpwHT"
+          className="vylder-notify"
+          target="_blank"
+          rel="noopener"
+        >
+          Benachrichtigt werden →
+        </a>
+      </div>
+    </div>
   );
 }
 
