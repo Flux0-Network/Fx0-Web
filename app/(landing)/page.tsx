@@ -110,7 +110,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          Visueller Website-Builder von Flux Network — eine Alternative zu Framer.
+          Mit Code bauen, visuell verfeinern — volle Designkontrolle in einem Tool.
         </p>
         <a
           href="https://discord.gg/D9GwqWpwHT"
