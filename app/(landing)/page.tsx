@@ -127,7 +127,7 @@ function VylderCard() {
 
 const PRODUCTS = [
   {
-    icon: '/lumaspace-icon.png',
+    icon: '/lumaspace-icon.png' as string | null,
     name: 'LumaSpace',
     status: 'Live',
     statusClass: 'product-status--live',
@@ -136,7 +136,7 @@ const PRODUCTS = [
     href: 'https://lumaspace.de/',
   },
   {
-    icon: '/flowwave-icon.png',
+    icon: '/flowwave-icon.png' as string | null,
     name: 'FlowWave',
     status: 'Open Beta',
     statusClass: 'product-status--dev',
@@ -145,13 +145,31 @@ const PRODUCTS = [
     href: 'https://flowwave.app',
   },
   {
-    icon: '/lyqdex-icon.PNG',
+    icon: '/lyqdex-icon.PNG' as string | null,
     name: 'LyqDex',
     status: 'In Entwicklung',
     statusClass: 'product-status--dev',
     desc: 'Dezentrales Exchange-Protokoll mit Fokus auf Liquidität, Effizienz und Transparenz. Onchain-Infrastruktur für die nächste Generation von DeFi.',
     tags: ['Onchain DEX', 'Liquidity Pools', 'Streaming Transactions', 'DeFi Analytics'],
     href: 'https://lyqdex.io',
+  },
+  {
+    icon: null,
+    name: 'Vex0',
+    status: 'In Entwicklung',
+    statusClass: 'product-status--dev',
+    desc: 'Open-Source Component Framework für React — ähnlich wie shadcn/ui, aber von Flux Network. Komponenten direkt ins Projekt kopieren und anpassen. Kein Lock-in, kein Overhead.',
+    tags: ['React', 'Open Source', 'Components', 'TypeScript'],
+    href: '/docs',
+  },
+  {
+    icon: null,
+    name: 'Vylder',
+    status: 'Coming Soon',
+    statusClass: 'product-status--dev',
+    desc: 'Visueller Website-Builder von Flux Network. Mit Code bauen, visuell verfeinern — volle Designkontrolle in einem Tool.',
+    tags: ['Visual Builder', 'Code & Design', 'No-Code', 'Website Builder'],
+    href: 'https://vylder.dev',
   },
 ];
 
@@ -172,8 +190,12 @@ function ProductsSection() {
             <div key={p.name} className="product-card">
               <div className="product-card-left">
                 <div className="product-icon">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.icon} alt={p.name} className="product-logo-icon" />
+                  {p.icon ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img src={p.icon} alt={p.name} className="product-logo-icon" />
+                  ) : (
+                    <span className="product-logo-fallback">{p.name[0]}</span>
+                  )}
                 </div>
                 <div>
                   <h3 className="product-name">{p.name}</h3>
@@ -184,7 +206,7 @@ function ProductsSection() {
               <ul className="product-tags">
                 {p.tags.map(t => <li key={t}>{t}</li>)}
               </ul>
-              <a href={p.href} className="btn-primary" target="_blank" rel="noopener">Öffnen →</a>
+              <a href={p.href} className="btn-primary" {...(p.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>Öffnen →</a>
             </div>
           ))}
         </div>
