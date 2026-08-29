@@ -845,7 +845,7 @@ body::after {
 .cookie-notice p a { color: var(--accent); text-decoration: none; }
 .cookie-notice p a:hover { text-decoration: underline; }
 .cookie-notice-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
-.cookie-accept { background: var(--accent); color: #fff; border: none; border-radius: 7px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.cookie-accept { background: #ffffff; color: #000000; border: none; border-radius: 7px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; cursor: pointer; white-space: nowrap; }
 .cookie-accept:hover { opacity: 0.88; }
 .cookie-close { cursor: pointer; color: var(--dim); font-weight: 700; font-size: 0.9rem; line-height: 1; background: none; border: none; padding: 0; }
 .cookie-close:hover { color: var(--text); }
