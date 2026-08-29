@@ -36,8 +36,8 @@ export default function LandingPage() {
       <div className="above-fold-wrapper">
         <AboveFoldBg />
         <HeroSection />
-        <VylderCard />
       </div>
+      <VylderCard />
       <Vex0Section />
       <ProductsSection />
       <PartnersSection />
@@ -110,7 +110,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          Der visuelle Website-Builder von Flux Network — eine Alternative zu Framer. Seiten bauen ohne Code, mit vollem Designkontrolle.
+          Visueller Website-Builder von Flux Network — eine Alternative zu Framer.
         </p>
         <a
           href="https://discord.gg/D9GwqWpwHT"

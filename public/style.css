@@ -1833,6 +1833,8 @@ kbd {
 /* ── VEX0 SECTION ── */
 .vex0-section {
   border-top: 1px solid var(--border);
+  padding-top: 64px !important;
+  padding-bottom: 64px !important;
 }
 .vex0-split {
   display: grid;
@@ -1886,25 +1888,20 @@ kbd {
 
 /* ── VYLDER CARD ── */
 .vylder-card-wrap {
-  position: relative;
-  z-index: 2;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px 24px;
   display: flex;
   justify-content: center;
-  padding: 0 24px 56px;
 }
 .vylder-card {
   width: 100%;
-  max-width: 520px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 20px;
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
-  padding: 24px 28px;
+  max-width: 680px;
   display: flex;
-  flex-direction: column;
-  gap: 12px;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
 }
 .vylder-card-top {
   display: flex;
@@ -1923,29 +1920,31 @@ kbd {
   padding: 3px 8px;
 }
 .vylder-name {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: #ffffff;
   letter-spacing: -0.02em;
 }
 .vylder-desc {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.5);
-  line-height: 1.6;
+  font-size: 0.84rem;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.55;
   margin: 0;
+  flex: 1;
+  min-width: 200px;
 }
 .vylder-notify {
   display: inline-flex;
-  align-self: flex-start;
+  align-self: center;
   font-size: 0.82rem;
   font-weight: 600;
-  color: rgba(255,255,255,0.75);
+  color: rgba(255,255,255,0.7);
   text-decoration: none;
+  white-space: nowrap;
   transition: color 0.15s;
+  flex-shrink: 0;
 }
-.vylder-notify:hover {
-  color: #ffffff;
-}
+.vylder-notify:hover { color: #ffffff; }
 
 /* ── PAKETE ── */
 .paket-individuell-wrap {
