@@ -122,7 +122,6 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 style={{
                   textDecoration: 'none',
                   color: 'rgba(255,255,255,0.55)',
@@ -251,7 +250,6 @@ export default function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
-                {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 onClick={() => setMenuOpen(false)}
                 style={{
                   textDecoration: 'none',
