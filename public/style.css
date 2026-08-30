@@ -340,6 +340,12 @@ body::after {
   color: var(--muted);
   margin-bottom: 40px;
 }
+.section-label-row::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
 
 /* ── HERO ── */
 .above-fold-wrapper {
