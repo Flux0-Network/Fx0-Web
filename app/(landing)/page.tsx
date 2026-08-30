@@ -37,9 +37,11 @@ export default function LandingPage() {
         <AboveFoldBg />
         <HeroSection />
       </div>
+      <StatsStrip />
       <VylderCard />
       <Vex0Section />
       <ProductsSection />
+      <RoadmapSection />
       <DashboardSection />
       <PartnersSection />
       <FaqSection />
@@ -108,6 +110,69 @@ function Vex0Section() {
               <pre><code dangerouslySetInnerHTML={{ __html: VEX0_CODE_HTML }} /></pre>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StatsStrip() {
+  const items = [
+    { val: '5+', label: 'Produkte im Ökosystem' },
+    { val: '3',  label: 'Live' },
+    { val: '2',  label: 'In Entwicklung' },
+    { val: '∞',  label: 'Open Community' },
+  ];
+  return (
+    <div className="stats-strip">
+      <div className="container">
+        <div className="stats-strip-inner">
+          {items.map((s, i) => (
+            <div key={i} className="stats-strip-item">
+              <span className="stats-strip-val">{s.val}</span>
+              <span className="stats-strip-label">{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const ROADMAP_ITEMS = [
+  { name: 'LumaSpace',    desc: 'KI-gestützter Landing Page Builder',         status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
+  { name: 'FlowWave',     desc: 'Workflow-Automatisierung für Teams',           status: 'Live',  cls: 'rm-live',  href: 'https://flowwave.app' },
+  { name: 'LyqDex',       desc: 'Crypto DEX Aggregator & Analytics',            status: 'Live',  cls: 'rm-live',  href: 'https://lyqdex.io' },
+  { name: 'Vex0',         desc: 'Open Source Component Framework',              status: 'Beta',  cls: 'rm-beta',  href: '#vex0' },
+  { name: 'Vylder',       desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
+  { name: 'Indikatoren',  desc: 'TradingView Pine Script Strategien & Tools',   status: 'Bald',  cls: 'rm-soon',  href: '#' },
+];
+
+function RoadmapSection() {
+  return (
+    <section className="roadmap-section section">
+      <div className="container">
+        <div className="section-label-row">ROADMAP</div>
+        <div className="section-intro">
+          <h2 className="section-title">Was wir bauen.</h2>
+          <p className="section-sub">Von Live bis Coming Soon — das Flux Network Ökosystem wächst.</p>
+        </div>
+        <div className="roadmap-list">
+          {ROADMAP_ITEMS.map((item, i) => (
+            <a
+              key={item.name}
+              href={item.href}
+              className="roadmap-item"
+              {...(item.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}
+            >
+              <span className="roadmap-num">0{i + 1}</span>
+              <div className="roadmap-info">
+                <span className="roadmap-name">{item.name}</span>
+                <span className="roadmap-desc">{item.desc}</span>
+              </div>
+              <span className={`roadmap-status ${item.cls}`}>{item.status}</span>
+            </a>
+          ))}
         </div>
       </div>
     </section>
