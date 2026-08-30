@@ -14,7 +14,6 @@ interface MeData {
 const NAV_LINKS = [
   { href: '#products', label: 'Produkte' },
   { href: '/docs',     label: 'Docs' },
-  { href: 'https://discord.gg/D9GwqWpwHT', label: 'Discord', external: true },
 ];
 
 export default function Navbar() {
