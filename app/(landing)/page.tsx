@@ -5,6 +5,7 @@ import HeroSection from '@/components/landing/HeroSection';
 import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
+import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
@@ -38,9 +39,10 @@ export default function LandingPage() {
         <HeroSection />
       </div>
       <StatsStrip />
+      <LumaSpaceSection />
+      <FlowWaveSection />
       <VylderCard />
       <Vex0Section />
-      <ProductsSection />
       <RoadmapSection />
       <DashboardSection />
       <PartnersSection />
@@ -140,10 +142,9 @@ function StatsStrip() {
 }
 
 const ROADMAP_ITEMS = [
-  { name: 'LumaSpace',    desc: 'KI-gestützter Landing Page Builder',         status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
-  { name: 'FlowWave',     desc: 'Workflow-Automatisierung für Teams',           status: 'Live',  cls: 'rm-live',  href: 'https://flowwave.app' },
-  { name: 'LyqDex',       desc: 'Crypto DEX Aggregator & Analytics',            status: 'Live',  cls: 'rm-live',  href: 'https://lyqdex.io' },
-  { name: 'Vex0',         desc: 'Open Source Component Framework',              status: 'Beta',  cls: 'rm-beta',  href: '#vex0' },
+  { name: 'LumaSpace',    desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
+  { name: 'FlowWave',     desc: 'Discord-Bots visuell bauen — ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
+  { name: 'Vex0',         desc: 'Open Source Component Framework',              status: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
   { name: 'Vylder',       desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
   { name: 'Indikatoren',  desc: 'TradingView Pine Script Strategien & Tools',   status: 'Bald',  cls: 'rm-soon',  href: '#' },
 ];
@@ -173,6 +174,142 @@ function RoadmapSection() {
               <span className={`roadmap-status ${item.cls}`}>{item.status}</span>
             </a>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function LumaSpaceMockup() {
+  const tasks = [
+    { done: true,  label: 'Design Review',   tag: 'Fertig',    tagCls: 'luma-tag-done' },
+    { done: false, label: 'API Integration', tag: 'In Arbeit', tagCls: 'luma-tag-wip' },
+    { done: false, label: 'Dokumentation',   tag: 'Offen',     tagCls: 'luma-tag-open' },
+  ];
+  return (
+    <div className="luma-mock">
+      <div className="luma-mock-bar">
+        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
+        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
+        <span className="dmock-dot" style={{ background: '#28c840' }} />
+        <span className="luma-mock-url">lumaspace.de/workspace</span>
+      </div>
+      <div className="luma-mock-body">
+        <div className="luma-mock-sidebar">
+          <div className="luma-mock-sidebar-title">Projekte</div>
+          {['Flux Network', 'Client A', 'Side Project'].map((p, i) => (
+            <div key={p} className={`luma-mock-proj${i === 0 ? ' active' : ''}`}>{p}</div>
+          ))}
+          <div className="luma-mock-ai-hint">✨ KI-Vorschlag</div>
+        </div>
+        <div className="luma-mock-main">
+          <div className="luma-mock-day">Heute</div>
+          {tasks.map(t => (
+            <div key={t.label} className={`luma-mock-task${t.done ? ' done' : ''}`}>
+              <span className="luma-mock-check">{t.done ? '✓' : '○'}</span>
+              <span className="luma-mock-task-label">{t.label}</span>
+              <span className={`luma-mock-tag ${t.tagCls}`}>{t.tag}</span>
+            </div>
+          ))}
+          <div className="luma-mock-suggestion">
+            <span>🤖</span>
+            <span>Focus-Block um 14:00 Uhr empfohlen</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function LumaSpaceSection() {
+  return (
+    <section className="product-spotlight section">
+      <div className="container">
+        <div className="product-split">
+          <div className="product-split-text">
+            <div className="section-label-row">LUMASPACE</div>
+            <h2 className="section-title">Planung.<br />KI-gestützt.</h2>
+            <p className="section-sub">
+              KI-gestütztes Produktivitätssystem für Teams und Solo-Worker — Planung, Fokusarbeit und automatisierte Workflows in einer Plattform.
+            </p>
+            <ul className="feature-list">
+              <li>KI schlägt Focus-Blöcke & Tasks vor</li>
+              <li>Realtime Collaboration im Team</li>
+              <li>Automatisierte Workflows</li>
+            </ul>
+            <a href="https://lumaspace.de/" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              LumaSpace öffnen →
+            </a>
+          </div>
+          <div className="product-split-visual">
+            <LumaSpaceMockup />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FlowWaveMockup() {
+  const commands = ['/info', '/ping', '/help', '/stats'];
+  return (
+    <div className="flow-mock">
+      <div className="flow-mock-bar">
+        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
+        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
+        <span className="dmock-dot" style={{ background: '#28c840' }} />
+        <span className="flow-mock-url">flowwave.app/builder</span>
+      </div>
+      <div className="flow-mock-body">
+        <div className="flow-mock-sidebar">
+          <div className="flow-mock-sidebar-title">Commands</div>
+          {commands.map((cmd, i) => (
+            <div key={cmd} className={`flow-mock-cmd${i === 0 ? ' active' : ''}`}>{cmd}</div>
+          ))}
+          <div className="flow-mock-add">+ Neu</div>
+        </div>
+        <div className="flow-mock-editor">
+          <div className="flow-mock-cmd-title">/info</div>
+          <div className="flow-mock-cmd-sub">Antwort: Embed</div>
+          <div className="flow-mock-embed">
+            <div className="flow-mock-embed-bar" />
+            <div className="flow-mock-embed-name">Flux Network Info</div>
+            <div className="flow-mock-embed-row">Version: 1.0.0</div>
+            <div className="flow-mock-embed-row" style={{ color: '#4ade80' }}>Status: ✓ Online</div>
+          </div>
+          <div className="flow-mock-trigger">
+            <span className="flow-mock-trigger-label">Trigger</span>
+            <span className="flow-mock-trigger-val">Slash Command</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FlowWaveSection() {
+  return (
+    <section className="product-spotlight section">
+      <div className="container">
+        <div className="product-split product-split--reverse">
+          <div className="product-split-visual">
+            <FlowWaveMockup />
+          </div>
+          <div className="product-split-text">
+            <div className="section-label-row">FLOWWAVE</div>
+            <h2 className="section-title">Discord Bots.<br />Ohne Boilerplate.</h2>
+            <p className="section-sub">
+              Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.
+            </p>
+            <ul className="feature-list">
+              <li>Visueller Command-Builder</li>
+              <li>Slash Commands & Events ohne Code</li>
+              <li>Powered by pycord v2</li>
+            </ul>
+            <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              FlowWave öffnen →
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -456,16 +593,15 @@ function CtaSection() {
         <div className="cta-inner">
           <div className="section-label-row">
             <span className="dot dot--grün" />
-            BEREIT?
+            EARLY ACCESS
           </div>
           <h2>Als Erstes dabei sein.</h2>
-          <p>Im Discord kriegst du Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten — bevor alle anderen.</p>
-          <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center', marginTop: 4 }}>
-            <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
-              <DiscordIcon /> Discord joinen
-            </a>
-            <a href="#products" className="btn-ghost">Produkte ansehen</a>
-          </div>
+          <p>Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</p>
+          <EarlyAccessForm />
+          <div className="cta-divider"><span>oder</span></div>
+          <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+            <DiscordIcon /> Discord joinen
+          </a>
         </div>
       </div>
     </section>
