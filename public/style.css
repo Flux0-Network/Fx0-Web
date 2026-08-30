@@ -1866,10 +1866,37 @@ kbd {
 .hero--small { min-height: unset; padding: 110px 0 56px; }
 
 /* ── DASHBOARD ── */
-.dash-login-card { max-width: 420px; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 48px 40px; text-align: center; box-shadow: var(--shadow-sm); }
-.dash-login-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; color: #fff; }
-.dash-login-card h2 { font-size: 1.4rem; font-weight: 800; margin-bottom: 8px; }
-.dash-login-card > p { color: var(--muted); font-size: 0.9rem; margin-bottom: 28px; }
+.dash-login-card { max-width: 400px; width: 100%; margin: 0 auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 40px 36px; text-align: center; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; align-items: center; }
+.dash-login-card h2 { font-size: 1.35rem; font-weight: 800; }
+.dash-login-card > p { color: var(--muted); font-size: 0.86rem; }
+.dash-login-input {
+  width: 100%; padding: 11px 14px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  color: var(--text); font-size: 0.88rem;
+  outline: none; transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+.dash-login-input:focus { border-color: rgba(255,255,255,0.3); }
+.dash-login-input::placeholder { color: var(--dim); }
+.dash-login-email-btn {
+  width: 100%; padding: 11px;
+  background: #ffffff; color: #000000;
+  border: none; border-radius: 10px;
+  font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; transition: opacity 0.15s;
+}
+.dash-login-email-btn:hover { opacity: 0.88; }
+.dash-login-email-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.dash-login-divider {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; margin: 18px 0;
+  color: var(--dim); font-size: 0.76rem;
+}
+.dash-login-divider::before, .dash-login-divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
 .dash-login-note { font-size: 0.78rem; color: var(--dim); margin-top: 20px; }
 .dash-login-note code { font-family: 'JetBrains Mono', monospace; background: var(--surface); border: 1px solid var(--border); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
 

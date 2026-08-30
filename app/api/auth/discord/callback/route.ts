@@ -60,6 +60,7 @@ export async function GET(request: NextRequest) {
       username: user.username,
       global_name: user.global_name || user.username,
       avatar: user.avatar,
+      earlyAccess: true,
       exp: Date.now() + 7 * 24 * 60 * 60 * 1000,
     })).toString('base64url');
     const sig = createHmac('sha256', SESSION_SECRET).update(`${header}.${payload}`).digest('base64url');
@@ -75,7 +76,7 @@ export async function GET(request: NextRequest) {
     if (kvUrl && kvToken) {
       const existing = await kvCmd<string>('GET', `flux0:user:${user.id}`);
       const prev = existing ? (typeof existing === 'string' ? JSON.parse(existing) : existing) : null;
-      const profile = { id: user.id, username: user.username, global_name: user.global_name || user.username, avatar: user.avatar, firstSeen: (prev as Record<string, unknown>)?.firstSeen || now, lastLogin: now, loginCount: ((prev as Record<string, unknown>)?.loginCount as number || 0) + 1 };
+      const profile = { id: user.id, username: user.username, global_name: user.global_name || user.username, avatar: user.avatar, earlyAccess: true, firstSeen: (prev as Record<string, unknown>)?.firstSeen || now, lastLogin: now, loginCount: ((prev as Record<string, unknown>)?.loginCount as number || 0) + 1 };
       await kvCmd('SET', `flux0:user:${user.id}`, JSON.stringify(profile));
       await kvCmd('SADD', 'flux0:users:all', user.id);
     }

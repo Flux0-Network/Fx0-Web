@@ -13,6 +13,7 @@ import PanelVerbindungen from './panels/PanelVerbindungen';
 import PanelAdmin from './panels/PanelAdmin';
 
 type View = 'loading' | 'login' | 'dashboard';
+type EmailStatus = 'idle' | 'loading' | 'error';
 
 export type PanelId = 'projekt' | 'anfrage' | 'dokumente' | 'support' | 'verbindungen' | 'admin';
 
@@ -26,7 +27,11 @@ export default function DashboardClient() {
   const [docs, setDocs] = useState<DocItem[]>([]);
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [activePanel, setActivePanel] = useState<PanelId>('projekt');
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [errorMsg, setErrorMsg]       = useState<string | null>(null);
+  const [emailVal, setEmailVal]       = useState('');
+  const [passVal, setPassVal]         = useState('');
+  const [emailStatus, setEmailStatus] = useState<EmailStatus>('idle');
+  const [emailErr, setEmailErr]       = useState<string | null>(null);
 
   const initialized = useRef(false);
 
@@ -82,6 +87,30 @@ export default function DashboardClient() {
       .catch(() => setView('login'));
   }, []);
 
+  async function handleEmailLogin(e: React.FormEvent) {
+    e.preventDefault();
+    setEmailErr(null);
+    setEmailStatus('loading');
+    try {
+      const res = await fetch('/api/auth/email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ email: emailVal, password: passVal }),
+      });
+      const data = await res.json() as { ok?: boolean; error?: string };
+      if (data.ok) {
+        window.location.reload();
+      } else {
+        setEmailErr(data.error || 'Fehler beim Login.');
+        setEmailStatus('error');
+      }
+    } catch {
+      setEmailErr('Verbindungsfehler.');
+      setEmailStatus('error');
+    }
+  }
+
   function navigate(panel: PanelId) {
     setActivePanel(panel);
     try { localStorage.setItem('flux0-dash-section', panel); } catch {}
@@ -104,15 +133,47 @@ export default function DashboardClient() {
           </div>
         )}
         <div className="dash-login-card">
-          <div className="dash-login-icon">
-            <DiscordIcon />
-          </div>
-          <h2>Mit Discord einloggen</h2>
-          <p>Verbinde deinen Discord-Account um dein Profil und deine Verbindungen zu sehen.</p>
+          <img src="/logo1.png" alt="Flux Network" style={{ height: 20, width: 'auto', marginBottom: 20, opacity: 0.85 }} />
+          <h2 style={{ marginBottom: 6 }}>Anmelden</h2>
+          <p style={{ marginBottom: 20 }}>Early Access &amp; Beta-Releases — für alle die eingeloggt sind.</p>
+
+          {/* Email form */}
+          <form onSubmit={handleEmailLogin} style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+            <input
+              type="email"
+              placeholder="Email"
+              value={emailVal}
+              onChange={e => setEmailVal(e.target.value)}
+              required
+              disabled={emailStatus === 'loading'}
+              className="dash-login-input"
+            />
+            <input
+              type="password"
+              placeholder="Passwort (min. 6 Zeichen)"
+              value={passVal}
+              onChange={e => setPassVal(e.target.value)}
+              required
+              disabled={emailStatus === 'loading'}
+              className="dash-login-input"
+            />
+            {emailErr && (
+              <div style={{ fontSize: '0.78rem', color: '#f87171', textAlign: 'center' }}>{emailErr}</div>
+            )}
+            <button type="submit" className="dash-login-email-btn" disabled={emailStatus === 'loading'}>
+              {emailStatus === 'loading' ? 'Wird geladen…' : 'Anmelden / Registrieren →'}
+            </button>
+          </form>
+
+          <div className="dash-login-divider"><span>oder</span></div>
+
           <a href={DISCORD_AUTH_URL} className="btn-discord">
             <DiscordIcon size={18} />
             Mit Discord einloggen
           </a>
+          <p style={{ fontSize: '0.72rem', color: 'var(--dim)', marginTop: 16, textAlign: 'center' }}>
+            Neue Email-Adresse? Konto wird automatisch erstellt.
+          </p>
         </div>
       </div>
     );

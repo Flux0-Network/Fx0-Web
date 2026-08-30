@@ -7,6 +7,7 @@ export interface SessionData {
   global_name?: string;
   avatar: string | null;
   discriminator?: string;
+  earlyAccess?: boolean;
   exp: number;
 }
 
