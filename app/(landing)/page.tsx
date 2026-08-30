@@ -40,6 +40,7 @@ export default function LandingPage() {
       <VylderCard />
       <Vex0Section />
       <ProductsSection />
+      <DashboardSection />
       <PartnersSection />
       <FaqSection />
       <CtaSection />
@@ -221,6 +222,75 @@ function ProductsSection() {
               <a href={p.href} className="btn-primary" {...(p.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>Öffnen →</a>
             </div>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function DashboardMockup() {
+  const navItems = ['Übersicht', 'Produkte', 'Early Access', 'Einstellungen'];
+  const products = [
+    { name: 'LumaSpace', status: 'Live', color: '#22c55e' },
+    { name: 'FlowWave',  status: 'Beta', color: '#f59e0b' },
+    { name: 'Vex0',      status: 'Dev',  color: '#888' },
+  ];
+  return (
+    <div className="dmock">
+      <div className="dmock-bar">
+        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
+        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
+        <span className="dmock-dot" style={{ background: '#28c840' }} />
+        <span className="dmock-url">flux0.dev/dashboard</span>
+      </div>
+      <div className="dmock-body">
+        <div className="dmock-sidebar">
+          {navItems.map((item, i) => (
+            <div key={item} className={`dmock-nav${i === 0 ? ' dmock-nav--active' : ''}`}>{item}</div>
+          ))}
+        </div>
+        <div className="dmock-main">
+          <div className="dmock-welcome">Willkommen zurück</div>
+          <div className="dmock-stats">
+            <div className="dmock-stat"><span className="dmock-stat-val">5</span><span className="dmock-stat-label">Produkte</span></div>
+            <div className="dmock-stat"><span className="dmock-stat-val" style={{ color: '#22c55e' }}>Early</span><span className="dmock-stat-label">Access</span></div>
+          </div>
+          <div className="dmock-list">
+            {products.map(p => (
+              <div key={p.name} className="dmock-row">
+                <span className="dmock-row-dot" style={{ background: p.color }} />
+                <span className="dmock-row-name">{p.name}</span>
+                <span className="dmock-row-status">{p.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function DashboardSection() {
+  return (
+    <section className="dashboard-section section">
+      <div className="container">
+        <div className="dashboard-split">
+          <div className="dashboard-text">
+            <div className="section-label-row">
+              <span className="dot" />
+              DASHBOARD
+            </div>
+            <h2 className="section-title">Dein Hub.<br />Alles drin.</h2>
+            <p className="section-sub">
+              Ein Ort für alle Flux Network Produkte. Early Access verwalten, Beta-Releases freischalten und den Status aller Tools im Blick behalten — Login via Discord.
+            </p>
+            <a href="/dashboard" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              Dashboard öffnen →
+            </a>
+          </div>
+          <div className="dashboard-preview">
+            <DashboardMockup />
+          </div>
         </div>
       </div>
     </section>
