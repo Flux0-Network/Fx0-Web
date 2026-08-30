@@ -163,7 +163,7 @@ const PRODUCTS = [
     href: '/docs',
   },
   {
-    icon: null,
+    icon: '/vylder-icon.png' as string | null,
     name: 'Vylder',
     status: 'Coming Soon',
     statusClass: 'product-status--dev',
