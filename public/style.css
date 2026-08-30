@@ -1,6 +1,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { overflow-x: hidden; max-width: 100%; }
+html { overflow-x: hidden; overflow-x: clip; max-width: 100%; }
 
 :root {
   --bg:        #000000;
@@ -30,6 +30,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
+  overflow-x: clip; /* stronger than hidden on iOS — prevents bounce/scroll into overflow */
   -webkit-font-smoothing: antialiased;
 }
 body::after {
@@ -1859,6 +1860,7 @@ kbd {
   border-top: 1px solid var(--border);
   padding-top: 64px !important;
   padding-bottom: 64px !important;
+  overflow: hidden;
 }
 .vex0-split {
   display: grid;
@@ -1873,6 +1875,7 @@ kbd {
   border-radius: 14px;
   overflow: hidden;
   min-width: 0;
+  width: 100%;
   max-width: 100%;
 }
 .code-block-header {
@@ -1911,6 +1914,10 @@ kbd {
     grid-template-columns: 1fr;
     gap: 40px;
   }
+}
+@media (max-width: 640px) {
+  .vex0-split > * { width: 100%; max-width: 100%; overflow: hidden; }
+  .code-block pre { font-size: 0.72rem; }
 }
 
 /* ── VYLDER CARD ── */
