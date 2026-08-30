@@ -816,7 +816,7 @@ body::after {
 }
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr 1fr;
+  grid-template-columns: 1.8fr 1fr 1fr;
   gap: 48px 40px;
   padding-bottom: 56px;
 }

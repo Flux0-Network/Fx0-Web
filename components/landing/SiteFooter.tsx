@@ -38,16 +38,6 @@ export default function SiteFooter() {
             </ul>
           </div>
 
-          {/* Services */}
-          <div className="footer-col">
-            <div className="footer-col-title">Services</div>
-            <ul className="footer-links">
-              <li><a href="/#pakete">Webdesign</a></li>
-              <li><a href="/design">Design Studio</a></li>
-              <li><a href="/#prozess">Prozess</a></li>
-            </ul>
-          </div>
-
           {/* Links */}
           <div className="footer-col">
             <div className="footer-col-title">Links</div>
