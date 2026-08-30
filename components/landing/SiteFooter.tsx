@@ -6,7 +6,7 @@ export default function SiteFooter() {
           <div className="footer-brand">
             <a href="/" className="logo">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/logo.png" alt="Flux Network" className="logo-img" />
+              <img src="/logo1.png" alt="Flux Network" className="logo-img" />
             </a>
             <p className="footer-tagline">Professionelle Webseiten &amp; digitale Produkte. Gebaut von Flux Network.</p>
             <div className="footer-socials">
