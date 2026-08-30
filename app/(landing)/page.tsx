@@ -51,6 +51,33 @@ export default function LandingPage() {
 
 // ── Static sections ────────────────────────────────────────────────────────
 
+const kw = (s: string) => `<span style="color:#c678dd">${s}</span>`;
+const str = (s: string) => `<span style="color:#98c379">${s}</span>`;
+const comp = (s: string) => `<span style="color:#61afef">${s}</span>`;
+const htag = (s: string) => `<span style="color:#e06c75">${s}</span>`;
+const attr = (s: string) => `<span style="color:#9cdcfe">${s}</span>`;
+const fn = (s: string) => `<span style="color:#dcdcaa">${s}</span>`;
+const pn = (s: string) => `<span style="color:rgba(255,255,255,0.35)">${s}</span>`;
+
+const VEX0_CODE_HTML = [
+  `${kw('import')} ${pn('{')} ${comp('Button')} ${pn('}')} ${kw('from')} ${str('"@/components/vex0/button"')}`,
+  `${kw('import')} ${pn('{')} ${comp('Card')}${pn(',')} ${comp('CardContent')} ${pn('}')} ${kw('from')} ${str('"@/components/vex0/card"')}`,
+  ``,
+  `${kw('export')} ${kw('function')} ${fn('Example')}${pn('() {')}`,
+  `  ${kw('return')} ${pn('(')}`,
+  `    ${pn('&lt;')}${comp('Card')}${pn('&gt;')}`,
+  `      ${pn('&lt;')}${comp('CardContent')}${pn('&gt;')}`,
+  `        ${pn('&lt;')}${htag('h3')}${pn('&gt;')}Flux Network${pn('&lt;/')}${htag('h3')}${pn('&gt;')}`,
+  `        ${pn('&lt;')}${htag('p')}${pn('&gt;')}Tools. Produkte. Indikatoren.${pn('&lt;/')}${htag('p')}${pn('&gt;')}`,
+  `        ${pn('&lt;')}${comp('Button')} ${attr('variant')}${pn('=')}${str('"outline"')}${pn('&gt;')}`,
+  `          Mehr erfahren →`,
+  `        ${pn('&lt;/')}${comp('Button')}${pn('&gt;')}`,
+  `      ${pn('&lt;/')}${comp('CardContent')}${pn('&gt;')}`,
+  `    ${pn('&lt;/')}${comp('Card')}${pn('&gt;')}`,
+  `  ${pn(')')}`,
+  `${pn('}')}`,
+].join('\n');
+
 function Vex0Section() {
   return (
     <section className="vex0-section section">
@@ -77,22 +104,7 @@ function Vex0Section() {
                   <span /><span /><span />
                 </div>
               </div>
-              <pre><code>{`import { Button } from "@/components/vex0/button"
-import { Card, CardContent } from "@/components/vex0/card"
-
-export function Example() {
-  return (
-    <Card>
-      <CardContent>
-        <h3>Flux Network</h3>
-        <p>Tools. Produkte. Indikatoren.</p>
-        <Button variant="outline">
-          Mehr erfahren →
-        </Button>
-      </CardContent>
-    </Card>
-  )
-}`}</code></pre>
+              <pre><code dangerouslySetInnerHTML={{ __html: VEX0_CODE_HTML }} /></pre>
             </div>
           </div>
         </div>
