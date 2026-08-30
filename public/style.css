@@ -340,6 +340,14 @@ body::after {
   color: var(--muted);
   margin-bottom: 40px;
 }
+.section-label-row .dot { display: none; }
+.section-label-row::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--border-md);
+  flex-shrink: 0;
+}
 .section-label-row::after {
   content: '';
   flex: 1;
