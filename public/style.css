@@ -2997,7 +2997,7 @@ kbd {
 
   /* hero */
   .above-fold-wrapper { min-height: auto; }
-  .hero { min-height: unset; padding: 100px 0 60px; align-items: flex-start; }
+  .hero { min-height: 85dvh; padding: 120px 0 80px; align-items: flex-start; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
