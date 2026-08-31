@@ -144,18 +144,18 @@ a {
   margin: 0 auto;
   padding: 40px 36px;
   text-align: center;
-  background: #1c1c1c;
-  border: 1px solid rgba(255,255,255,0.16);
+  background: #0f0f0f;
+  border: 1px solid rgba(255,255,255,0.10);
   border-radius: 20px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.05);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.04);
   display: flex; flex-direction: column; align-items: center; gap: 0;
 }
 .dash-login-card h2 { font-size: 1.3rem; font-weight: 800; margin: 0 0 6px; }
 .dash-login-card p { font-size: 0.84rem; color: var(--dim); line-height: 1.5; margin: 0 0 24px; }
 .dash-login-input {
   width: 100%; padding: 12px 16px;
-  background: rgba(255,255,255,0.08);
-  border: 1.5px solid rgba(255,255,255,0.28);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.18);
   border-radius: 10px;
   color: #ffffff; font-size: 0.88rem; font-family: inherit;
   outline: none; box-sizing: border-box;
