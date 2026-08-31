@@ -110,6 +110,7 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <ul
+          className="nav-desktop-links"
           style={{
             display: 'flex',
             listStyle: 'none',

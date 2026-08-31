@@ -2962,6 +2962,8 @@ kbd {
 @media (max-width: 640px) {
   .container { padding: 0 16px; }
 
+  .nav-desktop-links { display: none !important; }
+
   /* navbar — flat full-width bar on mobile, like Framer */
   .navbar {
     top: 0;
