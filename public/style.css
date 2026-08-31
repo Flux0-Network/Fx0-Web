@@ -3000,7 +3000,7 @@ kbd {
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
-  .hero h1 { font-size: clamp(1.85rem, 7.5vw, 2.8rem); letter-spacing: -0.03em; word-break: break-word; overflow-wrap: break-word; }
+  .hero h1 { font-size: clamp(1.5rem, 6.5vw, 2.2rem); letter-spacing: -0.03em; word-break: break-word; overflow-wrap: break-word; }
   .hero-sub { font-size: 1rem; text-align: center; }
   .hero-text { text-align: center; align-items: center; }
   .hero-ctas { justify-content: center; }
