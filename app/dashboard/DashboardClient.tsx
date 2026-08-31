@@ -133,12 +133,12 @@ export default function DashboardClient() {
           </div>
         )}
         <div className="dash-login-card">
-          <img src="/logo1.png" alt="Flux Network" style={{ height: 20, width: 'auto', marginBottom: 20, opacity: 0.85 }} />
+          <img src="/logo1.png" alt="Flux Network" style={{ height: 24, width: 'auto', marginBottom: 24, opacity: 0.9 }} />
           <h2 style={{ marginBottom: 6 }}>Anmelden</h2>
           <p style={{ marginBottom: 20 }}>Early Access &amp; Beta-Releases — für alle die eingeloggt sind.</p>
 
           {/* Email form */}
-          <form onSubmit={handleEmailLogin} style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%' }}>
+          <form onSubmit={handleEmailLogin} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
             <input
               type="email"
               placeholder="Email"
