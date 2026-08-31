@@ -1869,12 +1869,12 @@ kbd {
 .dash-login-card {
   max-width: 380px; width: 100%;
   margin: 0 auto;
-  background: rgba(16,16,16,0.95);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.15);
   border-radius: 20px;
   padding: 40px 36px;
   text-align: center;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,255,255,0.06);
   display: flex; flex-direction: column; align-items: center;
   gap: 0;
 }
@@ -1882,28 +1882,30 @@ kbd {
 .dash-login-card > p { color: var(--muted); font-size: 0.84rem; margin: 0 0 24px; line-height: 1.5; }
 .dash-login-input {
   width: 100%; padding: 12px 16px;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  border: 1.5px solid rgba(255,255,255,0.28);
   border-radius: 10px;
-  color: #ffffff; font-size: 0.88rem;
+  color: #ffffff !important; font-size: 0.88rem;
   outline: none; transition: border-color 0.15s, background 0.15s;
   box-sizing: border-box;
-  -webkit-appearance: none;
+  -webkit-appearance: none; appearance: none;
 }
 .dash-login-input:focus {
-  border-color: rgba(255,255,255,0.45);
-  background: rgba(255,255,255,0.09);
+  border-color: rgba(255,255,255,0.55);
+  background: rgba(255,255,255,0.12);
 }
-.dash-login-input::placeholder { color: rgba(255,255,255,0.3); }
+.dash-login-input::placeholder { color: rgba(255,255,255,0.4); }
 .dash-login-email-btn {
-  width: 100%; padding: 12px;
-  background: #ffffff; color: #000000;
+  width: 100%; padding: 13px;
+  background: #ffffff !important; color: #000000 !important;
   border: none; border-radius: 10px;
   font-size: 0.88rem; font-weight: 700;
   cursor: pointer; transition: opacity 0.15s;
   letter-spacing: -0.01em;
+  -webkit-appearance: none; appearance: none;
+  display: block;
 }
-.dash-login-email-btn:hover { opacity: 0.85; }
+.dash-login-email-btn:hover { opacity: 0.88; }
 .dash-login-email-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .dash-login-divider {
   display: flex; align-items: center; gap: 10px;
