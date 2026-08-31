@@ -3000,7 +3000,7 @@ kbd {
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
-  .hero h1 { font-size: clamp(2.6rem, 9vw, 3.6rem); letter-spacing: -0.03em; word-break: break-word; }
+  .hero h1 { font-size: clamp(1.85rem, 7.5vw, 2.8rem); letter-spacing: -0.03em; word-break: break-word; overflow-wrap: break-word; }
   .hero-sub { font-size: 1rem; text-align: center; }
   .hero-text { text-align: center; align-items: center; }
   .hero-ctas { justify-content: center; }
@@ -3076,7 +3076,7 @@ kbd {
 
 /* Small phones (≤ 400px) */
 @media (max-width: 400px) {
-  .hero h1 { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .hero h1 { font-size: clamp(1.65rem, 7vw, 2.2rem); }
   .hero-label { font-size: 0.6rem; }
   .product-icon { width: 40px; height: 40px; font-size: 1rem; }
   .docs-mobile-toggle span { display: none; }

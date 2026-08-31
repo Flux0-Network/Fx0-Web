@@ -37,7 +37,7 @@ export default function HeroSection() {
             Software, die bleibt. Produkte, Frameworks und Indikatoren — gebaut von Entwicklern, für Entwickler.
           </p>
           <div className="hero-ctas">
-            <a href="#products" className="btn-primary">
+            <a href="#produkte" className="btn-primary">
               Produkte ansehen →
             </a>
             <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener">Discord joinen</a>
