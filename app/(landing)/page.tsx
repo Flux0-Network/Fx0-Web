@@ -151,7 +151,7 @@ const ROADMAP_ITEMS = [
 
 function RoadmapSection() {
   return (
-    <section className="roadmap-section section">
+    <section id="roadmap" className="roadmap-section section">
       <div className="container">
         <div className="section-label-row">ROADMAP</div>
         <div className="section-intro">
@@ -223,7 +223,7 @@ function LumaSpaceMockup() {
 
 function LumaSpaceSection() {
   return (
-    <section className="product-spotlight section">
+    <section id="produkte" className="product-spotlight section">
       <div className="container">
         <div className="product-split">
           <div className="product-split-text">

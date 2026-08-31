@@ -12,8 +12,9 @@ interface MeData {
 }
 
 const NAV_LINKS = [
-  { href: '#products', label: 'Produkte' },
-  { href: '/docs',     label: 'Docs' },
+  { href: '#produkte',                        label: 'Produkte' },
+  { href: '#roadmap',                         label: 'Roadmap'  },
+  { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
 ];
 
 export default function Navbar() {
@@ -122,6 +123,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
+                {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 style={{
                   textDecoration: 'none',
                   color: 'rgba(255,255,255,0.55)',
@@ -251,6 +253,7 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
+                {...(link.external ? { target: '_blank', rel: 'noopener' } : {})}
                 style={{
                   textDecoration: 'none',
                   color: 'rgba(255,255,255,0.65)',
