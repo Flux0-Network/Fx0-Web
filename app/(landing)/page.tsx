@@ -85,7 +85,7 @@ const VEX0_CODE_HTML = [
 
 function Vex0Section() {
   return (
-    <section className="vex0-section section">
+    <section id="vex0" className="vex0-section section">
       <div className="container">
         <div className="vex0-split">
           <div className="vex0-text">
@@ -121,7 +121,7 @@ function Vex0Section() {
 function StatsStrip() {
   const items = [
     { val: '5+', label: 'Produkte im Ökosystem' },
-    { val: '3',  label: 'Live' },
+    { val: '2',  label: 'Live' },
     { val: '2',  label: 'In Entwicklung' },
     { val: '∞',  label: 'Open Community' },
   ];
@@ -318,7 +318,7 @@ function FlowWaveSection() {
 
 function VylderCard() {
   return (
-    <div className="vylder-card-wrap">
+    <div id="vylder" className="vylder-card-wrap">
       <div className="vylder-card">
         <div className="vylder-card-top">
           <span className="vylder-badge">Coming Soon</span>

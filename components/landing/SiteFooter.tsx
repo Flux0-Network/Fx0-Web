@@ -32,9 +32,8 @@ export default function SiteFooter() {
             <ul className="footer-links">
               <li><a href="https://lumaspace.de/" target="_blank" rel="noopener">LumaSpace</a></li>
               <li><a href="https://flowwave.app" target="_blank" rel="noopener">FlowWave</a></li>
-              <li><a href="https://lyqdex.io" target="_blank" rel="noopener">LyqDex</a></li>
-              <li><a href="/#products">Vylder</a></li>
-              <li><a href="/#products">Vex0</a></li>
+              <li><a href="/#vylder">Vylder</a></li>
+              <li><a href="/#vex0">Vex0</a></li>
             </ul>
           </div>
 
