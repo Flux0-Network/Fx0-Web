@@ -74,7 +74,7 @@ a {
 .dash-admin-tab { padding: 10px 16px; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-size: 0.85rem; color: var(--muted); font-family: inherit; transition: color .15s; }
 .dash-admin-tab.active { color: var(--fg); border-bottom-color: var(--fg); font-weight: 500; }
 .dash-admin-content { flex: 1; overflow-y: auto; }
-@media (min-width: 701px) {
+@media (min-width: 701px) and (max-width: 1023px) {
   .dash-sidebar { width: 64px; }
   .dash-sidenav { padding: 8px; }
   .dash-sidenav-item { justify-content: center; padding: 11px; gap: 0; border-radius: 10px; }
@@ -85,6 +85,16 @@ a {
   .dash-sidebar-footer { padding: 10px 8px; }
   .dash-sidebar-footer a { justify-content: center; padding: 11px; gap: 0; }
   .dash-sidebar-footer a .dash-sidenav-label { display: none; }
+}
+@media (min-width: 1024px) {
+  .dash-sidebar { width: 200px; border-right: 1px solid var(--border); }
+  .dash-sidenav { padding: 10px 8px; }
+  .dash-sidenav-item { justify-content: flex-start; padding: 9px 14px; gap: 10px; }
+  .dash-sidenav-item .dash-sidenav-label { display: block; }
+  .dash-sidenav-icon { width: 17px; height: 17px; }
+  .dash-sidebar-footer { padding: 12px 8px; }
+  .dash-sidebar-footer a { justify-content: flex-start; padding: 9px 14px; gap: 10px; }
+  .dash-sidebar-footer a .dash-sidenav-label { display: block; }
 }
 @media (max-width: 700px) {
   .dash-body { flex-direction: column; }
