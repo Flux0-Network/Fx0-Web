@@ -130,6 +130,23 @@ export default function DocsPage() {
                     <p>Produktivitätsplattform</p>
                   </div>
                 </a>
+                <a href="#vex0-intro" className="docs-quick-card">
+                  <span className="docs-quick-icon" style={{ background: 'rgba(139,92,246,0.15)', color: '#a78bfa', fontSize: '1.3rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>⬡</span>
+                  <div>
+                    <strong>Vex0</strong>
+                    <p>Open Source Component Framework</p>
+                  </div>
+                </a>
+                <a href="#vylder-intro" className="docs-quick-card">
+                  <span className="docs-quick-icon docs-quick-icon--logo">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/vylder-icon.png" alt="Vylder" className="product-logo-icon" />
+                  </span>
+                  <div>
+                    <strong>Vylder</strong>
+                    <p>Visueller Website-Builder</p>
+                  </div>
+                </a>
               </div>
             </section>
 
