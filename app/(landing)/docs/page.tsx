@@ -82,6 +82,19 @@ export default function DocsPage() {
               <a href="#flowwave-container" className="docs-nav-link">Container Deployment</a>
               <a href="#flowwave-pycord" className="docs-nav-link">pycord v2 Engine</a>
             </div>
+
+            <div className="docs-nav-group">
+              <div className="docs-nav-product-badge" style={{ background: 'rgba(139,92,246,0.12)', color: '#a78bfa', border: '1px solid rgba(139,92,246,0.25)' }}>⬡ Vex0</div>
+              <a href="#vex0-intro" className="docs-nav-link">Übersicht</a>
+              <a href="#vex0-start" className="docs-nav-link">Installation</a>
+              <a href="#vex0-components" className="docs-nav-link">Komponenten</a>
+            </div>
+
+            <div className="docs-nav-group">
+              <div className="docs-nav-product-badge" style={{ background: 'rgba(251,191,36,0.10)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.22)' }}>✦ Vylder</div>
+              <a href="#vylder-intro" className="docs-nav-link">Übersicht</a>
+              <a href="#vylder-features" className="docs-nav-link">Features</a>
+            </div>
           </div>
         </aside>
 
@@ -271,6 +284,87 @@ export default function DocsPage() {
                 Du möchtest direkt mit pycord v2 arbeiten? Die offizielle Dokumentation findest du unter{' '}
                 <a href="https://docs.pycord.dev" target="_blank" rel="noopener" className="docs-link">docs.pycord.dev</a>.
               </div>
+            </section>
+
+            <div className="docs-divider" />
+
+            {/* ─── VEX0 ─── */}
+            <div className="docs-product-header" id="vex0-intro" style={{ borderLeft: '3px solid #a78bfa' }}>
+              <span className="docs-product-icon" style={{ background: 'rgba(139,92,246,0.15)', fontSize: '1.4rem' }}>⬡</span>
+              <div>
+                <h2 className="docs-h1" style={{ margin: 0 }}>Vex0</h2>
+                <span className="docs-product-tag" style={{ background: 'rgba(139,92,246,0.15)', color: '#a78bfa' }}>In Entwicklung</span>
+              </div>
+            </div>
+
+            <section className="docs-section">
+              <p className="docs-lead">
+                Vex0 ist ein <strong>Open Source Component Framework</strong> für moderne Web-Apps — designed für Entwickler, die schnelle, konsistente UI-Komponenten ohne Overhead wollen.
+              </p>
+              <div className="docs-feature-list">
+                <div className="docs-feature-item"><span className="docs-feature-icon">⚡</span><div><strong>Zero Config</strong> — Komponenten direkt importieren, kein Build-Setup nötig</div></div>
+                <div className="docs-feature-item"><span className="docs-feature-icon">🎨</span><div><strong>Theming</strong> — CSS-Variablen-basiertes Design-System, leicht anpassbar</div></div>
+                <div className="docs-feature-item"><span className="docs-feature-icon">📦</span><div><strong>Tree-shakeable</strong> — Nur die Komponenten, die du nutzt, landen im Bundle</div></div>
+              </div>
+              <div className="docs-callout docs-callout--info">
+                Vex0 befindet sich in aktiver Entwicklung. Melde dich im Discord um Early Access und Updates zu erhalten.
+              </div>
+            </section>
+
+            <section className="docs-section" id="vex0-start">
+              <h2 className="docs-h2">Installation</h2>
+              <div className="docs-callout docs-callout--warn">
+                Das npm-Paket ist noch nicht öffentlich verfügbar. Die Installationsanleitung erscheint mit dem ersten Release.
+              </div>
+              <p>Geplant:</p>
+              <pre style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: 10, padding: '14px 18px', fontSize: '0.84rem', overflowX: 'auto' }}><code>npm install @vex0/ui</code></pre>
+            </section>
+
+            <section className="docs-section" id="vex0-components">
+              <h2 className="docs-h2">Komponenten</h2>
+              <p>Vex0 wird eine vollständige Komponentenbibliothek für React/Next.js mitbringen:</p>
+              <ul className="docs-list">
+                <li><code className="inline-code">Button</code> — Varianten: primary, ghost, destructive</li>
+                <li><code className="inline-code">Card</code> / <code className="inline-code">CardContent</code> — Flexible Container-Komponente</li>
+                <li><code className="inline-code">Input</code> / <code className="inline-code">Textarea</code> — Form-Elemente mit Validierungsstate</li>
+                <li><code className="inline-code">Modal</code> — Accessible Dialog mit Backdrop</li>
+                <li><code className="inline-code">Badge</code> / <code className="inline-code">Tag</code> — Status-Indikatoren</li>
+              </ul>
+            </section>
+
+            <div className="docs-divider" />
+
+            {/* ─── VYLDER ─── */}
+            <div className="docs-product-header" id="vylder-intro" style={{ borderLeft: '3px solid #fbbf24' }}>
+              <span className="docs-product-icon" style={{ background: 'rgba(251,191,36,0.12)', fontSize: '1.4rem' }}>✦</span>
+              <div>
+                <h2 className="docs-h1" style={{ margin: 0 }}>Vylder</h2>
+                <span className="docs-product-tag" style={{ background: 'rgba(251,191,36,0.12)', color: '#fbbf24' }}>Coming Soon</span>
+              </div>
+            </div>
+
+            <section className="docs-section">
+              <p className="docs-lead">
+                Vylder ist ein <strong>visueller Website-Builder mit integriertem Code-Editor</strong> — für Entwickler und Designer, die schnell professionelle Websites erstellen wollen, ohne zwischen Tool und IDE zu wechseln.
+              </p>
+              <div className="docs-feature-list">
+                <div className="docs-feature-item"><span className="docs-feature-icon">🖱️</span><div><strong>Visual Editor</strong> — Elemente per Drag-and-drop platzieren und direkt im Browser stylen</div></div>
+                <div className="docs-feature-item"><span className="docs-feature-icon">💻</span><div><strong>Code Editor</strong> — Jederzeit in den Code wechseln und manuell anpassen</div></div>
+                <div className="docs-feature-item"><span className="docs-feature-icon">🚀</span><div><strong>One-Click Deploy</strong> — Direkt aus Vylder auf vylder.dev oder eigene Domain deployen</div></div>
+              </div>
+              <div className="docs-callout docs-callout--info">
+                Vylder ist noch nicht öffentlich verfügbar. Auf <a href="https://vylder.dev" target="_blank" rel="noopener" className="docs-link">vylder.dev</a> kannst du dich für Early Access eintragen.
+              </div>
+            </section>
+
+            <section className="docs-section" id="vylder-features">
+              <h2 className="docs-h2">Geplante Features</h2>
+              <h3 className="docs-h3">Visual + Code Hybrid</h3>
+              <p>Anders als reine No-Code-Tools sperrt Vylder dich nicht ein — du kannst jederzeit zwischen der visuellen Ansicht und dem echten Code hin- und herschalten. Änderungen werden in beide Richtungen synchronisiert.</p>
+              <h3 className="docs-h3">Component Library</h3>
+              <p>Vylder kommt mit einer eingebauten Komponentenbibliothek (basierend auf Vex0) — fertige Sektionen, Navigation, Hero-Bereiche und mehr als Ausgangspunkt.</p>
+              <h3 className="docs-h3">Export &amp; Deploy</h3>
+              <p>Fertige Projekte können als statische HTML/CSS-Seite exportiert oder direkt über Vylder gehostet werden. Custom-Domain-Support ist geplant.</p>
             </section>
 
             <div className="docs-footer">
