@@ -18,7 +18,7 @@ type EmailStatus = 'idle' | 'loading' | 'error';
 export type PanelId = 'projekt' | 'anfrage' | 'dokumente' | 'support' | 'verbindungen' | 'admin';
 
 const DISCORD_AUTH_URL =
-  'https://discord.com/oauth2/authorize?client_id=1144724108135911554&response_type=code&redirect_uri=https%3A%2F%2Fflux0.dev%2Fapi%2Fauth%2Fdiscord%2Fcallback&scope=identify';
+  'https://discord.com/oauth2/authorize?client_id=1144724108135911554&response_type=code&redirect_uri=https%3A%2F%2Fflux0.dev%2Fapi%2FcallBack&scope=identify';
 
 export default function DashboardClient() {
   const [view, setView] = useState<View>('loading');
