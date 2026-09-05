@@ -12,7 +12,7 @@ export interface SessionData {
 }
 
 export async function getSession(): Promise<SessionData | null> {
-  const SESSION_SECRET = process.env.SESSION_SECRET;
+  const SESSION_SECRET = process.env.AUTH_SECRET;
   if (!SESSION_SECRET) return null;
 
   const cookieStore = await cookies();

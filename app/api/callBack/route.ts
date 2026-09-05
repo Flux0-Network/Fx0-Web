@@ -25,11 +25,11 @@ export async function GET(request: NextRequest) {
   }
 
   const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
-  const CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-  const SESSION_SECRET = process.env.SESSION_SECRET;
+  const CLIENT_SECRET = process.env.AUTH_DISCORD_SECRET;
+  const SESSION_SECRET = process.env.AUTH_SECRET;
 
   if (!CLIENT_ID || !CLIENT_SECRET || !SESSION_SECRET) {
-    const missing = ['DISCORD_CLIENT_ID', 'DISCORD_CLIENT_SECRET', 'SESSION_SECRET']
+    const missing = ['DISCORD_CLIENT_ID', 'AUTH_DISCORD_SECRET', 'AUTH_SECRET']
       .filter(k => !process.env[k]).join(', ');
     return new NextResponse(`Missing env vars: ${missing}`, { status: 500, headers: { 'Content-Type': 'text/plain' } });
   }

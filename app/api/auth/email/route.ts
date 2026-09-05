@@ -24,7 +24,7 @@ interface EmailRecord {
 }
 
 export async function POST(req: NextRequest) {
-  const SESSION_SECRET = process.env.SESSION_SECRET;
+  const SESSION_SECRET = process.env.AUTH_SECRET;
   if (!SESSION_SECRET) {
     return NextResponse.json({ error: 'server_error' }, { status: 500 });
   }
