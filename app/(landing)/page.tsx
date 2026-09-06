@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
+import PerspectiveGrid from '@/components/landing/PerspectiveGrid';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import CookieNotice from '@/components/landing/CookieNotice';
@@ -33,9 +34,8 @@ export default function LandingPage() {
     <>
       <ScrollReveal />
       <Navbar />
-      <div className="above-fold-wrapper grid-cross">
-        <span className="gc gc-tl" /><span className="gc gc-tr" />
-        <span className="gc gc-bl" /><span className="gc gc-br" />
+      <div className="above-fold-wrapper">
+        <PerspectiveGrid />
         <HeroSection />
       </div>
       <StatsStrip />
