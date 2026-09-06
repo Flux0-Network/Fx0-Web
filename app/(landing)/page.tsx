@@ -38,17 +38,20 @@ export default function LandingPage() {
         <AboveFoldBg />
         <HeroSection />
       </div>
-      <StatsStrip />
-      <LumaSpaceSection />
-      <FlowWaveSection />
-      <VylderCard />
-      <Vex0Section />
-      <RoadmapSection />
-      <DashboardSection />
-      <PartnersSection />
-      <FaqSection />
-      <CtaSection />
-      <SiteFooter />
+      <div className="page-grid-wrap">
+        <span className="gc gc-tl" /><span className="gc gc-tr" />
+        <StatsStrip />
+        <LumaSpaceSection />
+        <FlowWaveSection />
+        <VylderCard />
+        <Vex0Section />
+        <RoadmapSection />
+        <DashboardSection />
+        <PartnersSection />
+        <FaqSection />
+        <CtaSection />
+        <SiteFooter />
+      </div>
       <CookieNotice />
     </>
   );
@@ -557,9 +560,7 @@ const FAQ_ITEMS = [
 
 function FaqSection() {
   return (
-    <section id="faq" className="section grid-cross">
-      <span className="gc gc-tl" /><span className="gc gc-tr" />
-      <span className="gc gc-bl" /><span className="gc gc-br" />
+    <section id="faq" className="section">
       <div className="container">
         <div className="section-label-row">
           <span className="dot dot--gelb" />
@@ -590,9 +591,7 @@ const DiscordIcon = () => (
 
 function CtaSection() {
   return (
-    <section className="cta section grid-cross">
-      <span className="gc gc-tl" /><span className="gc gc-tr" />
-      <span className="gc gc-bl" /><span className="gc gc-br" />
+    <section className="cta section">
       <div className="container">
         <div className="cta-inner">
           <div className="section-label-row">
