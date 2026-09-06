@@ -47,8 +47,8 @@ export default function LandingPage() {
       <Vex0Section />
       <RoadmapSection />
       <DashboardSection />
-      <PartnersSection />
       <FaqSection />
+      <PartnersSection />
       <DiscordSection />
       <CtaSection />
       <SiteFooter />
@@ -506,7 +506,9 @@ function DashboardSection() {
 
 function PartnersSection() {
   return (
-    <section className="logo-cloud-section">
+    <section className="logo-cloud-section hatch-bg" style={{ position: 'relative' }}>
+      <span className="br br-tl" /><span className="br br-tr" />
+      <span className="br br-bl" /><span className="br br-br" />
       <div className="container">
         <p className="logo-cloud-label">Discord Partner &amp; befreundete Server</p>
         <div className="logo-cloud">
