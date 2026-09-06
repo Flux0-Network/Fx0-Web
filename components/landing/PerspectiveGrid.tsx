@@ -1,21 +1,39 @@
 export default function PerspectiveGrid() {
   const VPX = 50;
-  const VPY = 42;
+  const VPY = 45;
 
-  // Radial lines: from vanishing point to bottom edge, spread beyond screen width
-  const vLines = Array.from({ length: 25 }, (_, i) => {
-    const t = i / 24;
-    const bottomX = -20 + t * 140; // -20% to 140% → fills beyond edges
-    return { x1: VPX, y1: VPY, x2: bottomX, y2: 100 };
-  });
+  // Radial lines from VP to all 4 edges (many lines to fill the screen)
+  const radialLines: { x2: number; y2: number }[] = [];
 
-  // Horizontal lines: always full width (0→100), spaced with perspective
-  const hLines = Array.from({ length: 12 }, (_, i) => {
-    const t = (i + 1) / 12;
-    const progress = t * t; // exponential — denser near VP
-    const y = VPY + progress * (100 - VPY);
-    return { y };
-  });
+  // To bottom edge (y=100)
+  for (let i = 0; i <= 30; i++) {
+    radialLines.push({ x2: (i / 30) * 100, y2: 100 });
+  }
+  // To top edge (y=0)
+  for (let i = 0; i <= 30; i++) {
+    radialLines.push({ x2: (i / 30) * 100, y2: 0 });
+  }
+  // To left edge (x=0)
+  for (let i = 1; i < 20; i++) {
+    radialLines.push({ x2: 0, y2: (i / 20) * 100 });
+  }
+  // To right edge (x=100)
+  for (let i = 1; i < 20; i++) {
+    radialLines.push({ x2: 100, y2: (i / 20) * 100 });
+  }
+
+  // Horizontal lines — full width, both above and below VP
+  const hLines: number[] = [];
+  // Below VP
+  for (let i = 1; i <= 14; i++) {
+    const t = i / 14;
+    hLines.push(VPY + (t * t) * (100 - VPY));
+  }
+  // Above VP
+  for (let i = 1; i <= 10; i++) {
+    const t = i / 10;
+    hLines.push(VPY - (t * t) * VPY);
+  }
 
   return (
     <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', background: '#000' }}>
@@ -27,48 +45,52 @@ export default function PerspectiveGrid() {
         style={{ position: 'absolute', inset: 0 }}
       >
         <defs>
-          <linearGradient id="top-fade" x1="0" y1="0" x2="0" y2="1">
+          {/* Radial fade from VP outward — lines fade at edges */}
+          <radialGradient id="edge-fade" cx={`${VPX}%`} cy={`${VPY}%`} r="70%">
+            <stop offset="0%"   stopColor="black" stopOpacity="0" />
+            <stop offset="70%"  stopColor="black" stopOpacity="0" />
+            <stop offset="100%" stopColor="black" stopOpacity="0.85" />
+          </radialGradient>
+          {/* Dark center around VP so lines don't show too close */}
+          <radialGradient id="vp-mask" cx={`${VPX}%`} cy={`${VPY}%`} r="20%">
             <stop offset="0%"  stopColor="black" stopOpacity="1" />
-            <stop offset="38%" stopColor="black" stopOpacity="0" />
-          </linearGradient>
-          <linearGradient id="bot-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="70%" stopColor="black" stopOpacity="0" />
-            <stop offset="100%" stopColor="black" stopOpacity="1" />
-          </linearGradient>
+            <stop offset="100%" stopColor="black" stopOpacity="0" />
+          </radialGradient>
         </defs>
 
         {/* Radial lines */}
-        {vLines.map((l, i) => (
+        {radialLines.map((l, i) => (
           <line
-            key={`v${i}`}
-            x1={l.x1} y1={l.y1} x2={l.x2} y2={l.y2}
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.3"
+            key={`r${i}`}
+            x1={VPX} y1={VPY}
+            x2={l.x2} y2={l.y2}
+            stroke="rgba(255,255,255,0.14)"
+            strokeWidth="0.25"
           />
         ))}
 
-        {/* Horizontal lines — full width */}
-        {hLines.map((l, i) => (
+        {/* Horizontal lines full width */}
+        {hLines.map((y, i) => (
           <line
             key={`h${i}`}
-            x1={0} y1={l.y} x2={100} y2={l.y}
-            stroke="rgba(255,255,255,0.15)"
-            strokeWidth="0.3"
+            x1={0} y1={y} x2={100} y2={y}
+            stroke="rgba(255,255,255,0.14)"
+            strokeWidth="0.25"
           />
         ))}
 
-        {/* Gradient masks */}
-        <rect x="0" y="0" width="100" height="100" fill="url(#top-fade)" />
-        <rect x="0" y="0" width="100" height="100" fill="url(#bot-fade)" />
+        {/* Masks */}
+        <rect x="0" y="0" width="100" height="100" fill="url(#edge-fade)" />
+        <rect x="0" y="0" width="100" height="100" fill="url(#vp-mask)" />
       </svg>
 
-      {/* Horizon glow */}
+      {/* Subtle glow at vanishing point */}
       <div style={{
         position: 'absolute',
-        left: 0, right: 0,
-        top: '38%',
-        height: '60px',
-        background: 'radial-gradient(ellipse 60% 100% at 50% 50%, rgba(255,255,255,0.05) 0%, transparent 70%)',
+        left: '30%', right: '30%',
+        top: `${VPY - 6}%`,
+        height: '80px',
+        background: 'radial-gradient(ellipse 100% 100% at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
     </div>
