@@ -16,7 +16,7 @@ export const OCEAN_TUNING = {
     foamThreshold: 0,
   },
   particles: {
-    pointSize: 2.8,
+    pointSize: 2.0,
     fadeNear: 40,
     fadeFar: 280,
     fadePower: 2.0,
@@ -35,8 +35,8 @@ export const OCEAN_TUNING = {
   bloom: {
     threshold: 0.08,
     smoothWidth: 0.01,
-    strength: 0.75,
-    radius: 0.65,
+    strength: 0.55,
+    radius: 0.55,
     levels: 5,
     kernelRadii: [6, 10, 14, 18, 22] as const,
   },
