@@ -557,7 +557,9 @@ const FAQ_ITEMS = [
 
 function FaqSection() {
   return (
-    <section id="faq" className="section">
+    <section id="faq" className="section grid-cross">
+      <span className="gc gc-tl" /><span className="gc gc-tr" />
+      <span className="gc gc-bl" /><span className="gc gc-br" />
       <div className="container">
         <div className="section-label-row">
           <span className="dot dot--gelb" />
@@ -588,7 +590,9 @@ const DiscordIcon = () => (
 
 function CtaSection() {
   return (
-    <section className="cta section">
+    <section className="cta section grid-cross">
+      <span className="gc gc-tl" /><span className="gc gc-tr" />
+      <span className="gc gc-bl" /><span className="gc gc-br" />
       <div className="container">
         <div className="cta-inner">
           <div className="section-label-row">
