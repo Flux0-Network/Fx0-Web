@@ -201,15 +201,17 @@ a {
   position: relative;
   background-image: repeating-linear-gradient(
     -45deg,
-    rgba(255,255,255,0.04) 0px,
-    rgba(255,255,255,0.04) 1px,
+    rgba(255,255,255,0.06) 0px,
+    rgba(255,255,255,0.06) 1px,
     transparent 1px,
     transparent 10px
   );
+  border-left: 1px solid rgba(255,255,255,0.1);
+  border-right: 1px solid rgba(255,255,255,0.1);
 }
 /* L-shaped corner brackets */
-.br { position: absolute; width: 18px; height: 18px; pointer-events: none; z-index: 2; }
-.br-tl { top: 0; left: 0;  border-top:    1.5px solid rgba(255,255,255,0.4); border-left:   1.5px solid rgba(255,255,255,0.4); }
-.br-tr { top: 0; right: 0; border-top:    1.5px solid rgba(255,255,255,0.4); border-right:  1.5px solid rgba(255,255,255,0.4); }
-.br-bl { bottom: 0; left: 0;  border-bottom: 1.5px solid rgba(255,255,255,0.4); border-left:   1.5px solid rgba(255,255,255,0.4); }
-.br-br { bottom: 0; right: 0; border-bottom: 1.5px solid rgba(255,255,255,0.4); border-right:  1.5px solid rgba(255,255,255,0.4); }
+.br { position: absolute; width: 20px; height: 20px; pointer-events: none; z-index: 2; }
+.br-tl { top: -1px; left: -1px;  border-top:    1.5px solid rgba(255,255,255,0.5); border-left:   1.5px solid rgba(255,255,255,0.5); }
+.br-tr { top: -1px; right: -1px; border-top:    1.5px solid rgba(255,255,255,0.5); border-right:  1.5px solid rgba(255,255,255,0.5); }
+.br-bl { bottom: -1px; left: -1px;  border-bottom: 1.5px solid rgba(255,255,255,0.5); border-left:   1.5px solid rgba(255,255,255,0.5); }
+.br-br { bottom: -1px; right: -1px; border-bottom: 1.5px solid rgba(255,255,255,0.5); border-right:  1.5px solid rgba(255,255,255,0.5); }
