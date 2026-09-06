@@ -359,6 +359,7 @@ body::after {
 .above-fold-wrapper {
   position: relative;
   overflow: hidden;
+  width: 100%;
   min-height: calc(100svh - 100px);
   display: flex;
   flex-direction: column;
