@@ -34,8 +34,10 @@ export default function LandingPage() {
     <>
       <ScrollReveal />
       <Navbar />
-      <div className="above-fold-wrapper">
+      <div className="above-fold-wrapper" style={{ position: 'relative' }}>
         <PerspectiveGrid />
+        <span className="br br-tl" /><span className="br br-tr" />
+        <span className="br br-bl" /><span className="br br-br" />
         <HeroSection />
       </div>
       <StatsStrip />
@@ -557,7 +559,9 @@ const FAQ_ITEMS = [
 
 function FaqSection() {
   return (
-    <section id="faq" className="section">
+    <section id="faq" className="section hatch-bg" style={{ position: 'relative' }}>
+      <span className="br br-tl" /><span className="br br-tr" />
+      <span className="br br-bl" /><span className="br br-br" />
       <div className="container">
         <div className="section-label-row">
           <span className="dot dot--gelb" />
@@ -588,7 +592,9 @@ const DiscordIcon = () => (
 
 function CtaSection() {
   return (
-    <section className="cta section">
+    <section className="cta section hatch-bg" style={{ position: 'relative' }}>
+      <span className="br br-tl" /><span className="br br-tr" />
+      <span className="br br-bl" /><span className="br br-br" />
       <div className="container">
         <div className="cta-inner">
           <div className="section-label-row">
