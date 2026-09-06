@@ -269,25 +269,58 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="/dashboard"
-              onClick={() => setMenuOpen(false)}
-              style={{
-                display: 'block',
-                textDecoration: 'none',
-                textAlign: 'center',
-                background: 'transparent',
-                color: '#ffffff',
-                fontSize: '0.875rem',
-                fontWeight: 700,
-                padding: '11px 14px',
-                borderRadius: '10px',
-                marginTop: '6px',
-                border: '1px solid rgba(255,255,255,0.35)',
-              }}
-            >
-              Login
-            </a>
+            {user ? (
+              <a
+                href="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '10px',
+                  textDecoration: 'none',
+                  color: 'rgba(255,255,255,0.85)',
+                  fontSize: '0.875rem',
+                  fontWeight: 600,
+                  padding: '10px 14px',
+                  borderRadius: '10px',
+                  marginTop: '6px',
+                  background: 'rgba(255,255,255,0.05)',
+                }}
+              >
+                {user.avatar ? (
+                  <img
+                    src={`https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=64`}
+                    alt=""
+                    style={{ width: '22px', height: '22px', borderRadius: '50%', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <div style={{ width: '22px', height: '22px', borderRadius: '50%', background: '#fff', color: '#000', fontSize: '0.7rem', fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {(user.global_name || user.username)?.[0]?.toUpperCase() ?? '?'}
+                  </div>
+                )}
+                {user.global_name || user.username}
+              </a>
+            ) : (
+              <a
+                href="/dashboard"
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                  background: 'transparent',
+                  color: '#ffffff',
+                  fontSize: '0.875rem',
+                  fontWeight: 700,
+                  padding: '11px 14px',
+                  borderRadius: '10px',
+                  marginTop: '6px',
+                  border: '1px solid rgba(255,255,255,0.35)',
+                }}
+              >
+                Login
+              </a>
+            )}
           </div>
         )}
       </div>
