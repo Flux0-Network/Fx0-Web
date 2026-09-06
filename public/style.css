@@ -2998,8 +2998,8 @@ kbd {
   .nav-cta { font-size: 0.78rem; padding: 7px 12px; }
 
   /* hero */
-  .above-fold-wrapper { min-height: auto; }
-  .hero { min-height: 85dvh; padding: 120px 0 80px; align-items: flex-start; }
+  .above-fold-wrapper { min-height: calc(100dvh - 80px); }
+  .hero { min-height: 0; padding: 80px 0 48px; align-items: flex-start; justify-content: flex-start; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
