@@ -121,7 +121,7 @@ export function createRenderer({ canvas }: RendererOptions) {
     }
 
     gpu = nextGpu;
-    output = surface(gpu, canvas, { dpr: [1, 1.6] });
+    output = surface(gpu, canvas, { dpr: [1, 2] });
     graph = await createGraph(gpu, output, "fft-ocean-live");
     if (disposed) return;
 
