@@ -362,6 +362,7 @@ body::after {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
+  background-color: #000;
 }
 .above-fold-wrapper::after {
   content: '';

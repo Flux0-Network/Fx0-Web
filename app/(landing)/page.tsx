@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
-import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
@@ -34,24 +33,22 @@ export default function LandingPage() {
     <>
       <ScrollReveal />
       <Navbar />
-      <div className="above-fold-wrapper">
-        <AboveFoldBg />
+      <div className="above-fold-wrapper grid-cross">
+        <span className="gc gc-tl" /><span className="gc gc-tr" />
+        <span className="gc gc-bl" /><span className="gc gc-br" />
         <HeroSection />
       </div>
-      <div className="page-grid-wrap">
-        <span className="gc gc-tl" /><span className="gc gc-tr" />
-        <StatsStrip />
-        <LumaSpaceSection />
-        <FlowWaveSection />
-        <VylderCard />
-        <Vex0Section />
-        <RoadmapSection />
-        <DashboardSection />
-        <PartnersSection />
-        <FaqSection />
-        <CtaSection />
-        <SiteFooter />
-      </div>
+      <StatsStrip />
+      <LumaSpaceSection />
+      <FlowWaveSection />
+      <VylderCard />
+      <Vex0Section />
+      <RoadmapSection />
+      <DashboardSection />
+      <PartnersSection />
+      <FaqSection />
+      <CtaSection />
+      <SiteFooter />
       <CookieNotice />
     </>
   );
