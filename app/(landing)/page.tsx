@@ -595,9 +595,7 @@ const DiscordIcon = () => (
 
 function CtaSection() {
   return (
-    <section className="cta section hatch-bg" style={{ position: 'relative' }}>
-      <span className="br br-tl" /><span className="br br-tr" />
-      <span className="br br-bl" /><span className="br br-br" />
+    <section className="cta section hatch-bg" style={{ position: 'relative', borderLeft: 'none', borderRight: 'none' }}>
       <div className="container">
         <div className="cta-inner">
           <div className="section-label-row">
