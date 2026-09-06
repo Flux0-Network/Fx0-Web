@@ -379,7 +379,7 @@ body::after {
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 100px 0 80px;
+  padding: 100px 0 140px;
   position: relative;
   z-index: 1;
 }
