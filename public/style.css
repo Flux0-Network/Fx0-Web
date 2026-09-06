@@ -359,7 +359,7 @@ body::after {
 .above-fold-wrapper {
   position: relative;
   overflow: hidden;
-  min-height: 100svh;
+  min-height: 72vh;
   display: flex;
   flex-direction: column;
   background-color: #000;
@@ -379,7 +379,7 @@ body::after {
   flex: 1;
   display: flex;
   align-items: center;
-  padding: 80px 0 40px;
+  padding: 80px 0 32px;
   position: relative;
   z-index: 1;
 }
