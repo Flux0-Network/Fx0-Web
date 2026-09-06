@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import HeroCard from './HeroCard';
 
 export default function HeroSection() {
   const twRef = useRef<HTMLSpanElement>(null);
@@ -43,10 +42,6 @@ export default function HeroSection() {
             </a>
             <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener">Discord joinen</a>
           </div>
-        </div>
-
-        <div className="hero-visual">
-          <HeroCard />
         </div>
       </div>
 
