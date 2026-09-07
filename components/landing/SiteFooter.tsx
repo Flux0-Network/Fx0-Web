@@ -10,8 +10,8 @@ export default function SiteFooter() {
               <img src="/logo1.png" alt="Flux Network" className="footer-logo-img" />
             </a>
             <p className="footer-tagline">
-              Professionelle Webseiten &amp; digitale Produkte.<br />
-              Gebaut von Flux Network.
+              <span className="lang-de">Professionelle Webseiten &amp; digitale Produkte.<br />Gebaut von Flux Network.</span>
+              <span className="lang-en">Professional websites &amp; digital products.<br />Built by Flux Network.</span>
             </p>
             <div className="footer-socials">
               <a href="https://discord.gg/D9GwqWpwHT" target="_blank" rel="noopener" aria-label="Discord">
@@ -28,7 +28,10 @@ export default function SiteFooter() {
 
           {/* Produkte */}
           <div className="footer-col">
-            <div className="footer-col-title">Produkte</div>
+            <div className="footer-col-title">
+              <span className="lang-de">Produkte</span>
+              <span className="lang-en">Products</span>
+            </div>
             <ul className="footer-links">
               <li><a href="https://lumaspace.de/" target="_blank" rel="noopener">LumaSpace</a></li>
               <li><a href="https://flowwave.app" target="_blank" rel="noopener">FlowWave</a></li>
@@ -42,7 +45,7 @@ export default function SiteFooter() {
             <div className="footer-col-title">Links</div>
             <ul className="footer-links">
               <li><a href="/community">Community</a></li>
-              <li><a href="/docs">Dokumentation</a></li>
+              <li><a href="/docs"><span className="lang-de">Dokumentation</span><span className="lang-en">Documentation</span></a></li>
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/impressum">Impressum</a></li>
             </ul>

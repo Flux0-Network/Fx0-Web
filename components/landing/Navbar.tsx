@@ -11,18 +11,50 @@ interface MeData {
   global_name?: string;
 }
 
-const NAV_LINKS = [
+const NAV_LINKS_DE = [
   { href: '#produkte',                        label: 'Produkte'  },
   { href: '#roadmap',                         label: 'Roadmap'   },
   { href: '/docs',                            label: 'Docs'      },
   { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
 ];
+const NAV_LINKS_EN = [
+  { href: '#produkte',                        label: 'Products'  },
+  { href: '#roadmap',                         label: 'Roadmap'   },
+  { href: '/docs',                            label: 'Docs'      },
+  { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
+];
+
+function getAttr(attr: string, fallback: string) {
+  if (typeof document === 'undefined') return fallback;
+  return document.documentElement.getAttribute(attr) ?? fallback;
+}
+
+function SunIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="5" />
+      <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+      <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+    </svg>
+  );
+}
+function MoonIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+    </svg>
+  );
+}
 
 export default function Navbar() {
   const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
+  const [theme, setTheme]       = useState<'dark' | 'light'>('dark');
+  const [lang, setLang]         = useState<'de' | 'en'>('de');
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -55,7 +87,43 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', onOutside);
   }, [menuOpen]);
 
+  // Restore prefs on mount
+  useEffect(() => {
+    setTheme((getAttr('data-theme', 'dark') as 'dark' | 'light'));
+    setLang((getAttr('data-lang', 'de') as 'de' | 'en'));
+  }, []);
+
+  function toggleTheme() {
+    const next = theme === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
+
+  function toggleLang() {
+    const next = lang === 'de' ? 'en' : 'de';
+    setLang(next);
+    document.documentElement.setAttribute('data-lang', next);
+    localStorage.setItem('lang', next);
+  }
+
+  const NAV_LINKS = lang === 'de' ? NAV_LINKS_DE : NAV_LINKS_EN;
   const displayName = user ? (user.global_name || user.username) : null;
+  const loginLabel = lang === 'de' ? 'Login' : 'Login';
+
+  const iconBtnStyle: React.CSSProperties = {
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'none',
+    border: '1px solid rgba(255,255,255,0.18)',
+    borderRadius: '8px',
+    padding: '5px 7px',
+    cursor: 'pointer',
+    color: 'rgba(255,255,255,0.65)',
+    transition: 'color 0.15s, border-color 0.15s',
+    flexShrink: 0,
+  };
 
   return (
     <nav
@@ -65,7 +133,7 @@ export default function Navbar() {
         left: '50%',
         transform: 'translateX(-50%)',
         width: 'calc(100% - 32px)',
-        maxWidth: '860px',
+        maxWidth: '900px',
         zIndex: 100,
       }}
       aria-label="Navigation"
@@ -91,6 +159,7 @@ export default function Navbar() {
           transition: 'background 0.3s',
           gap: '4px',
         }}
+        className="nav-pill-inner"
       >
         {/* Logo */}
         <Link
@@ -153,7 +222,26 @@ export default function Navbar() {
         </ul>
 
         {/* Right side */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0, marginLeft: 'auto' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: 'auto' }}>
+
+          {/* Theme toggle */}
+          <button
+            aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'}
+            onClick={toggleTheme}
+            style={iconBtnStyle}
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
+
+          {/* Language toggle */}
+          <button
+            aria-label="Switch language"
+            onClick={toggleLang}
+            style={{ ...iconBtnStyle, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.04em', padding: '5px 8px' }}
+          >
+            {lang === 'de' ? 'EN' : 'DE'}
+          </button>
+
           {user ? (
             <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
               {user.avatar ? (
@@ -188,7 +276,7 @@ export default function Navbar() {
                 border: '1px solid rgba(255,255,255,0.35)',
               }}
             >
-              Login
+              {loginLabel}
             </a>
           )}
 
@@ -269,22 +357,42 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
+
+            {/* Mobile lang + theme row */}
+            <div style={{ display: 'flex', gap: '8px', padding: '6px 14px 4px' }}>
+              <button
+                onClick={toggleTheme}
+                style={{
+                  flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '8px', padding: '9px', cursor: 'pointer', color: 'rgba(255,255,255,0.7)',
+                  fontSize: '0.78rem', fontWeight: 500,
+                }}
+              >
+                {theme === 'dark' ? <><SunIcon /> Light</> : <><MoonIcon /> Dark</>}
+              </button>
+              <button
+                onClick={toggleLang}
+                style={{
+                  flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '8px', padding: '9px', cursor: 'pointer', color: 'rgba(255,255,255,0.7)',
+                  fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em',
+                }}
+              >
+                {lang === 'de' ? '🇬🇧 EN' : '🇩🇪 DE'}
+              </button>
+            </div>
+
             {user ? (
               <a
                 href="/dashboard"
                 onClick={() => setMenuOpen(false)}
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  textDecoration: 'none',
-                  color: 'rgba(255,255,255,0.85)',
-                  fontSize: '0.875rem',
-                  fontWeight: 600,
-                  padding: '10px 14px',
-                  borderRadius: '10px',
-                  marginTop: '6px',
-                  background: 'rgba(255,255,255,0.05)',
+                  display: 'flex', alignItems: 'center', gap: '10px',
+                  textDecoration: 'none', color: 'rgba(255,255,255,0.85)',
+                  fontSize: '0.875rem', fontWeight: 600, padding: '10px 14px',
+                  borderRadius: '10px', marginTop: '4px', background: 'rgba(255,255,255,0.05)',
                 }}
               >
                 {user.avatar ? (
@@ -305,20 +413,13 @@ export default function Navbar() {
                 href="/dashboard"
                 onClick={() => setMenuOpen(false)}
                 style={{
-                  display: 'block',
-                  textDecoration: 'none',
-                  textAlign: 'center',
-                  background: 'transparent',
-                  color: '#ffffff',
-                  fontSize: '0.875rem',
-                  fontWeight: 700,
-                  padding: '11px 14px',
-                  borderRadius: '10px',
-                  marginTop: '6px',
-                  border: '1px solid rgba(255,255,255,0.35)',
+                  display: 'block', textDecoration: 'none', textAlign: 'center',
+                  background: 'transparent', color: '#ffffff', fontSize: '0.875rem',
+                  fontWeight: 700, padding: '11px 14px', borderRadius: '10px',
+                  marginTop: '4px', border: '1px solid rgba(255,255,255,0.35)',
                 }}
               >
-                Login
+                {loginLabel}
               </a>
             )}
           </div>

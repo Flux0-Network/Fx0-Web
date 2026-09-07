@@ -122,10 +122,10 @@ function Vex0Section() {
 
 function StatsStrip() {
   const items = [
-    { val: '5+', label: 'Produkte im Ökosystem' },
-    { val: '2',  label: 'Live' },
-    { val: '2',  label: 'In Entwicklung' },
-    { val: '∞',  label: 'Open Community' },
+    { val: '5+', de: 'Produkte im Ökosystem', en: 'Products in Ecosystem' },
+    { val: '2',  de: 'Live',                  en: 'Live'                  },
+    { val: '2',  de: 'In Entwicklung',        en: 'In Development'        },
+    { val: '∞',  de: 'Open Community',        en: 'Open Community'        },
   ];
   return (
     <div className="stats-strip hatch-bg" style={{ position: 'relative' }}>
@@ -136,7 +136,10 @@ function StatsStrip() {
           {items.map((s, i) => (
             <div key={i} className="stats-strip-item">
               <span className="stats-strip-val">{s.val}</span>
-              <span className="stats-strip-label">{s.label}</span>
+              <span className="stats-strip-label">
+                <span className="lang-de">{s.de}</span>
+                <span className="lang-en">{s.en}</span>
+              </span>
             </div>
           ))}
         </div>
@@ -604,12 +607,23 @@ function CtaSection() {
             <span className="dot dot--grün" />
             EARLY ACCESS
           </div>
-          <h2>Als Erstes dabei sein.</h2>
-          <p>Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</p>
+          <h2>
+            <span className="lang-de">Als Erstes dabei sein.</span>
+            <span className="lang-en">Be the first.</span>
+          </h2>
+          <p>
+            <span className="lang-de">Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</span>
+            <span className="lang-en">Enter your email or join our Discord — get Early Access, Beta-Releases and updates to Vex0, Vylder and all other products before everyone else.</span>
+          </p>
           <EarlyAccessForm />
-          <div className="cta-divider"><span>oder</span></div>
+          <div className="cta-divider">
+            <span className="lang-de">oder</span>
+            <span className="lang-en">or</span>
+          </div>
           <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            <DiscordIcon /> Discord joinen
+            <DiscordIcon />
+            <span className="lang-de">Discord joinen</span>
+            <span className="lang-en">Join Discord</span>
           </a>
         </div>
       </div>

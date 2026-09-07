@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import AppProvider from '@/components/landing/AppProvider';
 
 export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
@@ -9,6 +10,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
         rel="stylesheet"
       />
       <link rel="stylesheet" href="/style.css" />
+      <AppProvider />
       {children}
     </>
   );
