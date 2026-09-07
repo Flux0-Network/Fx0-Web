@@ -29,31 +29,11 @@ function getAttr(attr: string, fallback: string) {
   return document.documentElement.getAttribute(attr) ?? fallback;
 }
 
-function SunIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <circle cx="12" cy="12" r="5" />
-      <line x1="12" y1="1" x2="12" y2="3" /><line x1="12" y1="21" x2="12" y2="23" />
-      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" /><line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-      <line x1="1" y1="12" x2="3" y2="12" /><line x1="21" y1="12" x2="23" y2="12" />
-      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" /><line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-    </svg>
-  );
-}
-function MoonIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-    </svg>
-  );
-}
-
 export default function Navbar() {
   const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
-  const [theme, setTheme]       = useState<'dark' | 'light'>('dark');
   const [lang, setLang]         = useState<'de' | 'en'>('de');
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -87,18 +67,9 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', onOutside);
   }, [menuOpen]);
 
-  // Restore prefs on mount
   useEffect(() => {
-    setTheme((getAttr('data-theme', 'dark') as 'dark' | 'light'));
     setLang((getAttr('data-lang', 'de') as 'de' | 'en'));
   }, []);
-
-  function toggleTheme() {
-    const next = theme === 'dark' ? 'light' : 'dark';
-    setTheme(next);
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-  }
 
   function toggleLang() {
     const next = lang === 'de' ? 'en' : 'de';
@@ -109,7 +80,6 @@ export default function Navbar() {
 
   const NAV_LINKS = lang === 'de' ? NAV_LINKS_DE : NAV_LINKS_EN;
   const displayName = user ? (user.global_name || user.username) : null;
-  const loginLabel = lang === 'de' ? 'Login' : 'Login';
 
   const iconBtnStyle: React.CSSProperties = {
     display: 'inline-flex',
@@ -224,15 +194,6 @@ export default function Navbar() {
         {/* Right side */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: 'auto' }}>
 
-          {/* Theme toggle */}
-          <button
-            aria-label={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-            onClick={toggleTheme}
-            style={iconBtnStyle}
-          >
-            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-          </button>
-
           {/* Language toggle */}
           <button
             aria-label="Switch language"
@@ -276,7 +237,7 @@ export default function Navbar() {
                 border: '1px solid rgba(255,255,255,0.35)',
               }}
             >
-              {loginLabel}
+              Login
             </a>
           )}
 
@@ -358,23 +319,12 @@ export default function Navbar() {
               </a>
             ))}
 
-            {/* Mobile lang + theme row */}
-            <div style={{ display: 'flex', gap: '8px', padding: '6px 14px 4px' }}>
-              <button
-                onClick={toggleTheme}
-                style={{
-                  flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px',
-                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '8px', padding: '9px', cursor: 'pointer', color: 'rgba(255,255,255,0.7)',
-                  fontSize: '0.78rem', fontWeight: 500,
-                }}
-              >
-                {theme === 'dark' ? <><SunIcon /> Light</> : <><MoonIcon /> Dark</>}
-              </button>
+            {/* Mobile lang row */}
+            <div style={{ padding: '6px 14px 4px' }}>
               <button
                 onClick={toggleLang}
                 style={{
-                  flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
                   background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
                   borderRadius: '8px', padding: '9px', cursor: 'pointer', color: 'rgba(255,255,255,0.7)',
                   fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em',
@@ -419,7 +369,7 @@ export default function Navbar() {
                   marginTop: '4px', border: '1px solid rgba(255,255,255,0.35)',
                 }}
               >
-                {loginLabel}
+                Login
               </a>
             )}
           </div>
