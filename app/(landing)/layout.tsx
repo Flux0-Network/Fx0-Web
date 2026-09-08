@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import AppProvider from '@/components/landing/AppProvider';
+import SmoothScroll from '@/components/landing/SmoothScroll';
 
 export default function LandingLayout({ children }: { children: ReactNode }) {
   return (
@@ -11,6 +12,7 @@ export default function LandingLayout({ children }: { children: ReactNode }) {
       />
       <link rel="stylesheet" href="/style.css" />
       <AppProvider />
+      <SmoothScroll />
       {children}
     </>
   );
