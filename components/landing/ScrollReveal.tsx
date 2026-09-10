@@ -8,7 +8,7 @@ export default function ScrollReveal() {
     const upSelectors = [
       '.section-label-row', '.section-title', '.section-sub',
       '.cta-inner', '.faq-item', '.logo-cloud-item',
-      '.roadmap-item', '.stats-strip-item', '.vylder-card',
+      '.roadmap-item', '.changelog-item', '.stats-strip-item', '.vylder-card',
       '.product-card', '.feature-card', '.paket-card',
       '.prozess-step', '.community-card', '.design-preview-card',
       '.mkt-card', '.pakete-note', '.tech-strip-label', '.tech-strip-list',

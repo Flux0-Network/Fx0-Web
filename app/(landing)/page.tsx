@@ -265,7 +265,7 @@ function ChangelogSection() {
         </div>
         <div className="changelog-list">
           {CHANGELOG_ITEMS.map((item, i) => (
-            <div key={i} className="changelog-item reveal">
+            <div key={i} className="changelog-item">
               <div className="changelog-meta">
                 <span className="changelog-date">{item.date}</span>
                 <span className={`changelog-tag ${item.tagCls}`}>{item.product}</span>
