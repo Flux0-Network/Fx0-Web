@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
@@ -6,6 +7,11 @@ import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
+
+const FlowWaveCanvas = dynamic(
+  () => import('@/components/landing/FlowWaveCanvas'),
+  { ssr: false }
+);
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
@@ -250,67 +256,36 @@ function LumaSpaceSection() {
   );
 }
 
-function FlowWaveMockup() {
-  const commands = ['/info', '/ping', '/help', '/stats'];
-  return (
-    <div className="flow-mock">
-      <div className="flow-mock-bar">
-        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
-        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
-        <span className="dmock-dot" style={{ background: '#28c840' }} />
-        <span className="flow-mock-url">flowwave.app/builder</span>
-      </div>
-      <div className="flow-mock-body">
-        <div className="flow-mock-sidebar">
-          <div className="flow-mock-sidebar-title">Commands</div>
-          {commands.map((cmd, i) => (
-            <div key={cmd} className={`flow-mock-cmd${i === 0 ? ' active' : ''}`}>{cmd}</div>
-          ))}
-          <div className="flow-mock-add">+ Neu</div>
-        </div>
-        <div className="flow-mock-editor">
-          <div className="flow-mock-cmd-title">/info</div>
-          <div className="flow-mock-cmd-sub">Antwort: Embed</div>
-          <div className="flow-mock-embed">
-            <div className="flow-mock-embed-bar" />
-            <div className="flow-mock-embed-name">Flux Network Info</div>
-            <div className="flow-mock-embed-row">Version: 1.0.0</div>
-            <div className="flow-mock-embed-row" style={{ color: '#4ade80' }}>Status: ✓ Online</div>
-          </div>
-          <div className="flow-mock-trigger">
-            <span className="flow-mock-trigger-label">Trigger</span>
-            <span className="flow-mock-trigger-val">Slash Command</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function FlowWaveSection() {
   return (
-    <section className="product-spotlight section">
-      <div className="container">
-        <div className="product-split product-split--reverse">
-          <div className="product-split-visual">
-            <FlowWaveMockup />
-          </div>
-          <div className="product-split-text">
-            <div className="section-label-row">FLOWWAVE</div>
-            <h2 className="section-title">Discord Bots.<br />Ohne Boilerplate.</h2>
-            <p className="section-sub">
-              Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.
-            </p>
-            <ul className="feature-list">
-              <li>Visueller Command-Builder</li>
-              <li>Slash Commands & Events ohne Code</li>
-              <li>Powered by pycord v2</li>
-            </ul>
-            <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
-              FlowWave öffnen →
-            </a>
-          </div>
-        </div>
+    <section className="flowwave-scene" id="flowwave">
+      <FlowWaveCanvas />
+      <div className="flowwave-scene-overlay" />
+      <div className="container flowwave-scene-content">
+        <div className="section-label-row">FLOWWAVE</div>
+        <h2 className="section-title">
+          <span className="lang-de">Discord Bots.<br />Ohne Boilerplate.</span>
+          <span className="lang-en">Discord Bots.<br />Without Boilerplate.</span>
+        </h2>
+        <p className="section-sub">
+          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2.</span>
+          <span className="lang-en">Set up Slash Commands, events and UI components visually — powered by pycord v2.</span>
+        </p>
+        <ul className="feature-list feature-list--centered">
+          <li>
+            <span className="lang-de">Visueller Command-Builder</span>
+            <span className="lang-en">Visual command builder</span>
+          </li>
+          <li>
+            <span className="lang-de">Slash Commands &amp; Events ohne Code</span>
+            <span className="lang-en">Slash Commands &amp; events without code</span>
+          </li>
+          <li>Powered by pycord v2</li>
+        </ul>
+        <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '24px' }}>
+          <span className="lang-de">FlowWave öffnen →</span>
+          <span className="lang-en">Open FlowWave →</span>
+        </a>
       </div>
     </section>
   );
