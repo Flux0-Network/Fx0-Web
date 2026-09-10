@@ -46,6 +46,7 @@ export default function LandingPage() {
       <VylderCard />
       <Vex0Section />
       <RoadmapSection />
+      <ChangelogSection />
       <DashboardSection />
       <FaqSection />
       <PartnersSection />
@@ -195,6 +196,93 @@ function RoadmapSection() {
               </span>
             </a>
           ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const CHANGELOG_ITEMS = [
+  {
+    date: 'Sep 2026',
+    product: 'LumaSpace',
+    version: 'v1.2.0',
+    tagCls: 'cl-tag--luma',
+    descDe: 'KI-Focus-Blöcke mit Kalender-Sync & verbesserter Task-Priorisierung',
+    descEn: 'AI focus blocks with calendar sync & improved task prioritization',
+  },
+  {
+    date: 'Aug 2026',
+    product: 'FlowWave',
+    version: 'v0.8.0',
+    tagCls: 'cl-tag--flow',
+    descDe: 'Event-Handler für Reaction Roles und verbesserter Embed-Builder',
+    descEn: 'Event handlers for reaction roles and improved embed builder',
+  },
+  {
+    date: 'Jul 2026',
+    product: 'Vex0',
+    version: 'v0.3.0',
+    tagCls: 'cl-tag--vex',
+    descDe: 'Button, Card & Badge Komponenten — Open Source auf GitHub',
+    descEn: 'Button, Card & Badge components — open source on GitHub',
+  },
+  {
+    date: 'Jun 2026',
+    product: 'LumaSpace',
+    version: 'v1.1.0',
+    tagCls: 'cl-tag--luma',
+    descDe: 'Realtime Collaboration — mehrere Nutzer gleichzeitig im selben Workspace',
+    descEn: 'Realtime collaboration — multiple users simultaneously in the same workspace',
+  },
+  {
+    date: 'Mai 2026',
+    product: 'FlowWave',
+    version: 'v0.7.0',
+    tagCls: 'cl-tag--flow',
+    descDe: 'Slash Command Builder Launch — Discord Bots ohne eine Zeile Code',
+    descEn: 'Slash Command Builder launch — Discord bots without a single line of code',
+  },
+];
+
+function ChangelogSection() {
+  return (
+    <section className="changelog-section section">
+      <div className="container">
+        <div className="section-label-row">
+          <span className="dot dot--grün" />
+          CHANGELOG
+        </div>
+        <div className="section-intro">
+          <h2 className="section-title">
+            <span className="lang-de">Was wir shipped haben.</span>
+            <span className="lang-en">What we&apos;ve shipped.</span>
+          </h2>
+          <p className="section-sub">
+            <span className="lang-de">Letzte Updates aus dem Flux Network Ökosystem.</span>
+            <span className="lang-en">Latest updates from the Flux Network ecosystem.</span>
+          </p>
+        </div>
+        <div className="changelog-list">
+          {CHANGELOG_ITEMS.map((item, i) => (
+            <div key={i} className="changelog-item reveal">
+              <div className="changelog-meta">
+                <span className="changelog-date">{item.date}</span>
+                <span className={`changelog-tag ${item.tagCls}`}>{item.product}</span>
+                <span className="changelog-version">{item.version}</span>
+              </div>
+              <p className="changelog-desc">
+                <span className="lang-de">{item.descDe}</span>
+                <span className="lang-en">{item.descEn}</span>
+              </p>
+            </div>
+          ))}
+        </div>
+        <div className="changelog-footer">
+          <a href="/changelog" className="btn-ghost" style={{ display: 'inline-flex', fontSize: '0.85rem' }}>
+            <span className="lang-de">Alle Updates ansehen →</span>
+            <span className="lang-en">View all updates →</span>
+          </a>
         </div>
       </div>
     </section>
