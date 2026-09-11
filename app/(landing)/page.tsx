@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
@@ -7,11 +6,7 @@ import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
-
-const FlowWaveCanvas = dynamic(
-  () => import('@/components/landing/FlowWaveCanvas'),
-  { ssr: false }
-);
+import FlowWaveCanvas from '@/components/landing/FlowWaveCanvas';
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
