@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
-import PerspectiveGrid from '@/components/landing/PerspectiveGrid';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
-import FlowWaveCanvas from '@/components/landing/FlowWaveCanvas';
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
@@ -36,14 +34,12 @@ export default function LandingPage() {
       <ScrollReveal />
       <Navbar />
       <div className="above-fold-wrapper" style={{ position: 'relative' }}>
-        <PerspectiveGrid />
         <span className="br br-tl" /><span className="br br-tr" />
         <span className="br br-bl" /><span className="br br-br" />
         <HeroSection />
       </div>
       <StatsStrip />
       <LumaSpaceSection />
-      <FlowWaveSection />
       <VylderCard />
       <Vex0Section />
       <RoadmapSection />
@@ -396,41 +392,6 @@ function LumaSpaceSection() {
             <LumaSpaceMockup />
           </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-function FlowWaveSection() {
-  return (
-    <section className="flowwave-scene" id="flowwave">
-      <FlowWaveCanvas />
-      <div className="flowwave-scene-overlay" />
-      <div className="container flowwave-scene-content">
-        <div className="section-label-row">FLOWWAVE</div>
-        <h2 className="section-title">
-          <span className="lang-de">Discord Bots.<br />Ohne Boilerplate.</span>
-          <span className="lang-en">Discord Bots.<br />Without Boilerplate.</span>
-        </h2>
-        <p className="section-sub">
-          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2.</span>
-          <span className="lang-en">Set up Slash Commands, events and UI components visually — powered by pycord v2.</span>
-        </p>
-        <ul className="feature-list feature-list--centered">
-          <li>
-            <span className="lang-de">Visueller Command-Builder</span>
-            <span className="lang-en">Visual command builder</span>
-          </li>
-          <li>
-            <span className="lang-de">Slash Commands &amp; Events ohne Code</span>
-            <span className="lang-en">Slash Commands &amp; events without code</span>
-          </li>
-          <li>Powered by pycord v2</li>
-        </ul>
-        <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '24px' }}>
-          <span className="lang-de">FlowWave öffnen →</span>
-          <span className="lang-en">Open FlowWave →</span>
-        </a>
       </div>
     </section>
   );
