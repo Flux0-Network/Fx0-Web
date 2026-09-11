@@ -1031,78 +1031,53 @@ body::after {
   border: 1px solid rgba(139,92,246,0.15);
 }
 
-/* FlowWave Mockup */
-.flow-mock {
-  border-radius: 14px;
-  border: 1px solid var(--border);
+/* ── FlowWave Scene (Three.js full-viewport) ── */
+.flowwave-scene {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
   overflow: hidden;
-  background: rgba(8,8,8,0.9);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
-.flow-mock-bar {
-  display: flex; align-items: center; gap: 6px;
-  padding: 10px 14px;
-  background: rgba(255,255,255,0.03);
-  border-bottom: 1px solid var(--border);
+.flowwave-scene-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 30%,
+    rgba(2, 22, 12, 0.45) 55%,
+    rgba(2, 22, 12, 0.85) 75%,
+    #02160c 100%
+  );
+  pointer-events: none;
+  z-index: 1;
 }
-.flow-mock-url { font-size: 0.7rem; color: var(--dim); margin-left: 8px; }
-.flow-mock-body {
-  display: flex; height: 240px;
-}
-.flow-mock-sidebar {
-  width: 110px; flex-shrink: 0;
-  border-right: 1px solid var(--border);
-  padding: 12px 10px;
-  display: flex; flex-direction: column; gap: 3px;
-}
-.flow-mock-sidebar-title {
-  font-size: 0.65rem; font-weight: 700;
-  color: var(--dim); letter-spacing: 0.08em;
-  text-transform: uppercase; margin-bottom: 6px;
-}
-.flow-mock-cmd {
-  font-size: 0.72rem; color: var(--muted);
-  padding: 5px 8px; border-radius: 6px; font-family: monospace;
-}
-.flow-mock-cmd.active { background: rgba(255,255,255,0.08); color: #60a5fa; }
-.flow-mock-add {
-  font-size: 0.7rem; color: var(--dim);
-  margin-top: auto; padding: 5px 8px;
-  border: 1px dashed rgba(255,255,255,0.12); border-radius: 6px;
+.flowwave-scene-content {
+  position: relative;
+  z-index: 2;
+  padding-bottom: 80px;
   text-align: center;
 }
-.flow-mock-editor {
-  flex: 1; padding: 14px 16px;
-  display: flex; flex-direction: column; gap: 10px;
+.flowwave-scene-content .section-label-row,
+.flowwave-scene-content .section-title,
+.flowwave-scene-content .section-sub {
+  max-width: 620px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.flow-mock-cmd-title {
-  font-size: 0.88rem; font-weight: 700; color: var(--text); font-family: monospace;
+.feature-list--centered {
+  align-items: center;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.flow-mock-cmd-sub { font-size: 0.7rem; color: var(--dim); }
-.flow-mock-embed {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 10px 12px;
-  display: flex; flex-direction: column; gap: 4px;
-  position: relative; overflow: hidden;
+@media (max-width: 640px) {
+  .flowwave-scene { min-height: 480px; }
+  .flowwave-scene-content { padding-bottom: 52px; }
 }
-.flow-mock-embed-bar {
-  position: absolute; left: 0; top: 0; bottom: 0;
-  width: 3px; background: #5865f2;
-}
-.flow-mock-embed-name { font-size: 0.78rem; font-weight: 600; color: #ffffff; padding-left: 4px; }
-.flow-mock-embed-row { font-size: 0.7rem; color: var(--muted); padding-left: 4px; }
-.flow-mock-trigger {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-top: auto;
-  padding: 7px 10px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
-  border: 1px solid var(--border);
-}
-.flow-mock-trigger-label { font-size: 0.68rem; color: var(--dim); }
-.flow-mock-trigger-val { font-size: 0.7rem; color: #60a5fa; font-weight: 600; }
 
 /* Early Access Form */
 .ea-form {
