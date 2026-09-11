@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import FlowWaveCanvas from '@/components/landing/FlowWaveCanvas';
 
 const COPY = {
   de: {
@@ -51,9 +50,7 @@ export default function HeroSection() {
   const c = COPY[lang];
 
   return (
-    <section className="hero hero--wave">
-      <FlowWaveCanvas />
-      <div className="hero-wave-overlay" />
+    <section className="hero" style={{ overflowX: 'hidden' }}>
       <div className="container hero-layout">
         <div className="hero-text">
           <h1>

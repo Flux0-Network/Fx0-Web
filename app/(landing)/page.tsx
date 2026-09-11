@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
+import PerspectiveGrid from '@/components/landing/PerspectiveGrid';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
 import CookieNotice from '@/components/landing/CookieNotice';
@@ -34,6 +35,7 @@ export default function LandingPage() {
       <ScrollReveal />
       <Navbar />
       <div className="above-fold-wrapper" style={{ position: 'relative' }}>
+        <PerspectiveGrid />
         <span className="br br-tl" /><span className="br br-tr" />
         <span className="br br-bl" /><span className="br br-br" />
         <HeroSection />

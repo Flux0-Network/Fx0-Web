@@ -412,7 +412,7 @@ body::after {
   min-height: calc(100svh - 100px);
   display: flex;
   flex-direction: column;
-  background-color: #02160c;
+  background-color: #000;
 }
 .above-fold-wrapper::after {
   content: '';
@@ -421,7 +421,7 @@ body::after {
   left: 0;
   right: 0;
   height: 180px;
-  background: linear-gradient(to bottom, transparent, #02160c);
+  background: linear-gradient(to bottom, transparent, #000000);
   pointer-events: none;
   z-index: 2;
 }
@@ -3333,22 +3333,7 @@ kbd {
 .icon-moon { display: block; }
 
 /* ── HERO ── */
-.hero { position: relative; overflow: hidden; }
-.hero--wave { background: #02160c; }
-.hero-wave-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(2, 22, 12, 0.18) 0%,
-    rgba(2, 22, 12, 0.10) 40%,
-    rgba(2, 22, 12, 0.55) 75%,
-    rgba(2, 22, 12, 0.80) 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
-.hero--wave .container { position: relative; z-index: 2; }
+.hero { position: relative; }
 
 
 /* ── DESIGN STUDIO ── */
