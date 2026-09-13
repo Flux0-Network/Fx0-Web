@@ -70,7 +70,7 @@ export default function PerspectiveGrid() {
 
           ctx.beginPath();
           ctx.arc(x, y, radius, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(52,232,154,${alpha.toFixed(3)})`;
+          ctx.fillStyle = `rgba(255,255,255,${alpha.toFixed(3)})`;
           ctx.fill();
         }
       }
