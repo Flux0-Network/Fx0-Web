@@ -3091,7 +3091,7 @@ kbd {
 
   /* hero */
   .above-fold-wrapper { min-height: calc(100dvh - 80px); }
-  .hero { min-height: 0; padding: 80px 0 48px; align-items: flex-start; justify-content: flex-start; }
+  .hero { min-height: 0; padding: 60px 0 48px; align-items: center; justify-content: center; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
