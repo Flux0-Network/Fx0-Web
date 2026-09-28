@@ -9,9 +9,15 @@ export default function OceanBackground() {
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const renderer = createRenderer({ canvas });
-    void renderer.ready;
-    return () => renderer.dispose();
+    if (!navigator.gpu) return;
+    let renderer: ReturnType<typeof createRenderer> | null = null;
+    try {
+      renderer = createRenderer({ canvas });
+      void renderer.ready;
+    } catch {
+      renderer = null;
+    }
+    return () => renderer?.dispose();
   }, []);
 
   return (
