@@ -6,7 +6,6 @@ import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
-import FlowWaveCanvas from '@/components/landing/FlowWaveCanvas';
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
@@ -256,7 +255,6 @@ function LumaSpaceSection() {
 function FlowWaveSection() {
   return (
     <section className="flowwave-scene" id="flowwave">
-      <FlowWaveCanvas />
       <div className="flowwave-scene-overlay" />
       <div className="container flowwave-scene-content">
         <div className="section-label-row">FLOWWAVE</div>
