@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
-import PerspectiveGrid from '@/components/landing/PerspectiveGrid';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
+import AboveFoldBg from '@/components/landing/AboveFoldBg';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
+import FlowWaveCanvas from '@/components/landing/FlowWaveCanvas';
 
 export const metadata: Metadata = {
   title: 'Flux Network — Tools. Produkte. Indikatoren.',
@@ -34,21 +35,20 @@ export default function LandingPage() {
     <>
       <ScrollReveal />
       <Navbar />
-      <div className="above-fold-wrapper" style={{ position: 'relative' }}>
-        <PerspectiveGrid />
-        <span className="br br-tl" /><span className="br br-tr" />
-        <span className="br br-bl" /><span className="br br-br" />
+      <div className="above-fold-wrapper">
+        <AboveFoldBg />
         <HeroSection />
       </div>
       <StatsStrip />
       <LumaSpaceSection />
+      <FlowWaveSection />
+      <BuildFrameOSSection />
       <VylderCard />
       <Vex0Section />
       <RoadmapSection />
-      <ChangelogSection />
       <DashboardSection />
-      <FaqSection />
       <PartnersSection />
+      <FaqSection />
       <CtaSection />
       <SiteFooter />
       <CookieNotice />
@@ -97,12 +97,10 @@ function Vex0Section() {
             </div>
             <h2 className="section-title">Copy.<br />Paste.<br />Done.</h2>
             <p className="section-sub">
-              <span className="lang-de">Das Open-Source Component Framework von Flux Network. Komponenten kopieren, einfügen, fertig — kein Wrapper, kein Lock-in. Dein Code, deine Regeln.</span>
-              <span className="lang-en">The Open-Source Component Framework by Flux Network. Copy components, paste them, done — no wrapper, no lock-in. Your code, your rules.</span>
+              Das Open-Source Component Framework von Flux Network. Komponenten kopieren, einfügen, fertig — kein Wrapper, kein Lock-in. Dein Code, deine Regeln.
             </p>
             <a href="/docs" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
-              <span className="lang-de">Docs ansehen →</span>
-              <span className="lang-en">View Docs →</span>
+              Docs ansehen →
             </a>
           </div>
           <div className="vex0-code">
@@ -124,24 +122,19 @@ function Vex0Section() {
 
 function StatsStrip() {
   const items = [
-    { val: '5+', de: 'Produkte im Ökosystem', en: 'Products in Ecosystem' },
-    { val: '2',  de: 'Live',                  en: 'Live'                  },
-    { val: '2',  de: 'In Entwicklung',        en: 'In Development'        },
-    { val: '∞',  de: 'Open Community',        en: 'Open Community'        },
+    { val: '6+', label: 'Produkte im Ökosystem' },
+    { val: '3',  label: 'Live / Beta' },
+    { val: '2',  label: 'In Entwicklung' },
+    { val: '∞',  label: 'Open Community' },
   ];
   return (
-    <div className="stats-strip hatch-bg" style={{ position: 'relative' }}>
-      <span className="br br-tl" /><span className="br br-tr" />
-      <span className="br br-bl" /><span className="br br-br" />
+    <div className="stats-strip">
       <div className="container">
         <div className="stats-strip-inner">
           {items.map((s, i) => (
             <div key={i} className="stats-strip-item">
               <span className="stats-strip-val">{s.val}</span>
-              <span className="stats-strip-label">
-                <span className="lang-de">{s.de}</span>
-                <span className="lang-en">{s.en}</span>
-              </span>
+              <span className="stats-strip-label">{s.label}</span>
             </div>
           ))}
         </div>
@@ -151,11 +144,12 @@ function StatsStrip() {
 }
 
 const ROADMAP_ITEMS = [
-  { name: 'LumaSpace',   descDe: 'KI-gestütztes Produktivitätssystem für Teams',  descEn: 'AI-powered productivity system for teams',          status: 'Live',  statusEn: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
-  { name: 'FlowWave',    descDe: 'Discord-Bots visuell bauen — ohne Boilerplate', descEn: 'Build Discord bots visually — without boilerplate', status: 'Beta',  statusEn: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
-  { name: 'Vex0',        descDe: 'Open Source Component Framework',               descEn: 'Open Source Component Framework',                   status: 'Dev',   statusEn: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
-  { name: 'Vylder',      descDe: 'Visueller Website-Builder mit Code-Editor',     descEn: 'Visual website builder with code editor',           status: 'Dev',   statusEn: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
-  { name: 'Indikatoren', descDe: 'TradingView Pine Script Strategien & Tools',    descEn: 'TradingView Pine Script strategies & tools',        status: 'Bald',  statusEn: 'Soon',  cls: 'rm-soon',  href: '#' },
+  { name: 'LumaSpace',      desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
+  { name: 'FlowWave',       desc: 'Discord-Bots visuell bauen — ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
+  { name: 'BuildFrameOS',   desc: 'Digitales Bautagebuch für Bauprojekte',         status: 'Beta',  cls: 'rm-beta',  href: 'https://buildframeos.app' },
+  { name: 'Vex0',           desc: 'Open Source Component Framework',              status: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
+  { name: 'Vylder',         desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
+  { name: 'Indikatoren',    desc: 'TradingView Pine Script Strategien & Tools',   status: 'Bald',  cls: 'rm-soon',  href: '#' },
 ];
 
 function RoadmapSection() {
@@ -164,14 +158,8 @@ function RoadmapSection() {
       <div className="container">
         <div className="section-label-row">ROADMAP</div>
         <div className="section-intro">
-          <h2 className="section-title">
-            <span className="lang-de">Was wir bauen.</span>
-            <span className="lang-en">What we&apos;re building.</span>
-          </h2>
-          <p className="section-sub">
-            <span className="lang-de">Von Live bis Coming Soon — das Flux Network Ökosystem wächst.</span>
-            <span className="lang-en">From Live to Coming Soon — the Flux Network ecosystem grows.</span>
-          </p>
+          <h2 className="section-title">Was wir bauen.</h2>
+          <p className="section-sub">Von Live bis Coming Soon — das Flux Network Ökosystem wächst.</p>
         </div>
         <div className="roadmap-list">
           {ROADMAP_ITEMS.map((item, i) => (
@@ -184,15 +172,9 @@ function RoadmapSection() {
               <span className="roadmap-num">0{i + 1}</span>
               <div className="roadmap-info">
                 <span className="roadmap-name">{item.name}</span>
-                <span className="roadmap-desc">
-                  <span className="lang-de">{item.descDe}</span>
-                  <span className="lang-en">{item.descEn}</span>
-                </span>
+                <span className="roadmap-desc">{item.desc}</span>
               </div>
-              <span className={`roadmap-status ${item.cls}`}>
-                <span className="lang-de">{item.status}</span>
-                <span className="lang-en">{item.statusEn}</span>
-              </span>
+              <span className={`roadmap-status ${item.cls}`}>{item.status}</span>
             </a>
           ))}
         </div>
@@ -201,94 +183,12 @@ function RoadmapSection() {
   );
 }
 
-const CHANGELOG_ITEMS = [
-  {
-    date: 'Sep 2026',
-    product: 'LumaSpace',
-    version: 'v1.2.0',
-    tagCls: 'cl-tag--luma',
-    descDe: 'KI-Focus-Blöcke mit Kalender-Sync & verbesserter Task-Priorisierung',
-    descEn: 'AI focus blocks with calendar sync & improved task prioritization',
-  },
-  {
-    date: 'Aug 2026',
-    product: 'FlowWave',
-    version: 'v0.8.0',
-    tagCls: 'cl-tag--flow',
-    descDe: 'Event-Handler für Reaction Roles und verbesserter Embed-Builder',
-    descEn: 'Event handlers for reaction roles and improved embed builder',
-  },
-  {
-    date: 'Jul 2026',
-    product: 'Vex0',
-    version: 'v0.3.0',
-    tagCls: 'cl-tag--vex',
-    descDe: 'Button, Card & Badge Komponenten — Open Source auf GitHub',
-    descEn: 'Button, Card & Badge components — open source on GitHub',
-  },
-  {
-    date: 'Jun 2026',
-    product: 'LumaSpace',
-    version: 'v1.1.0',
-    tagCls: 'cl-tag--luma',
-    descDe: 'Realtime Collaboration — mehrere Nutzer gleichzeitig im selben Workspace',
-    descEn: 'Realtime collaboration — multiple users simultaneously in the same workspace',
-  },
-  {
-    date: 'Mai 2026',
-    product: 'FlowWave',
-    version: 'v0.7.0',
-    tagCls: 'cl-tag--flow',
-    descDe: 'Slash Command Builder Launch — Discord Bots ohne eine Zeile Code',
-    descEn: 'Slash Command Builder launch — Discord bots without a single line of code',
-  },
-];
-
-function ChangelogSection() {
-  return (
-    <section className="changelog-section section">
-      <div className="container">
-        <div className="section-label-row">
-          <span className="dot dot--grün" />
-          CHANGELOG
-        </div>
-        <div className="section-intro">
-          <h2 className="section-title">
-            <span className="lang-de">Was wir shipped haben.</span>
-            <span className="lang-en">What we&apos;ve shipped.</span>
-          </h2>
-          <p className="section-sub">
-            <span className="lang-de">Letzte Updates aus dem Flux Network Ökosystem.</span>
-            <span className="lang-en">Latest updates from the Flux Network ecosystem.</span>
-          </p>
-        </div>
-        <div className="changelog-list">
-          {CHANGELOG_ITEMS.map((item, i) => (
-            <div key={i} className="changelog-item">
-              <div className="changelog-meta">
-                <span className="changelog-date">{item.date}</span>
-                <span className={`changelog-tag ${item.tagCls}`}>{item.product}</span>
-                <span className="changelog-version">{item.version}</span>
-              </div>
-              <p className="changelog-desc">
-                <span className="lang-de">{item.descDe}</span>
-                <span className="lang-en">{item.descEn}</span>
-              </p>
-            </div>
-          ))}
-        </div>
-        <div className="changelog-footer">
-          <a href="/changelog" className="btn-ghost" style={{ display: 'inline-flex', fontSize: '0.85rem' }}>
-            <span className="lang-de">Alle Updates ansehen →</span>
-            <span className="lang-en">View all updates →</span>
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 function LumaSpaceMockup() {
+  const tasks = [
+    { done: true,  label: 'Design Review',   tag: 'Fertig',    tagCls: 'luma-tag-done' },
+    { done: false, label: 'API Integration', tag: 'In Arbeit', tagCls: 'luma-tag-wip' },
+    { done: false, label: 'Dokumentation',   tag: 'Offen',     tagCls: 'luma-tag-open' },
+  ];
   return (
     <div className="luma-mock">
       <div className="luma-mock-bar">
@@ -299,56 +199,24 @@ function LumaSpaceMockup() {
       </div>
       <div className="luma-mock-body">
         <div className="luma-mock-sidebar">
-          <div className="luma-mock-sidebar-title">
-            <span className="lang-de">Projekte</span>
-            <span className="lang-en">Projects</span>
-          </div>
+          <div className="luma-mock-sidebar-title">Projekte</div>
           {['Flux Network', 'Client A', 'Side Project'].map((p, i) => (
             <div key={p} className={`luma-mock-proj${i === 0 ? ' active' : ''}`}>{p}</div>
           ))}
-          <div className="luma-mock-ai-hint">
-            <span className="lang-de">✨ KI-Vorschlag</span>
-            <span className="lang-en">✨ AI Suggestion</span>
-          </div>
+          <div className="luma-mock-ai-hint">✨ KI-Vorschlag</div>
         </div>
         <div className="luma-mock-main">
-          <div className="luma-mock-day">
-            <span className="lang-de">Heute</span>
-            <span className="lang-en">Today</span>
-          </div>
-          <div className="luma-mock-task done">
-            <span className="luma-mock-check">✓</span>
-            <span className="luma-mock-task-label">Design Review</span>
-            <span className="luma-mock-tag luma-tag-done">
-              <span className="lang-de">Fertig</span>
-              <span className="lang-en">Done</span>
-            </span>
-          </div>
-          <div className="luma-mock-task">
-            <span className="luma-mock-check">○</span>
-            <span className="luma-mock-task-label">API Integration</span>
-            <span className="luma-mock-tag luma-tag-wip">
-              <span className="lang-de">In Arbeit</span>
-              <span className="lang-en">In Progress</span>
-            </span>
-          </div>
-          <div className="luma-mock-task">
-            <span className="luma-mock-check">○</span>
-            <span className="luma-mock-task-label">
-              <span className="lang-de">Dokumentation</span>
-              <span className="lang-en">Documentation</span>
-            </span>
-            <span className="luma-mock-tag luma-tag-open">
-              <span className="lang-de">Offen</span>
-              <span className="lang-en">Open</span>
-            </span>
-          </div>
+          <div className="luma-mock-day">Heute</div>
+          {tasks.map(t => (
+            <div key={t.label} className={`luma-mock-task${t.done ? ' done' : ''}`}>
+              <span className="luma-mock-check">{t.done ? '✓' : '○'}</span>
+              <span className="luma-mock-task-label">{t.label}</span>
+              <span className={`luma-mock-tag ${t.tagCls}`}>{t.tag}</span>
+            </div>
+          ))}
           <div className="luma-mock-suggestion">
             <span>🤖</span>
-            <span>
-              <span className="lang-de">Focus-Block um 14:00 Uhr empfohlen</span>
-              <span className="lang-en">Focus block at 2:00 PM suggested</span>
-            </span>
+            <span>Focus-Block um 14:00 Uhr empfohlen</span>
           </div>
         </div>
       </div>
@@ -363,31 +231,17 @@ function LumaSpaceSection() {
         <div className="product-split">
           <div className="product-split-text">
             <div className="section-label-row">LUMASPACE</div>
-            <h2 className="section-title">
-              <span className="lang-de">Planung.<br />KI-gestützt.</span>
-              <span className="lang-en">Planning.<br />AI-powered.</span>
-            </h2>
+            <h2 className="section-title">Planung.<br />KI-gestützt.</h2>
             <p className="section-sub">
-              <span className="lang-de">KI-gestütztes Produktivitätssystem für Teams und Solo-Worker — Planung, Fokusarbeit und automatisierte Workflows in einer Plattform.</span>
-              <span className="lang-en">AI-powered productivity system for teams and solo workers — planning, focus work and automated workflows in one platform.</span>
+              KI-gestütztes Produktivitätssystem für Teams und Solo-Worker — Planung, Fokusarbeit und automatisierte Workflows in einer Plattform.
             </p>
             <ul className="feature-list">
-              <li>
-                <span className="lang-de">KI schlägt Focus-Blöcke &amp; Tasks vor</span>
-                <span className="lang-en">AI suggests focus blocks &amp; tasks</span>
-              </li>
-              <li>
-                <span className="lang-de">Realtime Collaboration im Team</span>
-                <span className="lang-en">Realtime team collaboration</span>
-              </li>
-              <li>
-                <span className="lang-de">Automatisierte Workflows</span>
-                <span className="lang-en">Automated workflows</span>
-              </li>
+              <li>KI schlägt Focus-Blöcke & Tasks vor</li>
+              <li>Realtime Collaboration im Team</li>
+              <li>Automatisierte Workflows</li>
             </ul>
             <a href="https://lumaspace.de/" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
-              <span className="lang-de">LumaSpace öffnen →</span>
-              <span className="lang-en">Open LumaSpace →</span>
+              LumaSpace öffnen →
             </a>
           </div>
           <div className="product-split-visual">
@@ -399,6 +253,108 @@ function LumaSpaceSection() {
   );
 }
 
+function FlowWaveSection() {
+  return (
+    <section className="flowwave-scene" id="flowwave">
+      <FlowWaveCanvas />
+      <div className="flowwave-scene-overlay" />
+      <div className="container flowwave-scene-content">
+        <div className="section-label-row">FLOWWAVE</div>
+        <h2 className="section-title">
+          <span className="lang-de">Discord Bots.<br />Ohne Boilerplate.</span>
+          <span className="lang-en">Discord Bots.<br />Without Boilerplate.</span>
+        </h2>
+        <p className="section-sub">
+          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2.</span>
+          <span className="lang-en">Set up Slash Commands, events and UI components visually — powered by pycord v2.</span>
+        </p>
+        <ul className="feature-list feature-list--centered">
+          <li>
+            <span className="lang-de">Visueller Command-Builder</span>
+            <span className="lang-en">Visual command builder</span>
+          </li>
+          <li>
+            <span className="lang-de">Slash Commands &amp; Events ohne Code</span>
+            <span className="lang-en">Slash Commands &amp; events without code</span>
+          </li>
+          <li>Powered by pycord v2</li>
+        </ul>
+        <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '24px' }}>
+          <span className="lang-de">FlowWave öffnen →</span>
+          <span className="lang-en">Open FlowWave →</span>
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function BuildFrameOSMockup() {
+  const entries = [
+    { date: '25. Sep', phase: 'Rohbau',    note: 'Außenwände fertiggestellt', photos: 4, cls: 'bfo-tag-active' },
+    { date: '22. Sep', phase: 'Fundament', note: 'Bodenplatte gegossen',      photos: 7, cls: 'bfo-tag-done'   },
+    { date: '18. Sep', phase: 'Aushub',    note: 'Erdarbeiten abgeschlossen', photos: 3, cls: 'bfo-tag-done'   },
+  ];
+  return (
+    <div className="bfo-mock">
+      <div className="bfo-mock-bar">
+        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
+        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
+        <span className="dmock-dot" style={{ background: '#28c840' }} />
+        <span className="bfo-mock-url">buildframeos.app/tagebuch</span>
+      </div>
+      <div className="bfo-mock-header">
+        <span className="bfo-mock-project">Bauprojekt Alpha</span>
+        <span className="bfo-mock-phase-badge">Phase: Rohbau</span>
+      </div>
+      <div className="bfo-mock-entries">
+        {entries.map(e => (
+          <div key={e.date} className="bfo-mock-entry">
+            <span className="bfo-mock-entry-date">{e.date}</span>
+            <div className="bfo-mock-entry-body">
+              <span className={`bfo-tag ${e.cls}`}>{e.phase}</span>
+              <span className="bfo-mock-entry-note">{e.note}</span>
+            </div>
+            <span className="bfo-mock-photos">📷 {e.photos}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BuildFrameOSSection() {
+  return (
+    <section id="buildframeos" className="product-spotlight section">
+      <div className="container">
+        <div className="product-split product-split--reverse">
+          <div className="product-split-visual">
+            <BuildFrameOSMockup />
+          </div>
+          <div className="product-split-text">
+            <div className="section-label-row">
+              <span className="dot" />
+              BUILDFRAMEOS
+            </div>
+            <h2 className="section-title">Bau&shy;tagebuch.<br />Digital.</h2>
+            <p className="section-sub">
+              Das digitale Bautagebuch für Bauprojekte. Fortschritte dokumentieren, Fotos anhängen und Bauphasen tracken — alles an einem Ort.
+            </p>
+            <ul className="feature-list">
+              <li>Digitales Bautagebuch mit Fotos</li>
+              <li>Bauphasen &amp; Fortschritt tracken</li>
+              <li>Mobil nutzbar, immer dabei</li>
+            </ul>
+            <a href="https://buildframeos.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              BuildFrameOS öffnen →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
 function VylderCard() {
   return (
     <div id="vylder" className="vylder-card-wrap">
@@ -408,8 +364,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          <span className="lang-de">Der Website-Builder, der Code versteht. Jede Library importierbar — visuell designen, im Code verfeinern.</span>
-          <span className="lang-en">The website builder that understands code. Any library importable — design visually, refine in code.</span>
+          Der Website-Builder, der Code versteht. Jede Library importierbar — visuell designen, im Code verfeinern.
         </p>
         <a
           href="https://vylder.dev"
@@ -429,10 +384,8 @@ const PRODUCTS = [
     icon: '/lumaspace-icon.png' as string | null,
     name: 'LumaSpace',
     status: 'Live',
-    statusEn: 'Live',
     statusClass: 'product-status--live',
-    descDe: 'KI-gestützte Produktivitätssysteme für Teams und Solo-Worker. Planung, Fokusarbeit und automatisierte Workflows — in einer Plattform.',
-    descEn: 'AI-powered productivity systems for teams and solo workers. Planning, focus work and automated workflows — in one platform.',
+    desc: 'KI-gestützte Produktivitätssysteme für Teams und Solo-Worker. Planung, Fokusarbeit und automatisierte Workflows — in einer Plattform.',
     tags: ['AI Planning', 'Realtime Collaboration', 'Task Orchestration', 'Focus & Scheduling'],
     href: 'https://lumaspace.de/',
   },
@@ -440,10 +393,8 @@ const PRODUCTS = [
     icon: '/flowwave-icon.png' as string | null,
     name: 'FlowWave',
     status: 'Open Beta',
-    statusEn: 'Open Beta',
     statusClass: 'product-status--dev',
-    descDe: 'Discord-Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.',
-    descEn: 'Discord bots without boilerplate. Set up Slash Commands, events and UI components visually — powered by pycord v2. Minutes instead of hours.',
+    desc: 'Discord-Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.',
     tags: ['pycord v2', 'Slash Commands', 'Bot Builder', 'Visual Editor'],
     href: 'https://flowwave.app',
   },
@@ -451,10 +402,8 @@ const PRODUCTS = [
     icon: '/lyqdex-icon.PNG' as string | null,
     name: 'LyqDex',
     status: 'In Entwicklung',
-    statusEn: 'In Development',
     statusClass: 'product-status--dev',
-    descDe: 'Onchain-Exchange-Protokoll der nächsten Generation. Fokus auf Liquidität, Effizienz und vollständige Transparenz — gebaut für die Zukunft von DeFi.',
-    descEn: 'Next-generation onchain exchange protocol. Focus on liquidity, efficiency and full transparency — built for the future of DeFi.',
+    desc: 'Onchain-Exchange-Protokoll der nächsten Generation. Fokus auf Liquidität, Effizienz und vollständige Transparenz — gebaut für die Zukunft von DeFi.',
     tags: ['Onchain DEX', 'Liquidity Pools', 'Streaming Transactions', 'DeFi Analytics'],
     href: 'https://lyqdex.io',
   },
@@ -462,10 +411,8 @@ const PRODUCTS = [
     icon: null,
     name: 'Vex0',
     status: 'In Entwicklung',
-    statusEn: 'In Development',
     statusClass: 'product-status--dev',
-    descDe: 'Das Component Framework von Flux Network. Einfach kopieren, einfügen, anpassen — kein Wrapper-Overhead, kein Lock-in. Funktioniert mit jedem React-Projekt.',
-    descEn: 'The component framework by Flux Network. Simply copy, paste, customize — no wrapper overhead, no lock-in. Works with any React project.',
+    desc: 'Das Component Framework von Flux Network. Einfach kopieren, einfügen, anpassen — kein Wrapper-Overhead, kein Lock-in. Funktioniert mit jedem React-Projekt.',
     tags: ['React', 'Open Source', 'Components', 'TypeScript'],
     href: '/docs',
   },
@@ -473,10 +420,8 @@ const PRODUCTS = [
     icon: '/vylder-icon.png' as string | null,
     name: 'Vylder',
     status: 'Coming Soon',
-    statusEn: 'Coming Soon',
     statusClass: 'product-status--dev',
-    descDe: 'Der Website-Builder, der Code versteht. Visuell designen, im Code verfeinern — und jede beliebige Library direkt importieren. Radix UI, shadcn/ui, dein eigenes Package. Kein Limit.',
-    descEn: 'The website builder that understands code. Design visually, refine in code — and import any library directly. Radix UI, shadcn/ui, your own package. No limits.',
+    desc: 'Der Website-Builder, der Code versteht. Visuell designen, im Code verfeinern — und jede beliebige Library direkt importieren. Radix UI, shadcn/ui, dein eigenes Package. Kein Limit.',
     tags: ['Visual Builder', 'Code Editor', 'Any Library', 'No-Code & Code'],
     href: 'https://vylder.dev',
   },
@@ -488,18 +433,11 @@ function ProductsSection() {
       <div className="container">
         <div className="section-label-row">
           <span className="dot" />
-          <span className="lang-de">PRODUKTE</span>
-          <span className="lang-en">PRODUCTS</span>
+          PRODUKTE
         </div>
         <div className="section-intro">
-          <h2 className="section-title">
-            <span className="lang-de">Was wir bauen.</span>
-            <span className="lang-en">What we&apos;re building.</span>
-          </h2>
-          <p className="section-sub">
-            <span className="lang-de">Fünf Produkte. Unterschiedliche Domänen. Derselbe Anspruch.</span>
-            <span className="lang-en">Five products. Different domains. Same standard.</span>
-          </p>
+          <h2 className="section-title">Was wir bauen.</h2>
+          <p className="section-sub">Fünf Produkte. Unterschiedliche Domänen. Derselbe Anspruch.</p>
         </div>
         <div className="products-list">
           {PRODUCTS.map(p => (
@@ -515,23 +453,14 @@ function ProductsSection() {
                 </div>
                 <div>
                   <h3 className="product-name">{p.name}</h3>
-                  <span className={`product-status ${p.statusClass}`}>
-                    <span className="lang-de">{p.status}</span>
-                    <span className="lang-en">{p.statusEn}</span>
-                  </span>
+                  <span className={`product-status ${p.statusClass}`}>{p.status}</span>
                 </div>
               </div>
-              <p className="product-desc">
-                <span className="lang-de">{p.descDe}</span>
-                <span className="lang-en">{p.descEn}</span>
-              </p>
+              <p className="product-desc">{p.desc}</p>
               <ul className="product-tags">
                 {p.tags.map(t => <li key={t}>{t}</li>)}
               </ul>
-              <a href={p.href} className="btn-primary" {...(p.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>
-                <span className="lang-de">Öffnen →</span>
-                <span className="lang-en">Open →</span>
-              </a>
+              <a href={p.href} className="btn-primary" {...(p.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>Öffnen →</a>
             </div>
           ))}
         </div>
@@ -541,8 +470,7 @@ function ProductsSection() {
 }
 
 function DashboardMockup() {
-  const navDe = ['Übersicht', 'Produkte', 'Early Access', 'Einstellungen'];
-  const navEn = ['Overview', 'Products', 'Early Access', 'Settings'];
+  const navItems = ['Übersicht', 'Produkte', 'Early Access', 'Einstellungen'];
   const products = [
     { name: 'LumaSpace', status: 'Live', color: '#22c55e' },
     { name: 'FlowWave',  status: 'Beta', color: '#f59e0b' },
@@ -558,30 +486,15 @@ function DashboardMockup() {
       </div>
       <div className="dmock-body">
         <div className="dmock-sidebar">
-          {navDe.map((item, i) => (
-            <div key={item} className={`dmock-nav${i === 0 ? ' dmock-nav--active' : ''}`}>
-              <span className="lang-de">{item}</span>
-              <span className="lang-en">{navEn[i]}</span>
-            </div>
+          {navItems.map((item, i) => (
+            <div key={item} className={`dmock-nav${i === 0 ? ' dmock-nav--active' : ''}`}>{item}</div>
           ))}
         </div>
         <div className="dmock-main">
-          <div className="dmock-welcome">
-            <span className="lang-de">Willkommen zurück</span>
-            <span className="lang-en">Welcome back</span>
-          </div>
+          <div className="dmock-welcome">Willkommen zurück</div>
           <div className="dmock-stats">
-            <div className="dmock-stat">
-              <span className="dmock-stat-val">5</span>
-              <span className="dmock-stat-label">
-                <span className="lang-de">Produkte</span>
-                <span className="lang-en">Products</span>
-              </span>
-            </div>
-            <div className="dmock-stat">
-              <span className="dmock-stat-val" style={{ color: '#22c55e' }}>Early</span>
-              <span className="dmock-stat-label">Access</span>
-            </div>
+            <div className="dmock-stat"><span className="dmock-stat-val">5</span><span className="dmock-stat-label">Produkte</span></div>
+            <div className="dmock-stat"><span className="dmock-stat-val" style={{ color: '#22c55e' }}>Early</span><span className="dmock-stat-label">Access</span></div>
           </div>
           <div className="dmock-list">
             {products.map(p => (
@@ -608,17 +521,12 @@ function DashboardSection() {
               <span className="dot" />
               DASHBOARD
             </div>
-            <h2 className="section-title">
-              <span className="lang-de">Dein Hub.<br />Alles drin.</span>
-              <span className="lang-en">Your Hub.<br />All in one.</span>
-            </h2>
+            <h2 className="section-title">Dein Hub.<br />Alles drin.</h2>
             <p className="section-sub">
-              <span className="lang-de">Ein Ort für alle Flux Network Produkte. Early Access verwalten, Beta-Releases freischalten und den Status aller Tools im Blick behalten — Login via Discord.</span>
-              <span className="lang-en">One place for all Flux Network products. Manage Early Access, unlock beta releases and track the status of all tools — login via Discord.</span>
+              Ein Ort für alle Flux Network Produkte. Early Access verwalten, Beta-Releases freischalten und den Status aller Tools im Blick behalten — Login via Discord.
             </p>
             <a href="/dashboard" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
-              <span className="lang-de">Dashboard öffnen →</span>
-              <span className="lang-en">Open Dashboard →</span>
+              Dashboard öffnen →
             </a>
           </div>
           <div className="dashboard-preview">
@@ -634,10 +542,7 @@ function PartnersSection() {
   return (
     <section className="logo-cloud-section">
       <div className="container">
-        <p className="logo-cloud-label">
-          <span className="lang-de">Discord Partner &amp; befreundete Server</span>
-          <span className="lang-en">Discord Partners &amp; friendly servers</span>
-        </p>
+        <p className="logo-cloud-label">Discord Partner &amp; befreundete Server</p>
         <div className="logo-cloud">
           <a href="https://discord.gg/WV3GCj3CaU" className="logo-cloud-item" target="_blank" rel="noopener">
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -654,10 +559,7 @@ function PartnersSection() {
           </a>
           <a href="https://discord.gg/yqQutP6EKV" className="logo-cloud-item logo-cloud-item--add" target="_blank" rel="noopener">
             <span className="logo-cloud-plus">+</span>
-            <span>
-              <span className="lang-de">Partner werden</span>
-              <span className="lang-en">Become a Partner</span>
-            </span>
+            <span>Partner werden</span>
           </a>
         </div>
       </div>
@@ -667,74 +569,48 @@ function PartnersSection() {
 
 const FAQ_ITEMS = [
   {
-    qDe: 'Was ist Flux Network?',
-    qEn: 'What is Flux Network?',
-    aDe: 'Flux Network ist ein digitales Produktstudio — wir bauen eigene Software-Produkte, Developer-Frameworks, TradingView-Indikatoren und Tools für die nächste Generation.',
-    aEn: 'Flux Network is a digital product studio — we build our own software products, developer frameworks, TradingView indicators and tools for the next generation.',
+    q: 'Was ist Flux Network?',
+    a: 'Flux Network ist ein digitales Produktstudio — wir bauen eigene Software-Produkte, Developer-Frameworks, TradingView-Indikatoren und Tools für die nächste Generation.',
   },
   {
-    qDe: 'Was ist Vex0?',
-    qEn: 'What is Vex0?',
-    aDe: 'Vex0 ist das Open-Source Component Framework von Flux Network. Komponenten einfach kopieren, ins Projekt einfügen und anpassen — kein Wrapper, kein Lock-in.',
-    aEn: 'Vex0 is the Open-Source Component Framework by Flux Network. Simply copy, paste into the project and customize — no wrapper, no lock-in.',
+    q: 'Was ist Vex0?',
+    a: 'Vex0 ist das Open-Source Component Framework von Flux Network. Komponenten einfach kopieren, ins Projekt einfügen und anpassen — kein Wrapper, kein Lock-in.',
   },
   {
-    qDe: 'Was ist Vylder?',
-    qEn: 'What is Vylder?',
-    aDe: 'Vylder ist unser visueller Website-Builder — visuell designen, im Code verfeinern, und jede beliebige Library importieren. Radix UI, shadcn/ui, dein eigenes Package. Mehr auf vylder.dev.',
-    aEn: 'Vylder is our visual website builder — design visually, refine in code, and import any library. Radix UI, shadcn/ui, your own package. More at vylder.dev.',
+    q: 'Was ist Vylder?',
+    a: 'Vylder ist unser visueller Website-Builder — visuell designen, im Code verfeinern, und jede beliebige Library importieren. Radix UI, shadcn/ui, dein eigenes Package. Mehr auf vylder.dev.',
   },
   {
-    qDe: 'Was sind die TradingView-Indikatoren?',
-    qEn: 'What are the TradingView indicators?',
-    aDe: 'Wir entwickeln Pine Script Indikatoren und Strategien für TradingView — von einfachen Overlay-Indikatoren bis zu kompletten automatisierten Strategien. Coming Soon.',
-    aEn: 'We develop Pine Script indicators and strategies for TradingView — from simple overlay indicators to complete automated strategies. Coming Soon.',
+    q: 'Was sind die TradingView-Indikatoren?',
+    a: 'Wir entwickeln Pine Script Indikatoren und Strategien für TradingView — von einfachen Overlay-Indikatoren bis zu kompletten automatisierten Strategien. Coming Soon.',
   },
   {
-    qDe: 'Wie kann ich auf dem Laufenden bleiben?',
-    qEn: 'How can I stay up to date?',
-    aDe: 'Tritt unserem Discord bei — dort posten wir Updates zu allen Produkten, Early Access und Beta-Releases als Erstes.',
-    aEn: "Join our Discord — that's where we post updates about all products, Early Access and beta releases first.",
+    q: 'Wie kann ich auf dem Laufenden bleiben?',
+    a: 'Tritt unserem Discord bei — dort posten wir Updates zu allen Produkten, Early Access und Beta-Releases als Erstes.',
   },
   {
-    qDe: 'Sind die Produkte kostenlos?',
-    qEn: 'Are the products free?',
-    aDe: 'Vex0 ist Open Source und kostenlos. Für LumaSpace, FlowWave und die Indikatoren gibt es kostenlose und kostenpflichtige Pläne — je nach Produkt unterschiedlich.',
-    aEn: 'Vex0 is Open Source and free. For LumaSpace, FlowWave and the indicators there are free and paid plans — depending on the product.',
+    q: 'Sind die Produkte kostenlos?',
+    a: 'Vex0 ist Open Source und kostenlos. Für LumaSpace, FlowWave und die Indikatoren gibt es kostenlose und kostenpflichtige Pläne — je nach Produkt unterschiedlich.',
   },
 ];
 
 function FaqSection() {
   return (
-    <section id="faq" className="section hatch-bg" style={{ position: 'relative' }}>
-      <span className="br br-tl" /><span className="br br-tr" />
-      <span className="br br-bl" /><span className="br br-br" />
+    <section id="faq" className="section">
       <div className="container">
         <div className="section-label-row">
           <span className="dot dot--gelb" />
           FAQ
         </div>
         <div className="section-intro">
-          <h2 className="section-title">
-            <span className="lang-de">Häufige Fragen</span>
-            <span className="lang-en">Frequently Asked Questions</span>
-          </h2>
-          <p className="section-sub">
-            <span className="lang-de">Kurz, klar — alles, was du wissen musst.</span>
-            <span className="lang-en">Short, clear — everything you need to know.</span>
-          </p>
+          <h2 className="section-title">Häufige Fragen</h2>
+          <p className="section-sub">Kurz, klar — alles, was du wissen musst.</p>
         </div>
         <div className="faq-grid">
           {FAQ_ITEMS.map(item => (
-            <details key={item.qDe} className="faq-item">
-              <summary>
-                <span className="lang-de">{item.qDe}</span>
-                <span className="lang-en">{item.qEn}</span>
-              </summary>
-              <p>
-                <span className="lang-de">{item.aDe}</span>
-                <span className="lang-en">{item.aEn}</span>
-              </p>
+            <details key={item.q} className="faq-item">
+              <summary>{item.q}</summary>
+              <p>{item.a}</p>
             </details>
           ))}
         </div>
@@ -742,7 +618,6 @@ function FaqSection() {
     </section>
   );
 }
-
 
 const DiscordIcon = () => (
   <svg width="18" height="18" viewBox="0 0 71 55" fill="currentColor">
@@ -752,32 +627,19 @@ const DiscordIcon = () => (
 
 function CtaSection() {
   return (
-    <section className="cta section hatch-bg" style={{ position: 'relative' }}>
-      <span className="br br-tl" /><span className="br br-tr" />
-      <span className="br br-bl" /><span className="br br-br" />
+    <section className="cta section">
       <div className="container">
         <div className="cta-inner">
           <div className="section-label-row">
             <span className="dot dot--grün" />
             EARLY ACCESS
           </div>
-          <h2>
-            <span className="lang-de">Als Erstes dabei sein.</span>
-            <span className="lang-en">Be the first.</span>
-          </h2>
-          <p>
-            <span className="lang-de">Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</span>
-            <span className="lang-en">Enter your email or join our Discord — get Early Access, Beta-Releases and updates to Vex0, Vylder and all other products before everyone else.</span>
-          </p>
+          <h2>Als Erstes dabei sein.</h2>
+          <p>Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</p>
           <EarlyAccessForm />
-          <div className="cta-divider">
-            <span className="lang-de">oder</span>
-            <span className="lang-en">or</span>
-          </div>
+          <div className="cta-divider"><span>oder</span></div>
           <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
-            <DiscordIcon />
-            <span className="lang-de">Discord joinen</span>
-            <span className="lang-en">Join Discord</span>
+            <DiscordIcon /> Discord joinen
           </a>
         </div>
       </div>
