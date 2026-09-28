@@ -1031,6 +1031,99 @@ body::after {
   border: 1px solid rgba(139,92,246,0.15);
 }
 
+/* ── BuildFrameOS Mockup ── */
+.bfo-mock {
+  background: rgba(8,8,8,0.9);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  font-size: 0.82rem;
+}
+.bfo-mock-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+.bfo-mock-url {
+  margin-left: 8px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono, monospace);
+}
+.bfo-mock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.bfo-mock-project {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.85rem;
+}
+.bfo-mock-phase-badge {
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: rgba(234,179,8,0.15);
+  color: #eab308;
+  border: 1px solid rgba(234,179,8,0.3);
+}
+.bfo-mock-entries { padding: 8px 0; }
+.bfo-mock-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.bfo-mock-entry:last-child { border-bottom: none; }
+.bfo-mock-entry-date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  min-width: 52px;
+}
+.bfo-mock-entry-body {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.bfo-mock-entry-note {
+  color: var(--text-sub);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bfo-mock-photos {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.bfo-tag {
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.bfo-tag-active {
+  background: rgba(52,232,154,0.12);
+  color: #34e89a;
+  border: 1px solid rgba(52,232,154,0.3);
+}
+.bfo-tag-done {
+  background: rgba(255,255,255,0.06);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
 /* ── FlowWave Scene (Three.js full-viewport) ── */
 .flowwave-scene {
   position: relative;
