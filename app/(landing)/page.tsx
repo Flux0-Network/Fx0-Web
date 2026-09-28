@@ -42,6 +42,7 @@ export default function LandingPage() {
       <StatsStrip />
       <LumaSpaceSection />
       <FlowWaveSection />
+      <BuildFrameOSSection />
       <VylderCard />
       <Vex0Section />
       <RoadmapSection />
@@ -121,8 +122,8 @@ function Vex0Section() {
 
 function StatsStrip() {
   const items = [
-    { val: '5+', label: 'Produkte im Ökosystem' },
-    { val: '2',  label: 'Live' },
+    { val: '6+', label: 'Produkte im Ökosystem' },
+    { val: '3',  label: 'Live / Beta' },
     { val: '2',  label: 'In Entwicklung' },
     { val: '∞',  label: 'Open Community' },
   ];
@@ -143,11 +144,12 @@ function StatsStrip() {
 }
 
 const ROADMAP_ITEMS = [
-  { name: 'LumaSpace',    desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
-  { name: 'FlowWave',     desc: 'Discord-Bots visuell bauen — ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
-  { name: 'Vex0',         desc: 'Open Source Component Framework',              status: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
-  { name: 'Vylder',       desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
-  { name: 'Indikatoren',  desc: 'TradingView Pine Script Strategien & Tools',   status: 'Bald',  cls: 'rm-soon',  href: '#' },
+  { name: 'LumaSpace',      desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
+  { name: 'FlowWave',       desc: 'Discord-Bots visuell bauen — ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
+  { name: 'BuildFrameOS',   desc: 'Digitales Bautagebuch für Bauprojekte',         status: 'Beta',  cls: 'rm-beta',  href: 'https://buildframeos.app' },
+  { name: 'Vex0',           desc: 'Open Source Component Framework',              status: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
+  { name: 'Vylder',         desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
+  { name: 'Indikatoren',    desc: 'TradingView Pine Script Strategien & Tools',   status: 'Bald',  cls: 'rm-soon',  href: '#' },
 ];
 
 function RoadmapSection() {
@@ -285,6 +287,73 @@ function FlowWaveSection() {
     </section>
   );
 }
+
+function BuildFrameOSMockup() {
+  const entries = [
+    { date: '25. Sep', phase: 'Rohbau',    note: 'Außenwände fertiggestellt', photos: 4, cls: 'bfo-tag-active' },
+    { date: '22. Sep', phase: 'Fundament', note: 'Bodenplatte gegossen',      photos: 7, cls: 'bfo-tag-done'   },
+    { date: '18. Sep', phase: 'Aushub',    note: 'Erdarbeiten abgeschlossen', photos: 3, cls: 'bfo-tag-done'   },
+  ];
+  return (
+    <div className="bfo-mock">
+      <div className="bfo-mock-bar">
+        <span className="dmock-dot" style={{ background: '#ff5f57' }} />
+        <span className="dmock-dot" style={{ background: '#ffbd2e' }} />
+        <span className="dmock-dot" style={{ background: '#28c840' }} />
+        <span className="bfo-mock-url">buildframeos.app/tagebuch</span>
+      </div>
+      <div className="bfo-mock-header">
+        <span className="bfo-mock-project">Bauprojekt Alpha</span>
+        <span className="bfo-mock-phase-badge">Phase: Rohbau</span>
+      </div>
+      <div className="bfo-mock-entries">
+        {entries.map(e => (
+          <div key={e.date} className="bfo-mock-entry">
+            <span className="bfo-mock-entry-date">{e.date}</span>
+            <div className="bfo-mock-entry-body">
+              <span className={`bfo-tag ${e.cls}`}>{e.phase}</span>
+              <span className="bfo-mock-entry-note">{e.note}</span>
+            </div>
+            <span className="bfo-mock-photos">📷 {e.photos}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function BuildFrameOSSection() {
+  return (
+    <section id="buildframeos" className="product-spotlight section">
+      <div className="container">
+        <div className="product-split product-split--reverse">
+          <div className="product-split-visual">
+            <BuildFrameOSMockup />
+          </div>
+          <div className="product-split-text">
+            <div className="section-label-row">
+              <span className="dot" />
+              BUILDFRAMEOS
+            </div>
+            <h2 className="section-title">Bau&shy;tagebuch.<br />Digital.</h2>
+            <p className="section-sub">
+              Das digitale Bautagebuch für Bauprojekte. Fortschritte dokumentieren, Fotos anhängen und Bauphasen tracken — alles an einem Ort.
+            </p>
+            <ul className="feature-list">
+              <li>Digitales Bautagebuch mit Fotos</li>
+              <li>Bauphasen &amp; Fortschritt tracken</li>
+              <li>Mobil nutzbar, immer dabei</li>
+            </ul>
+            <a href="https://buildframeos.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '8px' }}>
+              BuildFrameOS öffnen →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 
 function VylderCard() {
   return (
