@@ -1127,31 +1127,10 @@ body::after {
 /* ── FlowWave Scene (Three.js full-viewport) ── */
 .flowwave-scene {
   position: relative;
-  height: 100vh;
-  min-height: 560px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  padding: 96px 0;
 }
-.flowwave-scene-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    transparent 30%,
-    rgba(2, 22, 12, 0.45) 55%,
-    rgba(2, 22, 12, 0.85) 75%,
-    #02160c 100%
-  );
-  pointer-events: none;
-  z-index: 1;
-}
+.flowwave-scene-overlay { display: none; }
 .flowwave-scene-content {
-  position: relative;
-  z-index: 2;
-  padding-bottom: 80px;
   text-align: center;
 }
 .flowwave-scene-content .section-label-row,
@@ -1168,8 +1147,7 @@ body::after {
   margin-right: auto;
 }
 @media (max-width: 640px) {
-  .flowwave-scene { min-height: 480px; }
-  .flowwave-scene-content { padding-bottom: 52px; }
+  .flowwave-scene { padding: 64px 0; }
 }
 
 /* Early Access Form */
