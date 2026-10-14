@@ -8,11 +8,6 @@ function parseHex(hex: string): RGB {
   return [(n >> 16) & 0xff, (n >> 8) & 0xff, n & 0xff];
 }
 
-function lerpRGB(a: RGB, b: RGB, t: number): string {
-  const s = Math.max(0, Math.min(1, t));
-  return `rgb(${(a[0] + (b[0] - a[0]) * s) | 0},${(a[1] + (b[1] - a[1]) * s) | 0},${(a[2] + (b[2] - a[2]) * s) | 0})`;
-}
-
 const D2R = Math.PI / 180;
 
 interface SpectralDrapeProps {
@@ -20,7 +15,6 @@ interface SpectralDrapeProps {
   backgroundColor?: string;
   density?: number;
   dotSize?: number;
-  strands?: number;
   amplitude?: number;
   frequency?: number;
   speed?: number;
@@ -29,22 +23,19 @@ interface SpectralDrapeProps {
   roll?: number;
   zoom?: number;
   interactive?: boolean;
-  className?: string;
-  style?: React.CSSProperties;
 }
 
 export default function SpectralDrape({
-  colors = ['#3311bb', '#a89fff'],
-  backgroundColor = '#0a0a0a',
-  density = 1,
+  colors = ['#08051e', '#c8bcff'],
+  backgroundColor = '#050010',
+  density = 1.4,
   dotSize = 1,
-  strands = 8,
-  amplitude = 1,
+  amplitude = 3.0,
   frequency = 1,
-  speed = 1,
-  tilt = -40,
-  turn = -45,
-  roll = 110,
+  speed = 0.45,
+  tilt = 28,
+  turn = 32,
+  roll = 0,
   zoom = 1,
   interactive = true,
 }: SpectralDrapeProps) {
@@ -103,37 +94,32 @@ export default function SpectralDrape({
       const W = canvas.offsetWidth;
       const H = canvas.offsetHeight;
 
+      ctx.clearRect(0, 0, W * dpr, H * dpr);
       ctx.fillStyle = backgroundColor;
       ctx.fillRect(0, 0, W * dpr, H * dpr);
 
-      // spacing in CSS pixels
-      const spacing = (28 / density) / zoom;
-      const dotR = spacing * 0.19 * dotSize;
-      const fov = Math.max(W, H) * 1.1;
+      const spacing = (20 / density) / zoom;
+      const fov = Math.max(W, H) * 1.5;
 
-      const halfCols = Math.ceil((W * 0.9) / spacing) + 3;
-      const halfRows = Math.ceil((H * 1.1) / spacing) + 3;
+      const halfCols = Math.ceil((W * 1.3) / spacing) + 5;
+      const halfRows = Math.ceil((H * 1.3) / spacing) + 5;
 
-      // parallax
       const px = mouse.x * 0.05 * W;
       const py = mouse.y * 0.04 * H;
 
       const t = elapsed * speed;
+
+      // Collect dots with depth for sorting (painter's algorithm)
+      const dots: { sx: number; sy: number; r: number; t: number; pz: number }[] = [];
 
       for (let ri = -halfRows; ri <= halfRows; ri++) {
         for (let ci = -halfCols; ci <= halfCols; ci++) {
           const gx = ci * spacing;
           const gy = ri * spacing;
 
-          // Wave displacement (Z axis)
-          let gz = 0;
-          for (let s = 0; s < strands; s++) {
-            const ph = (s / strands) * Math.PI * 2;
-            gz +=
-              Math.sin(gx * frequency * 0.007 + t * 0.7 + ph) *
-              (0.55 + 0.45 * Math.cos(gy * frequency * 0.005 + t * 0.45 + ph * 0.8));
-          }
-          gz = (gz / strands) * amplitude * spacing * 2.2;
+          // Single clean sinusoid — creates the ribbon/fold look
+          const waveInput = (gx * 0.7 + gy * 0.3) * frequency * 0.006 + t * 1.0;
+          const gz = Math.sin(waveInput) * amplitude * spacing * 2.6;
 
           // 3D rotation
           const rx = m00 * gx + m01 * gy + m02 * gz;
@@ -148,18 +134,36 @@ export default function SpectralDrape({
           const sx = (rx * persp + W * 0.5 + px) * dpr;
           const sy = (ry * persp + H * 0.52 + py) * dpr;
 
-          const margin = dotR * dpr * 4;
+          const margin = 30 * dpr;
           if (sx < -margin || sx > W * dpr + margin || sy < -margin || sy > H * dpr + margin) continue;
 
-          const normWave = (gz / (amplitude * spacing * 2.2) + 1) * 0.5;
-          const r = Math.max(0.4, dotR * persp * dpr);
+          // normWave: 0 = valley (dark), 1 = peak (bright)
+          const normWave = (gz / (amplitude * spacing * 2.6) + 1) * 0.5;
+          const r = Math.max(0.25, spacing * 0.14 * dotSize * persp * dpr);
 
-          ctx.beginPath();
-          ctx.arc(sx, sy, r, 0, Math.PI * 2);
-          ctx.fillStyle = lerpRGB(colA, colB, normWave);
-          ctx.fill();
+          dots.push({ sx, sy, r, t: normWave, pz });
         }
       }
+
+      // Sort back-to-front so near dots paint over far dots
+      dots.sort((a, b) => b.pz - a.pz);
+
+      for (const d of dots) {
+        const alpha = 0.08 + d.t * d.t * 0.92;
+        const r = d.r;
+
+        const s = Math.max(0, Math.min(1, d.t));
+        const rr = (colA[0] + (colB[0] - colA[0]) * s) | 0;
+        const gg = (colA[1] + (colB[1] - colA[1]) * s) | 0;
+        const bb = (colA[2] + (colB[2] - colA[2]) * s) | 0;
+
+        ctx.globalAlpha = alpha;
+        ctx.beginPath();
+        ctx.arc(d.sx, d.sy, r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${rr},${gg},${bb})`;
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
 
       rafId = requestAnimationFrame(frame);
     }
