@@ -33,8 +33,8 @@ export default function SpectralDrape({
   amplitude = 4.2,
   frequency = 1,
   speed = 0.4,
-  tilt = 20,
-  turn = 40,
+  tilt = 25,
+  turn = 15,
   roll = 0,
   zoom = 1,
   interactive = true,
@@ -114,9 +114,8 @@ export default function SpectralDrape({
           const gx = ci * spacing;
           const gy = ri * spacing;
 
-          // Wave runs diagonally — ~3-4 full folds visible per screen width
-          // Coefficient 0.011 ≈ one fold every ~570 CSS px
-          const phase = (gx * 0.72 + gy * 0.28) * frequency * 0.011 + t;
+          // Wave runs diagonally, travels toward viewer (- t so folds move down-right, staying on screen)
+          const phase = (gx * 0.55 + gy * 0.45) * frequency * 0.010 - t;
           const gz = Math.sin(phase) * amplitude * spacing * 2.8;
 
           // 3-D rotation
@@ -135,7 +134,7 @@ export default function SpectralDrape({
           const margin = 24 * dpr;
           if (sx < -margin || sx > W * dpr + margin || sy < -margin || sy > H * dpr + margin) continue;
 
-          // 0 = valley (dark), 1 = peak (bright)
+          // norm: 0 = valley (dark), 1 = peak (bright)
           const norm = (gz / (amplitude * spacing * 2.8) + 1) * 0.5;
 
           // Quadratic alpha: valleys near-invisible, peaks fully opaque
