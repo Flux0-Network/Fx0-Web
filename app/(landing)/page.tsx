@@ -37,12 +37,12 @@ export default function LandingPage() {
       <div className="above-fold-wrapper">
         <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
           <Threads
-            color={[0.78, 0.74, 1]}
-            accentColor={[0.42, 0.32, 0.9]}
+            color={[1, 1, 1]}
             amplitude={1.8}
             distance={0.5}
             lineCount={100}
             speed={0.5}
+            waves={3}
             angle={25}
             fade={0.12}
             brightness={1.5}
