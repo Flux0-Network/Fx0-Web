@@ -428,8 +428,8 @@ body::after {
 .hero {
   flex: 1;
   display: flex;
-  align-items: center;
-  padding: 100px 0 140px;
+  align-items: flex-end;
+  padding: 100px 0 80px;
   position: relative;
   z-index: 1;
 }
@@ -748,7 +748,19 @@ body::after {
   line-height: 1.75;
   margin-bottom: 36px;
 }
-.hero-ctas { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.hero-ctas { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; width: 100%; max-width: 360px; }
+.hero-ctas .btn-primary,
+.hero-ctas .btn-ghost {
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  padding: 13px 20px;
+}
+.hero-ctas .btn-ghost {
+  color: var(--muted);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: var(--radius);
+}
 
 /* ── GLASS BUTTONS (hero only) ── */
 .btn-glass {
@@ -3162,15 +3174,15 @@ kbd {
 
   /* hero */
   .above-fold-wrapper { min-height: calc(100dvh - 80px); }
-  .hero { min-height: 0; padding: 60px 0 48px; align-items: center; justify-content: center; }
+  .hero { min-height: 0; padding: 60px 0 48px; align-items: flex-end; justify-content: flex-end; }
   .hero-layout { grid-template-columns: 1fr; gap: 40px; }
   .hero-visual { display: none; }
   .scroll-indicator { display: none; }
   .hero-label { font-size: 0.65rem; padding: 5px 10px; gap: 7px; }
   .hero h1 { font-size: clamp(1.5rem, 6.5vw, 2.2rem); letter-spacing: -0.03em; word-break: break-word; overflow-wrap: break-word; }
-  .hero-sub { font-size: 1rem; text-align: center; }
-  .hero-text { text-align: center; align-items: center; }
-  .hero-ctas { justify-content: center; }
+  .hero-sub { font-size: 1rem; text-align: left; }
+  .hero-text { text-align: left; align-items: flex-start; }
+  .hero-ctas { align-items: stretch; max-width: 100%; }
 
   /* early access form */
   .ea-form { flex-direction: column; max-width: 100%; }
