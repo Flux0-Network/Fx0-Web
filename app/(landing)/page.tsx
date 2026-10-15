@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
-import SpectralDrape from '@/components/landing/SpectralDrape';
+import Threads from '@/components/landing/Threads';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
@@ -35,7 +35,19 @@ export default function LandingPage() {
       <ScrollReveal />
       <Navbar />
       <div className="above-fold-wrapper">
-        <SpectralDrape />
+        <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
+          <Threads
+            color={[0.78, 0.74, 1]}
+            accentColor={[0.42, 0.32, 0.9]}
+            amplitude={1.8}
+            distance={0.5}
+            lineCount={100}
+            speed={0.5}
+            angle={25}
+            fade={0.12}
+            brightness={1.5}
+          />
+        </div>
         <HeroSection />
       </div>
       <StatsStrip />
