@@ -30,12 +30,12 @@ export default function SpectralDrape({
   backgroundColor = '#020008',
   density = 1.5,
   dotSize = 1,
-  amplitude = 4.2,
-  frequency = 1,
-  speed = 0.4,
-  tilt = 25,
-  turn = 15,
-  roll = 0,
+  amplitude = 5.8,
+  frequency = 1.6,
+  speed = 0.35,
+  tilt = 22,
+  turn = 18,
+  roll = 8,
   zoom = 1,
   interactive = true,
 }: SpectralDrapeProps) {
@@ -99,8 +99,8 @@ export default function SpectralDrape({
 
       // Base grid spacing in CSS px
       const spacing = (19 / density) / zoom;
-      // FOV controls perspective strength
-      const fov = Math.max(W, H) * 1.2;
+      // Tighter FOV = stronger perspective depth illusion
+      const fov = Math.max(W, H) * 0.75;
 
       const halfCols = Math.ceil((W * 1.2) / spacing) + 4;
       const halfRows = Math.ceil((H * 1.2) / spacing) + 4;
@@ -114,9 +114,9 @@ export default function SpectralDrape({
           const gx = ci * spacing;
           const gy = ri * spacing;
 
-          // Wave runs diagonally, travels toward viewer (- t so folds move down-right, staying on screen)
-          const phase = (gx * 0.55 + gy * 0.45) * frequency * 0.010 - t;
-          const gz = Math.sin(phase) * amplitude * spacing * 2.8;
+          // Diagonal wave — folds run ~45° across the canvas
+          const phase = (gx * 0.58 + gy * 0.42) * frequency * 0.013 - t;
+          const gz = Math.sin(phase) * amplitude * spacing * 3.2;
 
           // 3-D rotation
           const rx = m00 * gx + m01 * gy + m02 * gz;
@@ -134,14 +134,14 @@ export default function SpectralDrape({
           const margin = 24 * dpr;
           if (sx < -margin || sx > W * dpr + margin || sy < -margin || sy > H * dpr + margin) continue;
 
-          // norm: 0 = valley (dark), 1 = peak (bright)
-          const norm = (gz / (amplitude * spacing * 2.8) + 1) * 0.5;
+          // norm: 0 = valley (dark/invisible), 1 = peak (bright/opaque)
+          const norm = (gz / (amplitude * spacing * 3.2) + 1) * 0.5;
 
-          // Quadratic alpha: valleys near-invisible, peaks fully opaque
-          const alpha = norm * norm;
+          // Steep power curve: valleys nearly invisible, peaks pop out
+          const alpha = Math.pow(norm, 1.8);
 
-          // Dot radius grows with perspective depth AND brightness
-          const r = Math.max(0.2, spacing * 0.13 * dotSize * persp * dpr * (0.4 + norm * 0.6));
+          // Dot radius: perspective scale + brightness boost at peaks
+          const r = Math.max(0.2, spacing * 0.12 * dotSize * persp * dpr * (0.3 + norm * 0.7));
 
           const s = Math.max(0, Math.min(1, norm));
           const rr = (colA[0] + (colB[0] - colA[0]) * s) | 0;
