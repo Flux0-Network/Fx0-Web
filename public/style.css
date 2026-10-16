@@ -3560,3 +3560,33 @@ kbd {
   .cl-entry { grid-template-columns: 1fr; gap: 12px; }
   .cl-entry-meta { flex-direction: row; flex-wrap: wrap; align-items: center; }
 }
+
+/* ── CHANGELOG BANNER & ACTIONS ── */
+.cl-banner {
+  display: block;
+  width: 100%;
+  max-width: 720px;
+  aspect-ratio: 1200 / 630;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin: 18px 0 16px;
+  object-fit: cover;
+}
+.cl-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.cl-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+.cl-action-btn:hover { border-color: var(--border-md); color: var(--text); }
+.cl-action-btn--discord { border-color: rgba(88,101,242,0.4); color: #818cf8; }
+.cl-action-btn--discord:hover { border-color: rgba(88,101,242,0.7); color: #a5b4fc; background: rgba(88,101,242,0.08); }
