@@ -36,7 +36,7 @@ uniform float waveSpeed;
 uniform vec3 waveColor;
 uniform vec3 bgColor;
 
-// Bayer dithering — recursive mix approach, GLSL ES 1.0 compatible
+// Bayer dithering, recursive mix approach, GLSL ES 1.0 compatible
 float bayer2(vec2 a) { a = floor(a); return fract(dot(a, vec2(0.5, a.y * 0.75))); }
 float bayer4(vec2 a) { return mix(bayer2(a * 0.5) * 0.25, bayer2(a), 0.75) * 0.66667; }
 float bayer8(vec2 a) { return mix(bayer4(a * 0.5) * 0.25, bayer4(a), 0.75) * 0.66667; }

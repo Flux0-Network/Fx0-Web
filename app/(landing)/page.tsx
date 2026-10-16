@@ -8,12 +8,12 @@ import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
 
 export const metadata: Metadata = {
-  title: 'Flux Network — Tools. Produkte. Indikatoren.',
+  title: 'Flux Network, Tools. Produkte. Indikatoren.',
   description: 'Flux Network baut digitale Produkte, Developer-Frameworks und TradingView-Indikatoren. LumaSpace, FlowWave, Vex0 und mehr.',
   openGraph: {
     type: 'website',
     url: 'https://flux0.dev/',
-    title: 'Flux Network — Tools. Produkte. Indikatoren.',
+    title: 'Flux Network, Tools. Produkte. Indikatoren.',
     description: 'Digitale Produkte, Developer-Frameworks und Trading-Tools von Flux Network.',
     images: [{ url: 'https://flux0.dev/og-image.png', width: 1200, height: 630 }],
     siteName: 'Flux Network',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@flux0dev',
-    title: 'Flux Network — Tools. Produkte. Indikatoren.',
+    title: 'Flux Network, Tools. Produkte. Indikatoren.',
     description: 'Digitale Produkte, Developer-Frameworks und Trading-Tools von Flux Network.',
     images: ['https://flux0.dev/og-image.png'],
   },
@@ -109,7 +109,7 @@ function Vex0Section() {
             </div>
             <h2 className="section-title">Copy.<br />Paste.<br />Done.</h2>
             <p className="section-sub">
-              Das Open-Source Component Framework von Flux Network. Komponenten kopieren, einfügen, fertig — kein Wrapper, kein Lock-in. Dein Code, deine Regeln.
+              Das Open-Source Component Framework von Flux Network. Komponenten kopieren, einfügen, fertig, kein Wrapper, kein Lock-in. Dein Code, deine Regeln.
             </p>
             <a href="/docs" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
               Docs ansehen →
@@ -177,30 +177,30 @@ const CHANGELOG_ITEMS = [
     product: 'Vex0',
     version: 'v0.3.0',
     tagCls: 'cl-tag--vex',
-    descDe: 'Button, Card & Badge Komponenten — Open Source auf GitHub',
-    descEn: 'Button, Card & Badge components — open source on GitHub',
+    descDe: 'Button, Card & Badge Komponenten, Open Source auf GitHub',
+    descEn: 'Button, Card & Badge components, open source on GitHub',
   },
   {
     date: 'Jun 2026',
     product: 'LumaSpace',
     version: 'v1.1.0',
     tagCls: 'cl-tag--luma',
-    descDe: 'Realtime Collaboration — mehrere Nutzer gleichzeitig im selben Workspace',
-    descEn: 'Realtime collaboration — multiple users simultaneously in the same workspace',
+    descDe: 'Realtime Collaboration, mehrere Nutzer gleichzeitig im selben Workspace',
+    descEn: 'Realtime collaboration, multiple users simultaneously in the same workspace',
   },
   {
     date: 'Mai 2026',
     product: 'FlowWave',
     version: 'v0.7.0',
     tagCls: 'cl-tag--flow',
-    descDe: 'Slash Command Builder Launch — Discord Bots ohne eine Zeile Code',
-    descEn: 'Slash Command Builder launch — Discord bots without a single line of code',
+    descDe: 'Slash Command Builder Launch, Discord Bots ohne eine Zeile Code',
+    descEn: 'Slash Command Builder launch, Discord bots without a single line of code',
   },
 ];
 
 const ROADMAP_ITEMS = [
   { name: 'LumaSpace',      desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
-  { name: 'FlowWave',       desc: 'Discord-Bots visuell bauen — ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
+  { name: 'FlowWave',       desc: 'Discord-Bots visuell bauen, ohne Boilerplate', status: 'Beta',  cls: 'rm-beta',  href: 'https://flowwave.app' },
   { name: 'BuildFrameOS',   desc: 'Digitales Bautagebuch für Bauprojekte',         status: 'Beta',  cls: 'rm-beta',  href: 'https://buildframeos.app' },
   { name: 'Vex0',           desc: 'Open Source Component Framework',              status: 'Dev',   cls: 'rm-dev',   href: '#vex0' },
   { name: 'Vylder',         desc: 'Visueller Website-Builder mit Code-Editor',    status: 'Dev',   cls: 'rm-dev',   href: '#vylder' },
@@ -214,7 +214,7 @@ function RoadmapSection() {
         <div className="section-label-row">ROADMAP</div>
         <div className="section-intro">
           <h2 className="section-title">Was wir bauen.</h2>
-          <p className="section-sub">Von Live bis Coming Soon — das Flux Network Ökosystem wächst.</p>
+          <p className="section-sub">Von Live bis Coming Soon, das Flux Network Ökosystem wächst.</p>
         </div>
         <div className="roadmap-list">
           {ROADMAP_ITEMS.map((item, i) => (
@@ -288,7 +288,7 @@ function LumaSpaceSection() {
             <div className="section-label-row">LUMASPACE</div>
             <h2 className="section-title">Planung.<br />KI-gestützt.</h2>
             <p className="section-sub">
-              KI-gestütztes Produktivitätssystem für Teams und Solo-Worker — Planung, Fokusarbeit und automatisierte Workflows in einer Plattform.
+              KI-gestütztes Produktivitätssystem für Teams und Solo-Worker, Planung, Fokusarbeit und automatisierte Workflows in einer Plattform.
             </p>
             <ul className="feature-list">
               <li>KI schlägt Focus-Blöcke & Tasks vor</li>
@@ -319,8 +319,8 @@ function FlowWaveSection() {
           <span className="lang-en">Discord Bots.<br />Without Boilerplate.</span>
         </h2>
         <p className="section-sub">
-          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2.</span>
-          <span className="lang-en">Set up Slash Commands, events and UI components visually — powered by pycord v2.</span>
+          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen, powered by pycord v2.</span>
+          <span className="lang-en">Set up Slash Commands, events and UI components visually, powered by pycord v2.</span>
         </p>
         <ul className="feature-list feature-list--centered">
           <li>
@@ -391,7 +391,7 @@ function BuildFrameOSSection() {
             </div>
             <h2 className="section-title">Bau&shy;tagebuch.<br />Digital.</h2>
             <p className="section-sub">
-              Das digitale Bautagebuch für Bauprojekte. Fortschritte dokumentieren, Fotos anhängen und Bauphasen tracken — alles an einem Ort.
+              Das digitale Bautagebuch für Bauprojekte. Fortschritte dokumentieren, Fotos anhängen und Bauphasen tracken, alles an einem Ort.
             </p>
             <ul className="feature-list">
               <li>Digitales Bautagebuch mit Fotos</li>
@@ -418,7 +418,7 @@ function VylderCard() {
           <span className="vylder-name">Vylder</span>
         </div>
         <p className="vylder-desc">
-          Der Website-Builder, der Code versteht. Jede Library importierbar — visuell designen, im Code verfeinern.
+          Der Website-Builder, der Code versteht. Jede Library importierbar, visuell designen, im Code verfeinern.
         </p>
         <a
           href="https://vylder.dev"
@@ -439,7 +439,7 @@ const PRODUCTS = [
     name: 'LumaSpace',
     status: 'Live',
     statusClass: 'product-status--live',
-    desc: 'KI-gestützte Produktivitätssysteme für Teams und Solo-Worker. Planung, Fokusarbeit und automatisierte Workflows — in einer Plattform.',
+    desc: 'KI-gestützte Produktivitätssysteme für Teams und Solo-Worker. Planung, Fokusarbeit und automatisierte Workflows, in einer Plattform.',
     tags: ['AI Planning', 'Realtime Collaboration', 'Task Orchestration', 'Focus & Scheduling'],
     href: 'https://lumaspace.de/',
   },
@@ -448,7 +448,7 @@ const PRODUCTS = [
     name: 'FlowWave',
     status: 'Open Beta',
     statusClass: 'product-status--dev',
-    desc: 'Discord-Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten visuell aufsetzen — powered by pycord v2. Minuten statt Stunden.',
+    desc: 'Discord-Bots ohne Boilerplate. Slash Commands, Events und UI-Komponenten visuell aufsetzen, powered by pycord v2. Minuten statt Stunden.',
     tags: ['pycord v2', 'Slash Commands', 'Bot Builder', 'Visual Editor'],
     href: 'https://flowwave.app',
   },
@@ -457,7 +457,7 @@ const PRODUCTS = [
     name: 'LyqDex',
     status: 'In Entwicklung',
     statusClass: 'product-status--dev',
-    desc: 'Onchain-Exchange-Protokoll der nächsten Generation. Fokus auf Liquidität, Effizienz und vollständige Transparenz — gebaut für die Zukunft von DeFi.',
+    desc: 'Onchain-Exchange-Protokoll der nächsten Generation. Fokus auf Liquidität, Effizienz und vollständige Transparenz, gebaut für die Zukunft von DeFi.',
     tags: ['Onchain DEX', 'Liquidity Pools', 'Streaming Transactions', 'DeFi Analytics'],
     href: 'https://lyqdex.io',
   },
@@ -466,7 +466,7 @@ const PRODUCTS = [
     name: 'Vex0',
     status: 'In Entwicklung',
     statusClass: 'product-status--dev',
-    desc: 'Das Component Framework von Flux Network. Einfach kopieren, einfügen, anpassen — kein Wrapper-Overhead, kein Lock-in. Funktioniert mit jedem React-Projekt.',
+    desc: 'Das Component Framework von Flux Network. Einfach kopieren, einfügen, anpassen, kein Wrapper-Overhead, kein Lock-in. Funktioniert mit jedem React-Projekt.',
     tags: ['React', 'Open Source', 'Components', 'TypeScript'],
     href: '/docs',
   },
@@ -475,7 +475,7 @@ const PRODUCTS = [
     name: 'Vylder',
     status: 'Coming Soon',
     statusClass: 'product-status--dev',
-    desc: 'Der Website-Builder, der Code versteht. Visuell designen, im Code verfeinern — und jede beliebige Library direkt importieren. Radix UI, shadcn/ui, dein eigenes Package. Kein Limit.',
+    desc: 'Der Website-Builder, der Code versteht. Visuell designen, im Code verfeinern, und jede beliebige Library direkt importieren. Radix UI, shadcn/ui, dein eigenes Package. Kein Limit.',
     tags: ['Visual Builder', 'Code Editor', 'Any Library', 'No-Code & Code'],
     href: 'https://vylder.dev',
   },
@@ -621,7 +621,7 @@ function DashboardSection() {
             </div>
             <h2 className="section-title">Dein Hub.<br />Alles drin.</h2>
             <p className="section-sub">
-              Ein Ort für alle Flux Network Produkte. Early Access verwalten, Beta-Releases freischalten und den Status aller Tools im Blick behalten — Login via Discord.
+              Ein Ort für alle Flux Network Produkte. Early Access verwalten, Beta-Releases freischalten und den Status aller Tools im Blick behalten, Login via Discord.
             </p>
             <a href="/dashboard" className="btn-primary" style={{ display: 'inline-flex', marginTop: '8px' }}>
               Dashboard öffnen →
@@ -668,27 +668,27 @@ function PartnersSection() {
 const FAQ_ITEMS = [
   {
     q: 'Was ist Flux Network?',
-    a: 'Flux Network ist ein digitales Produktstudio — wir bauen eigene Software-Produkte, Developer-Frameworks, TradingView-Indikatoren und Tools für die nächste Generation.',
+    a: 'Flux Network ist ein digitales Produktstudio, wir bauen eigene Software-Produkte, Developer-Frameworks, TradingView-Indikatoren und Tools für die nächste Generation.',
   },
   {
     q: 'Was ist Vex0?',
-    a: 'Vex0 ist das Open-Source Component Framework von Flux Network. Komponenten einfach kopieren, ins Projekt einfügen und anpassen — kein Wrapper, kein Lock-in.',
+    a: 'Vex0 ist das Open-Source Component Framework von Flux Network. Komponenten einfach kopieren, ins Projekt einfügen und anpassen, kein Wrapper, kein Lock-in.',
   },
   {
     q: 'Was ist Vylder?',
-    a: 'Vylder ist unser visueller Website-Builder — visuell designen, im Code verfeinern, und jede beliebige Library importieren. Radix UI, shadcn/ui, dein eigenes Package. Mehr auf vylder.dev.',
+    a: 'Vylder ist unser visueller Website-Builder, visuell designen, im Code verfeinern, und jede beliebige Library importieren. Radix UI, shadcn/ui, dein eigenes Package. Mehr auf vylder.dev.',
   },
   {
     q: 'Was sind die TradingView-Indikatoren?',
-    a: 'Wir entwickeln Pine Script Indikatoren und Strategien für TradingView — von einfachen Overlay-Indikatoren bis zu kompletten automatisierten Strategien. Coming Soon.',
+    a: 'Wir entwickeln Pine Script Indikatoren und Strategien für TradingView, von einfachen Overlay-Indikatoren bis zu kompletten automatisierten Strategien. Coming Soon.',
   },
   {
     q: 'Wie kann ich auf dem Laufenden bleiben?',
-    a: 'Tritt unserem Discord bei — dort posten wir Updates zu allen Produkten, Early Access und Beta-Releases als Erstes.',
+    a: 'Tritt unserem Discord bei, dort posten wir Updates zu allen Produkten, Early Access und Beta-Releases als Erstes.',
   },
   {
     q: 'Sind die Produkte kostenlos?',
-    a: 'Vex0 ist Open Source und kostenlos. Für LumaSpace, FlowWave und die Indikatoren gibt es kostenlose und kostenpflichtige Pläne — je nach Produkt unterschiedlich.',
+    a: 'Vex0 ist Open Source und kostenlos. Für LumaSpace, FlowWave und die Indikatoren gibt es kostenlose und kostenpflichtige Pläne, je nach Produkt unterschiedlich.',
   },
 ];
 
@@ -702,7 +702,7 @@ function FaqSection() {
         </div>
         <div className="section-intro">
           <h2 className="section-title">Häufige Fragen</h2>
-          <p className="section-sub">Kurz, klar — alles, was du wissen musst.</p>
+          <p className="section-sub">Kurz, klar, alles, was du wissen musst.</p>
         </div>
         <div className="faq-grid">
           {FAQ_ITEMS.map(item => (
@@ -733,7 +733,7 @@ function CtaSection() {
             EARLY ACCESS
           </div>
           <h2>Als Erstes dabei sein.</h2>
-          <p>Trag deine Email ein oder join unseren Discord — du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</p>
+          <p>Trag deine Email ein oder join unseren Discord, du kriegst Early Access, Beta-Releases und Updates zu Vex0, Vylder und allen anderen Produkten bevor alle anderen.</p>
           <EarlyAccessForm />
           <div className="cta-divider"><span>oder</span></div>
           <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>

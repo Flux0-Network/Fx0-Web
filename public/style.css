@@ -34,7 +34,7 @@ body {
   color: var(--text);
   line-height: 1.6;
   overflow-x: hidden;
-  overflow-x: clip; /* stronger than hidden on iOS — prevents bounce/scroll into overflow */
+  overflow-x: clip; /* stronger than hidden on iOS, prevents bounce/scroll into overflow */
   -webkit-font-smoothing: antialiased;
 }
 body::after {
@@ -459,7 +459,7 @@ body::after {
 .hero-text { display: flex; flex-direction: column; align-items: flex-start; width: 100%; }
 .hero-sub { text-align: left; max-width: 560px; }
 
-/* Hero Visual — Terminal + Floating Cards */
+/* Hero Visual, Terminal + Floating Cards */
 .hero-visual {
   display: flex;
   justify-content: center;
@@ -636,7 +636,7 @@ body::after {
 
 /* ── CARD EFFECTS ── */
 
-/* Feature cards — white glow border + lift */
+/* Feature cards, white glow border + lift */
 .feature-card {
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
 }
@@ -647,7 +647,7 @@ body::after {
   background: var(--surface);
 }
 
-/* Paket cards — glow + lift */
+/* Paket cards, glow + lift */
 .paket-card {
   transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s, background 0.25s;
 }
@@ -676,7 +676,7 @@ body::after {
   background: var(--surface);
 }
 
-/* Product cards — glow on hover */
+/* Product cards, glow on hover */
 .product-card {
   transition: background 0.2s, box-shadow 0.2s;
 }
@@ -693,7 +693,7 @@ body::after {
 .faq-item summary:hover { background: rgba(255,255,255,0.03); }
 .faq-item[open] { background: rgba(255,255,255,0.02); }
 
-/* Logo cloud items — lift */
+/* Logo cloud items, lift */
 .logo-cloud-item {
   transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
 }
@@ -713,7 +713,7 @@ body::after {
 }
 
 /* ── SECTION GLOW EFFECTS ── */
-/* Ambient-Glow direkt im body-background — kein Clipping, keine Artefakte */
+/* Ambient-Glow direkt im body-background, kein Clipping, keine Artefakte */
 
 .hero-label {
   display: inline-flex;
@@ -860,7 +860,7 @@ body::after {
   align-items: center;
   gap: 8px;
 }
-.feature-list li::before { content: '—'; font-size: 0.75rem; opacity: 0.5; }
+.feature-list li::before { content: '·'; font-size: 0.75rem; opacity: 0.5; }
 
 /* ── CTA ── */
 .cta-inner { max-width: 520px; }
@@ -3089,7 +3089,7 @@ kbd {
 
 /* ── RESPONSIVE ── */
 
-/* Tablet (641px – 900px) */
+/* Tablet (641px, 900px) */
 @media (max-width: 900px) {
   /* docs: sidebar becomes a slide-in drawer */
   .docs-sidebar {
@@ -3141,7 +3141,7 @@ kbd {
 
   .nav-desktop-links { display: none !important; }
 
-  /* navbar — flat full-width bar on mobile, like Framer */
+  /* navbar, flat full-width bar on mobile, like Framer */
   .navbar {
     top: 0;
     left: 0;

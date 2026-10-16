@@ -5,13 +5,13 @@ import { useEffect, useRef, useState } from 'react';
 const COPY = {
   de: {
     tw:   'Tools. Produkte. Indikatoren.',
-    sub:  'Software, die bleibt. Produkte, Frameworks und Indikatoren — gebaut von Entwicklern, für Entwickler.',
+    sub:  'Software, die bleibt. Produkte, Frameworks und Indikatoren, gebaut von Entwicklern, für Entwickler.',
     cta1: 'Produkte ansehen →',
     cta2: 'Discord joinen',
   },
   en: {
     tw:   'Tools. Products. Indicators.',
-    sub:  'Software that lasts. Products, frameworks and indicators — built by developers, for developers.',
+    sub:  'Software that lasts. Products, frameworks and indicators, built by developers, for developers.',
     cta1: 'View Products →',
     cta2: 'Join Discord',
   },

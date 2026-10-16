@@ -10,7 +10,7 @@ export default function PanelDokumente({ docs }: Props) {
   if (!docs.length) {
     return (
       <div style={{ color: 'var(--dim)', fontSize: '0.88rem', padding: '24px 0' }}>
-        Noch keine Dokumente vorhanden. Dokumente werden von uns hinzugefügt — z.B. Angebote, Rechnungen oder Verträge.
+        Noch keine Dokumente vorhanden. Dokumente werden von uns hinzugefügt, z.B. Angebote, Rechnungen oder Verträge.
       </div>
     );
   }

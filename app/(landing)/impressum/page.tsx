@@ -4,12 +4,12 @@ import SiteFooter from '@/components/landing/SiteFooter';
 import CookieNotice from '@/components/landing/CookieNotice';
 
 export const metadata: Metadata = {
-  title: 'Impressum — Flux0',
+  title: 'Impressum, Flux0',
   description: 'Impressum von Flux0 / Flux Network gemäß § 5 TMG.',
   openGraph: {
     type: 'website',
     url: 'https://flux0.dev/impressum',
-    title: 'Impressum — Flux0',
+    title: 'Impressum, Flux0',
     siteName: 'Flux0',
   },
   alternates: { canonical: 'https://flux0.dev/impressum' },

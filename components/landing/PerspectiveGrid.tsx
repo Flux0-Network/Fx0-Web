@@ -54,7 +54,7 @@ export default function PerspectiveGrid() {
           // Combine and map to [0, 1]
           const wave = (w1 * 0.45 + w2 * 0.35 + w3 * 0.20) * 0.5 + 0.5;
 
-          // Mouse ripple — concentric rings spreading from cursor
+          // Mouse ripple, concentric rings spreading from cursor
           const dx   = x - mouse.x;
           const dy   = y - mouse.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
@@ -64,7 +64,7 @@ export default function PerspectiveGrid() {
 
           const combined = Math.min(1, wave + ripple * 0.55);
 
-          // Dim troughs, bright peaks — high contrast so waves are visible
+          // Dim troughs, bright peaks, high contrast so waves are visible
           const alpha  = 0.025 + combined * combined * 0.72;
           const radius = (0.8 + combined * 2.4) * dpr;
 

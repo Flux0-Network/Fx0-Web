@@ -134,7 +134,7 @@ export default function DashboardClient() {
         <div className="dash-login-card">
           <img src="/logo1.png" alt="Flux Network" style={{ height: 24, width: 'auto', marginBottom: 24, opacity: 0.9 }} />
           <h2 style={{ marginBottom: 6 }}>Anmelden</h2>
-          <p style={{ marginBottom: 20 }}>Early Access &amp; Beta-Releases — für alle die eingeloggt sind.</p>
+          <p style={{ marginBottom: 20 }}>Early Access &amp; Beta-Releases, für alle die eingeloggt sind.</p>
 
           {/* Email form */}
           <form onSubmit={handleEmailLogin} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
@@ -180,7 +180,7 @@ export default function DashboardClient() {
 
   if (!user) return null;
 
-  const userName = user.global_name || user.username || '—';
+  const userName = user.global_name || user.username || '';
 
   return (
     <div className="dash-app">

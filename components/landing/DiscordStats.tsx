@@ -8,7 +8,7 @@ interface DiscordStats {
 }
 
 export default function DiscordStats() {
-  const [stats, setStats] = useState<DiscordStats>({ members: '—', online: '—' });
+  const [stats, setStats] = useState<DiscordStats>({ members: '-', online: '-' });
 
   useEffect(() => {
     fetch('https://discord.com/api/v9/invites/D9GwqWpwHT?with_counts=true')
@@ -16,8 +16,8 @@ export default function DiscordStats() {
       .then((data) => {
         if (!data) return;
         setStats({
-          members: data.approximate_member_count?.toLocaleString('de-DE') ?? '—',
-          online: data.approximate_presence_count?.toLocaleString('de-DE') ?? '—',
+          members: data.approximate_member_count?.toLocaleString('de-DE') ?? '-',
+          online: data.approximate_presence_count?.toLocaleString('de-DE') ?? '-',
         });
       })
       .catch(() => {});

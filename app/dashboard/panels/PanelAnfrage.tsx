@@ -27,7 +27,7 @@ export default function PanelAnfrage() {
       if (!r.ok) throw new Error((await r.json()).error || 'Fehler');
       setSuccess(true);
     } catch {
-      setError('Senden fehlgeschlagen — versuch es nochmal oder schreib uns direkt auf Discord.');
+      setError('Senden fehlgeschlagen, versuch es nochmal oder schreib uns direkt auf Discord.');
     }
     setLoading(false);
   }
@@ -38,7 +38,7 @@ export default function PanelAnfrage() {
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
         <div>
           <strong>Anfrage gesendet!</strong>
-          <p style={{ color: 'var(--dim)', fontSize: '0.85rem', marginTop: 4 }}>Wir melden uns innerhalb von 24 Stunden — schau auch in deinen Discord.</p>
+          <p style={{ color: 'var(--dim)', fontSize: '0.85rem', marginTop: 4 }}>Wir melden uns innerhalb von 24 Stunden, schau auch in deinen Discord.</p>
         </div>
       </div>
     );
@@ -68,7 +68,7 @@ export default function PanelAnfrage() {
         <textarea
           value={beschreibung}
           onChange={e => setBeschreibung(e.target.value)}
-          placeholder="Beschreibe dein Projekt so genau wie möglich — was soll gebaut werden, wer ist die Zielgruppe, welche Funktionen braucht du?"
+          placeholder="Beschreibe dein Projekt so genau wie möglich, was soll gebaut werden, wer ist die Zielgruppe, welche Funktionen braucht du?"
           rows={5}
           style={{ width: '100%', padding: '10px 14px', background: 'var(--surface)', border: '1px solid var(--border-md)', borderRadius: 10, color: 'var(--fg)', fontSize: '0.88rem', fontFamily: 'inherit', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
         />
@@ -79,7 +79,7 @@ export default function PanelAnfrage() {
         <input
           value={budget}
           onChange={e => setBudget(e.target.value)}
-          placeholder="z.B. 500–1500€"
+          placeholder="z.B. 5001500€"
           style={{ width: '100%', padding: '9px 14px', background: 'var(--surface)', border: '1px solid var(--border-md)', borderRadius: 10, color: 'var(--fg)', fontSize: '0.88rem', fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
         />
       </div>

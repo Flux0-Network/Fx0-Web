@@ -19,7 +19,7 @@ export default function PanelVerbindungen({ user, userName }: Props) {
         statusColor="#f59e0b"
         user={user}
         userName={userName}
-        note={<>Jetzt in der Open Beta verfügbar — öffne <a href="https://flowwave.app" target="_blank" rel="noopener" style={{ color: 'var(--accent)' }}>flowwave.app</a> und leg los.</>}
+        note={<>Jetzt in der Open Beta verfügbar, öffne <a href="https://flowwave.app" target="_blank" rel="noopener" style={{ color: 'var(--accent)' }}>flowwave.app</a> und leg los.</>}
       />
       <ConnectionCard
         icon="/lumaspace-icon.png"
@@ -29,7 +29,7 @@ export default function PanelVerbindungen({ user, userName }: Props) {
         statusColor="#22c55e"
         user={user}
         userName={userName}
-        note={<>Öffne LumaSpace unter <a href="https://lumaspace.de/" target="_blank" rel="noopener" style={{ color: 'var(--accent)' }}>lumaspace.de</a> — dein Flux0-Account ist bereits verknüpft.</>}
+        note={<>Öffne LumaSpace unter <a href="https://lumaspace.de/" target="_blank" rel="noopener" style={{ color: 'var(--accent)' }}>lumaspace.de</a>, dein Flux0-Account ist bereits verknüpft.</>}
       />
     </div>
   );

@@ -6,8 +6,8 @@ import DiscordStats from '@/components/landing/DiscordStats';
 import CopyButton from '@/components/landing/CopyButton';
 
 export const metadata: Metadata = {
-  title: 'Community — Flux Network',
-  description: 'Werde Teil der Flux Network Community — Discord, Minecraft Server und mehr.',
+  title: 'Community, Flux Network',
+  description: 'Werde Teil der Flux Network Community, Discord, Minecraft Server und mehr.',
 };
 
 const TOPICS = [
@@ -21,31 +21,31 @@ const TOPICS = [
     color: { bg: 'rgba(124,58,237,0.08)', border: 'rgba(124,58,237,0.2)', text: '#7c3aed' },
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>,
     title: 'Entwicklung',
-    text: 'Code-Reviews, Projekt-Vorstellungen, Hilfe bei Bugs — egal ob Web, Backend oder Mobile. Hier lernt man zusammen.',
+    text: 'Code-Reviews, Projekt-Vorstellungen, Hilfe bei Bugs, egal ob Web, Backend oder Mobile. Hier lernt man zusammen.',
   },
   {
     color: { bg: 'rgba(34,197,94,0.08)', border: 'rgba(34,197,94,0.2)', text: '#16a34a' },
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 7h4M6 11h2"/></svg>,
     title: 'Gaming',
-    text: 'Minecraft, Valorant, weitere Games — organisierte Sessions, Server-Updates und alles rund ums Zocken in der Community.',
+    text: 'Minecraft, Valorant, weitere Games, organisierte Sessions, Server-Updates und alles rund ums Zocken in der Community.',
   },
   {
     color: { bg: 'rgba(59,130,246,0.08)', border: 'rgba(59,130,246,0.2)', text: '#2563eb' },
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 0 1 10 10c0 5.52-4.48 10-10 10S2 17.52 2 12"/><path d="M12 6v6l4 2"/><circle cx="4" cy="6" r="2"/><path d="M4 8v2"/></svg>,
     title: 'KI & Tech',
-    text: 'Neue AI-Tools, Modelle, Automatisierung und Technik-News — wer hier drinsteckt, bekommt es als erstes mit.',
+    text: 'Neue AI-Tools, Modelle, Automatisierung und Technik-News, wer hier drinsteckt, bekommt es als erstes mit.',
   },
   {
     color: { bg: 'rgba(236,72,153,0.08)', border: 'rgba(236,72,153,0.2)', text: '#db2777' },
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M15 9h.01M9 15l2-2 2 2 3-3"/></svg>,
     title: 'Design & UI',
-    text: 'Webdesign, UI-Inspiration, Farben und Typografie — zeig deine Arbeiten, hol dir Feedback oder lass dich einfach inspirieren.',
+    text: 'Webdesign, UI-Inspiration, Farben und Typografie, zeig deine Arbeiten, hol dir Feedback oder lass dich einfach inspirieren.',
   },
   {
     color: { bg: 'rgba(245,158,11,0.1)', border: 'rgba(245,158,11,0.25)', text: '#d97706' },
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
     title: 'Allgemein',
-    text: 'Off-Topic, Memes, Vorstellungen — hier ist alles erlaubt was keinen anderen Channel hat. Entspannt und ohne Thema.',
+    text: 'Off-Topic, Memes, Vorstellungen, hier ist alles erlaubt was keinen anderen Channel hat. Entspannt und ohne Thema.',
   },
 ];
 
@@ -67,7 +67,7 @@ export default function CommunityPage() {
             Werde Teil von<br />
             <span style={{ color: 'var(--accent)' }}>Flux Network.</span>
           </h1>
-          <p>Discord, Minecraft &amp; mehr — eine aktive Community rund um Technik, Gaming und Entwicklung.</p>
+          <p>Discord, Minecraft &amp; mehr, eine aktive Community rund um Technik, Gaming und Entwicklung.</p>
           <a href="https://discord.gg/D9GwqWpwHT" className="btn-primary" target="_blank" rel="noopener">
             Discord beitreten →
           </a>
@@ -83,7 +83,7 @@ export default function CommunityPage() {
           </div>
           <h2 className="comm-section-title">Unser Discord-Server</h2>
           <p className="comm-section-sub">
-            Stell Fragen, zeig deine Projekte, chatte mit anderen — der Flux Network Discord ist die Anlaufstelle für alles.
+            Stell Fragen, zeig deine Projekte, chatte mit anderen, der Flux Network Discord ist die Anlaufstelle für alles.
           </p>
 
           <div className="discord-card">
@@ -112,7 +112,7 @@ export default function CommunityPage() {
             THEMEN &amp; CHANNELS
           </div>
           <h2 className="comm-section-title">Worüber wir reden.</h2>
-          <p className="comm-section-sub">Von Krypto bis Code — bei uns ist jeder Themenbereich vertreten.</p>
+          <p className="comm-section-sub">Von Krypto bis Code, bei uns ist jeder Themenbereich vertreten.</p>
 
           <div className="community-grid">
             {TOPICS.map(topic => (
@@ -149,7 +149,7 @@ export default function CommunityPage() {
           </div>
           <h2 className="comm-section-title">Unser Modded Server</h2>
           <p className="comm-section-sub">
-            All The Mods 10 — hunderte Mods, endlose Möglichkeiten. Tritt unserem Server bei und bau mit der Community.
+            All The Mods 10, hunderte Mods, endlose Möglichkeiten. Tritt unserem Server bei und bau mit der Community.
           </p>
 
           <div className="mc-card">

@@ -41,7 +41,7 @@ export default function PanelSupport({ tickets, onTicketAdded }: Props) {
       setSubject('');
       setMessage('');
     } catch {
-      setError('Senden fehlgeschlagen — versuch es nochmal.');
+      setError('Senden fehlgeschlagen, versuch es nochmal.');
     }
     setLoading(false);
   }

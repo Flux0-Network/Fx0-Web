@@ -62,7 +62,7 @@ navLinks?.querySelectorAll('a').forEach((l) =>
       })
       .catch(function () {
         if (elMembers) elMembers.textContent = '1.200+';
-        if (elOnline)  elOnline.textContent  = '—';
+        if (elOnline)  elOnline.textContent  = '';
       });
   }
 })();

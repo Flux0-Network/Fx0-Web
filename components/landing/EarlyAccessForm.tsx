@@ -26,7 +26,7 @@ export default function EarlyAccessForm() {
     return (
       <div className="ea-success">
         <span className="ea-success-icon">✓</span>
-        <span>Du bist auf der Liste — wir melden uns!</span>
+        <span>Du bist auf der Liste, wir melden uns!</span>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function EarlyAccessForm() {
       <button className="ea-btn" type="submit" disabled={status === 'loading'}>
         {status === 'loading' ? '...' : 'Early Access →'}
       </button>
-      {status === 'error' && <span className="ea-error">Fehler — versuch es nochmal.</span>}
+      {status === 'error' && <span className="ea-error">Fehler, versuch es nochmal.</span>}
     </form>
   );
 }

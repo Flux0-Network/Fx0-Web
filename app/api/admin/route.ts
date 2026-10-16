@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
       fetch(webhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ embeds: [{ title: '🔄 Projektstatus geändert', color: 0x7c3aed, fields: [{ name: 'Kunde', value: `${name} (${userId})`, inline: true }, { name: 'Paket', value: (existing.paket as string) || '—', inline: true }, { name: 'Status', value: `${STATUS_LABELS[existing.status as number] ?? existing.status} → **${STATUS_LABELS[status] ?? status}**`, inline: false }, ...(note ? [{ name: 'Notiz', value: note.slice(0, 512), inline: false }] : [])], timestamp: new Date().toISOString(), footer: { text: 'flux0.dev · Admin Panel' } }] }),
+        body: JSON.stringify({ embeds: [{ title: '🔄 Projektstatus geändert', color: 0x7c3aed, fields: [{ name: 'Kunde', value: `${name} (${userId})`, inline: true }, { name: 'Paket', value: (existing.paket as string) || '', inline: true }, { name: 'Status', value: `${STATUS_LABELS[existing.status as number] ?? existing.status} → **${STATUS_LABELS[status] ?? status}**`, inline: false }, ...(note ? [{ name: 'Notiz', value: note.slice(0, 512), inline: false }] : [])], timestamp: new Date().toISOString(), footer: { text: 'flux0.dev · Admin Panel' } }] }),
       }).catch(() => {});
     }
   }

@@ -114,7 +114,7 @@ export default function SpectralDrape({
           const gx = ci * spacing;
           const gy = ri * spacing;
 
-          // Diagonal wave — folds run ~45° across the canvas
+          // Diagonal wave, folds run ~45° across the canvas
           const phase = (gx * 0.58 + gy * 0.42) * frequency * 0.013 - t;
           const gz = Math.sin(phase) * amplitude * spacing * 3.2;
 

@@ -17,7 +17,7 @@ export default function PanelProjekt({ project }: Props) {
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" /><path d="M3 9h18M9 21V9" /></svg>
         </div>
         <div style={{ fontSize: '0.98rem', fontWeight: 700, marginBottom: 8 }}>Kein aktives Projekt</div>
-        <div style={{ fontSize: '0.85rem', color: 'var(--dim)', lineHeight: 1.5, marginBottom: 18 }}>Du hast noch keine Website-Anfrage gestellt. Starte eine neue Anfrage — wir melden uns innerhalb von 24h.</div>
+        <div style={{ fontSize: '0.85rem', color: 'var(--dim)', lineHeight: 1.5, marginBottom: 18 }}>Du hast noch keine Website-Anfrage gestellt. Starte eine neue Anfrage, wir melden uns innerhalb von 24h.</div>
       </div>
     );
   }
