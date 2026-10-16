@@ -1,0 +1,137 @@
+export const UPDATES = [
+  {
+    slug:    'flowwave-v0-9-0',
+    date:    'Okt 2026',
+    product: 'FlowWave',
+    version: 'v0.9.0',
+    tagCls:  'cl-tag--flow',
+    title:   'Multi-Server-Support & Bot-Templates',
+    descDe:  'Ein Account, beliebig viele Discord-Server. Dazu kommen 12 vorgefertigte Bot-Templates für Moderation, Willkommen-Nachrichten und Ticket-Systeme.',
+    changes: [
+      'Multi-Server-Dashboard mit Quick-Switch',
+      '12 Bot-Templates (Moderation, Welcome, Tickets)',
+      'Verbesserter Embed-Builder mit Live-Vorschau',
+      'Bug: Slash Commands wurden bei > 25 Optionen nicht gespeichert',
+    ],
+  },
+  {
+    slug:    'lumaspace-v1-2-0',
+    date:    'Sep 2026',
+    product: 'LumaSpace',
+    version: 'v1.2.0',
+    tagCls:  'cl-tag--luma',
+    title:   'KI-Focus-Blöcke & Kalender-Sync',
+    descDe:  'KI schlägt automatisch Focus-Blöcke basierend auf Deadlines und Arbeitshistorie vor. Kalender-Sync mit Google Calendar und Outlook ist jetzt in allen Plänen verfügbar.',
+    changes: [
+      'KI-Focus-Blöcke mit automatischer Priorisierung',
+      'Google Calendar & Outlook Sync',
+      'Verbesserte Task-Priorisierung via ML',
+      'Schnellere Ladezeiten durch Edge Caching',
+    ],
+  },
+  {
+    slug:    'flowwave-v0-8-0',
+    date:    'Aug 2026',
+    product: 'FlowWave',
+    version: 'v0.8.0',
+    tagCls:  'cl-tag--flow',
+    title:   'Reaction Roles & verbesserter Embed-Builder',
+    descDe:  'Event-Handler für Reaction Roles direkt im Builder konfigurierbar. Der Embed-Builder unterstützt jetzt Felder, Thumbnails und Footer ohne Codekenntnisse.',
+    changes: [
+      'Reaction Roles via on_reaction_add Handler',
+      'Embed-Builder: Felder, Thumbnails, Footer',
+      'Conditional Logic Blöcke (if/else im Builder)',
+      'Performance: Deploy-Zeit von ~90s auf ~18s reduziert',
+    ],
+  },
+  {
+    slug:    'vex0-v0-3-0',
+    date:    'Jul 2026',
+    product: 'Vex0',
+    version: 'v0.3.0',
+    tagCls:  'cl-tag--vex',
+    title:   'Button, Card & Badge Open Source Release',
+    descDe:  'Vex0 ist jetzt auf GitHub öffentlich verfügbar. Neue Komponenten: Button (6 Varianten), Card mit CardContent, Badge und StatusBadge. Zero Config, direkt kopierbar.',
+    changes: [
+      'Open Source Release auf GitHub',
+      'Button: primary, ghost, destructive, outline, subtle, link',
+      'Card & CardContent Komponente',
+      'Badge & StatusBadge mit Farbvarianten',
+      'TypeScript-first mit vollständigen Types',
+    ],
+  },
+  {
+    slug:    'lumaspace-v1-1-0',
+    date:    'Jun 2026',
+    product: 'LumaSpace',
+    version: 'v1.1.0',
+    tagCls:  'cl-tag--luma',
+    title:   'Realtime Collaboration für Teams',
+    descDe:  'Mehrere Nutzer können jetzt gleichzeitig im selben Workspace arbeiten. Cursor-Präsenz, Live-Kommentare und gleichzeitige Task-Bearbeitung ohne Konflikte.',
+    changes: [
+      'Realtime-Cursor-Präsenz für alle Team-Mitglieder',
+      'Live-Kommentare auf Tasks',
+      'Conflict-free gleichzeitige Bearbeitung (CRDT)',
+      'Team-Aktivitätsfeed in der Seitenleiste',
+    ],
+  },
+  {
+    slug:    'flowwave-v0-7-0',
+    date:    'Mai 2026',
+    product: 'FlowWave',
+    version: 'v0.7.0',
+    tagCls:  'cl-tag--flow',
+    title:   'Slash Command Builder Launch',
+    descDe:  'FlowWave geht in die Open Beta. Discord-Bots ohne eine Zeile Code erstellen: Slash Commands, Events und einfache Antwort-Logik direkt im Browser konfigurieren.',
+    changes: [
+      'Visueller Slash-Command-Builder',
+      'Event-Handler für on_message, on_ready, on_member_join',
+      'Container-Deployment auf Knopfdruck',
+      'Discord OAuth Login für Bot-Token-Verwaltung',
+    ],
+  },
+  {
+    slug:    'buildframeos-v0-4-0',
+    date:    'Apr 2026',
+    product: 'BuildFrameOS',
+    version: 'v0.4.0',
+    tagCls:  'cl-tag--lyq',
+    title:   'Foto-Dokumentation & Bauphasen-Tracker',
+    descDe:  'Fotos können jetzt direkt per App hochgeladen und Bauphasen zugeordnet werden. Automatische GPS-Geotagging und Zeitstempel für lückenlose Dokumentation.',
+    changes: [
+      'Foto-Upload direkt aus der mobilen App',
+      'GPS-Geotagging automatisch',
+      'Bauphassen-Tracker mit Fortschrittsanzeige',
+      'PDF-Export des Bautagebuches',
+    ],
+  },
+  {
+    slug:    'lumaspace-v1-0-0',
+    date:    'Mrz 2026',
+    product: 'LumaSpace',
+    version: 'v1.0.0',
+    tagCls:  'cl-tag--luma',
+    title:   'LumaSpace geht live',
+    descDe:  'Nach 8 Monaten Entwicklung ist LumaSpace offiziell live. KI-gestütztes Produktivitätssystem für Teams und Solo-Worker mit Task-Management, Fokus-Sessions und Workflows.',
+    changes: [
+      'Task-Management mit KI-Priorisierung',
+      'Focus-Session-Timer mit Deep Work Tracking',
+      'Workflow-Automatisierung (Zapier-ähnlich)',
+      'Team-Workspaces mit Rollen und Berechtigungen',
+      'Mobile App (iOS & Android)',
+    ],
+  },
+] as const;
+
+export type Update = typeof UPDATES[number];
+
+export function ogUrl(u: Update, base = '') {
+  const p = new URLSearchParams({
+    product: u.product,
+    version: u.version,
+    title:   u.title,
+    date:    u.date,
+    changes: u.changes.slice(0, 4).join('|'),
+  });
+  return `${base}/api/og?${p.toString()}`;
+}

@@ -3592,3 +3592,9 @@ kbd {
 .cl-action-btn:hover { border-color: rgba(255,255,255,0.28); color: #fff; background: rgba(255,255,255,0.09); }
 .cl-action-btn--discord { border-color: rgba(88,101,242,0.45); color: #818cf8; background: rgba(88,101,242,0.07); }
 .cl-action-btn--discord:hover { border-color: rgba(88,101,242,0.7); color: #a5b4fc; background: rgba(88,101,242,0.14); }
+
+/* ── CHANGELOG SINGLE UPDATE PAGE ── */
+.cl-back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--dim); text-decoration: none; margin-bottom: 20px; transition: color 0.15s; }
+.cl-back-link:hover { color: var(--muted); }
+.cl-single-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.cl-single-title { font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; margin: 0; }
