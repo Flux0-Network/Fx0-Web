@@ -5,7 +5,8 @@ export const UPDATES = [
     product: 'FlowWave',
     version: 'v0.9.0',
     tagCls:  'cl-tag--flow',
-    title:   'Multi-Server-Support & Bot-Templates',
+    title:   'Multi-Server-Support',
+    tagline: 'Ein Account. Alle Server.',
     descDe:  'Ein Account, beliebig viele Discord-Server. Dazu kommen 12 vorgefertigte Bot-Templates für Moderation, Willkommen-Nachrichten und Ticket-Systeme.',
     changes: [
       'Multi-Server-Dashboard mit Quick-Switch',
@@ -20,7 +21,8 @@ export const UPDATES = [
     product: 'LumaSpace',
     version: 'v1.2.0',
     tagCls:  'cl-tag--luma',
-    title:   'KI-Focus-Blöcke & Kalender-Sync',
+    title:   'KI-Focus-Blöcke',
+    tagline: 'Dein Kalender denkt mit.',
     descDe:  'KI schlägt automatisch Focus-Blöcke basierend auf Deadlines und Arbeitshistorie vor. Kalender-Sync mit Google Calendar und Outlook ist jetzt in allen Plänen verfügbar.',
     changes: [
       'KI-Focus-Blöcke mit automatischer Priorisierung',
@@ -35,7 +37,8 @@ export const UPDATES = [
     product: 'FlowWave',
     version: 'v0.8.0',
     tagCls:  'cl-tag--flow',
-    title:   'Reaction Roles & verbesserter Embed-Builder',
+    title:   'Reaction Roles',
+    tagline: 'Keine Zeile Code. Läuft.',
     descDe:  'Event-Handler für Reaction Roles direkt im Builder konfigurierbar. Der Embed-Builder unterstützt jetzt Felder, Thumbnails und Footer ohne Codekenntnisse.',
     changes: [
       'Reaction Roles via on_reaction_add Handler',
@@ -50,7 +53,8 @@ export const UPDATES = [
     product: 'Vex0',
     version: 'v0.3.0',
     tagCls:  'cl-tag--vex',
-    title:   'Button, Card & Badge Open Source Release',
+    title:   'Open Source Release',
+    tagline: 'Kopieren. Einfügen. Fertig.',
     descDe:  'Vex0 ist jetzt auf GitHub öffentlich verfügbar. Neue Komponenten: Button (6 Varianten), Card mit CardContent, Badge und StatusBadge. Zero Config, direkt kopierbar.',
     changes: [
       'Open Source Release auf GitHub',
@@ -66,7 +70,8 @@ export const UPDATES = [
     product: 'LumaSpace',
     version: 'v1.1.0',
     tagCls:  'cl-tag--luma',
-    title:   'Realtime Collaboration für Teams',
+    title:   'Realtime Collaboration',
+    tagline: 'Mehrere Nutzer. Ein Workspace.',
     descDe:  'Mehrere Nutzer können jetzt gleichzeitig im selben Workspace arbeiten. Cursor-Präsenz, Live-Kommentare und gleichzeitige Task-Bearbeitung ohne Konflikte.',
     changes: [
       'Realtime-Cursor-Präsenz für alle Team-Mitglieder',
@@ -81,7 +86,8 @@ export const UPDATES = [
     product: 'FlowWave',
     version: 'v0.7.0',
     tagCls:  'cl-tag--flow',
-    title:   'Slash Command Builder Launch',
+    title:   'Slash Command Builder',
+    tagline: 'Bots bauen. Ohne Code.',
     descDe:  'FlowWave geht in die Open Beta. Discord-Bots ohne eine Zeile Code erstellen: Slash Commands, Events und einfache Antwort-Logik direkt im Browser konfigurieren.',
     changes: [
       'Visueller Slash-Command-Builder',
@@ -96,7 +102,8 @@ export const UPDATES = [
     product: 'BuildFrameOS',
     version: 'v0.4.0',
     tagCls:  'cl-tag--lyq',
-    title:   'Foto-Dokumentation & Bauphasen-Tracker',
+    title:   'Foto-Dokumentation',
+    tagline: 'Jede Phase. Lückenlos.',
     descDe:  'Fotos können jetzt direkt per App hochgeladen und Bauphasen zugeordnet werden. Automatische GPS-Geotagging und Zeitstempel für lückenlose Dokumentation.',
     changes: [
       'Foto-Upload direkt aus der mobilen App',
@@ -111,7 +118,8 @@ export const UPDATES = [
     product: 'LumaSpace',
     version: 'v1.0.0',
     tagCls:  'cl-tag--luma',
-    title:   'LumaSpace geht live',
+    title:   'LumaSpace ist live.',
+    tagline: '8 Monate. Jetzt fertig.',
     descDe:  'Nach 8 Monaten Entwicklung ist LumaSpace offiziell live. KI-gestütztes Produktivitätssystem für Teams und Solo-Worker mit Task-Management, Fokus-Sessions und Workflows.',
     changes: [
       'Task-Management mit KI-Priorisierung',
@@ -130,8 +138,8 @@ export function ogUrl(u: Update, base = '') {
     product: u.product,
     version: u.version,
     title:   u.title,
+    tagline: u.tagline,
     date:    u.date,
-    changes: u.changes.slice(0, 4).join('|'),
   });
   return `${base}/api/og?${p.toString()}`;
 }

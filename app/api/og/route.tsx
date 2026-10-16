@@ -8,6 +8,7 @@ const ACCENT: Record<string, string> = {
   FlowWave:     '#818cf8',
   Vex0:         '#fbbf24',
   BuildFrameOS: '#f472b6',
+  'Flux Network': '#00d4b1',
 };
 
 export async function GET(request: NextRequest) {
@@ -15,11 +16,10 @@ export async function GET(request: NextRequest) {
   const product = searchParams.get('product') ?? 'Flux Network';
   const version = searchParams.get('version') ?? '';
   const title   = searchParams.get('title')   ?? '';
+  const tagline = searchParams.get('tagline')  ?? '';
   const date    = searchParams.get('date')     ?? '';
-  const changes = searchParams.get('changes')  ?? '';
 
-  const accent  = ACCENT[product] ?? '#a78bfa';
-  const changeList = changes ? changes.split('|').slice(0, 4) : [];
+  const accent = ACCENT[product] ?? '#00d4b1';
 
   return new ImageResponse(
     (
@@ -27,90 +27,120 @@ export async function GET(request: NextRequest) {
         style={{
           width: '100%',
           height: '100%',
-          background: 'linear-gradient(135deg, #0a0a0f 0%, #13111c 100%)',
+          background: '#080808',
           display: 'flex',
           flexDirection: 'column',
-          padding: '52px 60px',
+          padding: '56px 72px',
           fontFamily: 'sans-serif',
           position: 'relative',
           overflow: 'hidden',
         }}
       >
-        {/* top accent bar */}
-        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: accent }} />
-
-        {/* glow blob */}
+        {/* Diagonal line texture — repeating-linear-gradient */}
         <div style={{
           position: 'absolute',
-          top: -120,
-          right: -120,
-          width: 420,
-          height: 420,
-          borderRadius: '50%',
-          background: accent + '18',
-          filter: 'blur(80px)',
+          inset: 0,
+          backgroundImage: 'repeating-linear-gradient(135deg, transparent 0px, transparent 88px, rgba(255,255,255,0.028) 88px, rgba(255,255,255,0.028) 89px)',
         }} />
 
-        {/* header row */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        {/* Subtle right-side glow */}
+        <div style={{
+          position: 'absolute',
+          top: '10%',
+          right: '-80px',
+          width: 500,
+          height: 500,
+          borderRadius: '50%',
+          background: `radial-gradient(circle, ${accent}12 0%, transparent 70%)`,
+          display: 'flex',
+        }} />
+
+        {/* Top-left: product icon dot + name + version */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, position: 'relative', zIndex: 1 }}>
           <div style={{
-            background: accent + '22',
-            border: `1px solid ${accent}55`,
-            borderRadius: 99,
-            padding: '5px 16px',
-            fontSize: 14,
-            color: accent,
-            fontWeight: 700,
-            letterSpacing: 1,
-          }}>
+            width: 10,
+            height: 10,
+            borderRadius: '50%',
+            background: accent,
+            flexShrink: 0,
+            display: 'flex',
+          }} />
+          <div style={{ fontSize: 17, fontWeight: 700, color: '#ffffff', letterSpacing: 0.5 }}>
             {product}
           </div>
-          <div style={{ fontSize: 13, color: '#ffffff50', fontFamily: 'monospace', letterSpacing: 1 }}>
-            {version}
-          </div>
-          <div style={{ marginLeft: 'auto', fontSize: 13, color: '#ffffff33', fontFamily: 'monospace' }}>
+          {version ? (
+            <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', marginLeft: 4 }}>
+              {version}
+            </div>
+          ) : null}
+          <div style={{ marginLeft: 'auto', fontSize: 13, color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace' }}>
             {date}
           </div>
         </div>
 
-        {/* title */}
+        {/* Main text block — center vertically */}
         <div style={{
-          fontSize: 52,
-          fontWeight: 900,
-          color: '#ffffff',
-          letterSpacing: -2,
-          lineHeight: 1.1,
-          marginTop: 28,
-          maxWidth: 820,
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          justifyContent: 'center',
+          position: 'relative',
+          zIndex: 1,
+          paddingBottom: 8,
         }}>
-          {title}
+          {/* Title — large, bold, white */}
+          <div style={{
+            fontSize: 80,
+            fontWeight: 900,
+            color: '#ffffff',
+            letterSpacing: -3,
+            lineHeight: 1.0,
+            maxWidth: 900,
+          }}>
+            {title}
+          </div>
+
+          {/* Tagline — slightly dimmer, same size */}
+          {tagline ? (
+            <div style={{
+              fontSize: 80,
+              fontWeight: 900,
+              color: 'rgba(255,255,255,0.45)',
+              letterSpacing: -3,
+              lineHeight: 1.0,
+              maxWidth: 900,
+              marginTop: 4,
+            }}>
+              {tagline}
+            </div>
+          ) : null}
+
+          {/* powered by Flux0 */}
+          <div style={{
+            fontSize: 16,
+            fontWeight: 700,
+            color: '#00d4b1',
+            marginTop: 36,
+            letterSpacing: 0.2,
+          }}>
+            powered by Flux0
+          </div>
         </div>
 
-        {/* changes */}
-        {changeList.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 28 }}>
-            {changeList.map((c, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <div style={{ color: accent, fontSize: 16, fontWeight: 700, fontFamily: 'monospace', flexShrink: 0 }}>+</div>
-                <div style={{ fontSize: 16, color: '#ffffffaa', lineHeight: 1.4 }}>{c}</div>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* footer */}
+        {/* Bottom bar */}
         <div style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          marginTop: 'auto',
-          paddingTop: 24,
-          borderTop: '1px solid #ffffff12',
+          position: 'relative',
+          zIndex: 1,
+          paddingTop: 20,
+          borderTop: '1px solid rgba(255,255,255,0.08)',
         }}>
-          <div style={{ fontSize: 15, fontWeight: 800, color: '#ffffff66', letterSpacing: 3, textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.3)', letterSpacing: 3, textTransform: 'uppercase' }}>
             Flux Network
           </div>
-          <div style={{ fontSize: 13, color: '#ffffff33', fontFamily: 'monospace' }}>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>
             flux0.dev/changelog
           </div>
         </div>
