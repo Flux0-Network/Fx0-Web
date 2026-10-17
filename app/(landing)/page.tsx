@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import ScrollReveal from '@/components/landing/ScrollReveal';
 import Navbar from '@/components/landing/Navbar';
 import HeroSection from '@/components/landing/HeroSection';
@@ -6,6 +7,7 @@ import Threads from '@/components/landing/Threads';
 import CookieNotice from '@/components/landing/CookieNotice';
 import SiteFooter from '@/components/landing/SiteFooter';
 import EarlyAccessForm from '@/components/landing/EarlyAccessForm';
+import { UPDATES } from './changelog/updates-data';
 
 export const metadata: Metadata = {
   title: 'Flux Network, Tools. Produkte. Indikatoren.',
@@ -155,48 +157,7 @@ function StatsStrip() {
   );
 }
 
-const CHANGELOG_ITEMS = [
-  {
-    date: 'Sep 2026',
-    product: 'LumaSpace',
-    version: 'v1.2.0',
-    tagCls: 'cl-tag--luma',
-    descDe: 'KI-Focus-Blöcke mit Kalender-Sync & verbesserter Task-Priorisierung',
-    descEn: 'AI focus blocks with calendar sync & improved task prioritization',
-  },
-  {
-    date: 'Aug 2026',
-    product: 'FlowWave',
-    version: 'v0.8.0',
-    tagCls: 'cl-tag--flow',
-    descDe: 'Event-Handler für Reaction Roles und verbesserter Embed-Builder',
-    descEn: 'Event handlers for reaction roles and improved embed builder',
-  },
-  {
-    date: 'Jul 2026',
-    product: 'Vex0',
-    version: 'v0.3.0',
-    tagCls: 'cl-tag--vex',
-    descDe: 'Button, Card & Badge Komponenten, Open Source auf GitHub',
-    descEn: 'Button, Card & Badge components, open source on GitHub',
-  },
-  {
-    date: 'Jun 2026',
-    product: 'LumaSpace',
-    version: 'v1.1.0',
-    tagCls: 'cl-tag--luma',
-    descDe: 'Realtime Collaboration, mehrere Nutzer gleichzeitig im selben Workspace',
-    descEn: 'Realtime collaboration, multiple users simultaneously in the same workspace',
-  },
-  {
-    date: 'Mai 2026',
-    product: 'FlowWave',
-    version: 'v0.7.0',
-    tagCls: 'cl-tag--flow',
-    descDe: 'Slash Command Builder Launch, Discord Bots ohne eine Zeile Code',
-    descEn: 'Slash Command Builder launch, Discord bots without a single line of code',
-  },
-];
+const CHANGELOG_ITEMS = UPDATES.slice(0, 5);
 
 const ROADMAP_ITEMS = [
   { name: 'LumaSpace',      desc: 'KI-gestütztes Produktivitätssystem für Teams', status: 'Live',  cls: 'rm-live',  href: 'https://lumaspace.de/' },
@@ -584,18 +545,15 @@ function ChangelogSection() {
           </p>
         </div>
         <div className="changelog-list">
-          {CHANGELOG_ITEMS.map((item, i) => (
-            <div key={i} className="changelog-item">
+          {CHANGELOG_ITEMS.map((item) => (
+            <Link key={item.slug} href={`/changelog/${item.slug}`} className="changelog-item changelog-item--link">
               <div className="changelog-meta">
                 <span className="changelog-date">{item.date}</span>
                 <span className={`changelog-tag ${item.tagCls}`}>{item.product}</span>
                 <span className="changelog-version">{item.version}</span>
               </div>
-              <p className="changelog-desc">
-                <span className="lang-de">{item.descDe}</span>
-                <span className="lang-en">{item.descEn}</span>
-              </p>
-            </div>
+              <p className="changelog-desc">{item.descDe}</p>
+            </Link>
           ))}
         </div>
         <div className="changelog-footer">
