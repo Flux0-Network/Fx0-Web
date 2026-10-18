@@ -48,6 +48,7 @@ export default function SiteFooter() {
               <li><a href="/docs"><span className="lang-de">Dokumentation</span><span className="lang-en">Documentation</span></a></li>
               <li><a href="/dashboard">Dashboard</a></li>
               <li><a href="/impressum">Impressum</a></li>
+              <li><a href="/datenschutz">Datenschutz</a></li>
             </ul>
           </div>
         </div>
