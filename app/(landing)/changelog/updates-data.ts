@@ -1,5 +1,23 @@
 export const UPDATES = [
   {
+    slug:    'flux0-dev-okt-2026',
+    date:    'Okt 2026',
+    product: 'Flux Network',
+    version: 'v1.1.0',
+    tagCls:  'cl-tag--flux',
+    title:   'Website Redesign',
+    tagline: 'Schneller. Klarer. Besser.',
+    descDe:  'flux0.dev hat ein komplett neues Fundament bekommen. Hero mit Scroll-Zoom-Effekt, vollstandige Updates-Seite mit Discord-Share, Datenschutzerklarung und viele weitere Verbesserungen.',
+    changes: [
+      'Hero: Scroll-Zoom Pull-in Effekt beim Runterscrollen',
+      'Neue /changelog Seite mit Filter, OG-Bannern und Link-Share',
+      'Jedes Update hat eine eigene Seite mit Discord-Embed',
+      'Changelog-Eintrge auf der Landing sind jetzt klickbar',
+      'Datenschutzerklarung hinzugefugt (/datenschutz)',
+      'Flux Network. im Hero verlinkt zur Startseite',
+    ],
+  },
+  {
     slug:    'flowwave-v0-9-0',
     date:    'Okt 2026',
     product: 'FlowWave',

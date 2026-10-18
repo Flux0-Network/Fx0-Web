@@ -2050,6 +2050,7 @@ kbd {
 .cl-tag--flow  { background: rgba(99,102,241,0.12); color: #818cf8; border: 1px solid rgba(99,102,241,0.22); }
 .cl-tag--vex   { background: rgba(251,191,36,0.1);  color: #fbbf24; border: 1px solid rgba(251,191,36,0.22); }
 .cl-tag--lyq   { background: rgba(236,72,153,0.1);  color: #f472b6; border: 1px solid rgba(236,72,153,0.22); }
+.cl-tag--flux  { background: rgba(0,212,177,0.1);   color: #00d4b1; border: 1px solid rgba(0,212,177,0.22); }
 .changelog-version {
   display: inline-block;
   font-size: 0.7rem;
