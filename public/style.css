@@ -406,7 +406,7 @@ body::after {
 
 /* ── HERO ── */
 .hero-scroll-stage {
-  height: 200vh;
+  height: 150vh;
 }
 .above-fold-wrapper {
   position: sticky;

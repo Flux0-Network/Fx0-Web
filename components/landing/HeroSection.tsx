@@ -56,7 +56,7 @@ export default function HeroSection() {
       if (!stage || !inner) return;
       const scrolled = Math.max(0, window.scrollY - stage.offsetTop);
       const vh = window.innerHeight;
-      const progress = Math.min(1, scrolled / vh);
+      const progress = Math.min(1, scrolled / (vh * 0.5));
       const scale = 1 + progress * 0.18;
       inner.style.transform = `scale(${scale})`;
       inner.style.opacity = String(Math.max(0, 1 - progress * 1.6));
