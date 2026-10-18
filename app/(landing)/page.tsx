@@ -279,28 +279,15 @@ function FlowWaveSection() {
       <div className="flowwave-scene-overlay" />
       <div className="container flowwave-scene-content">
         <div className="section-label-row">FLOWWAVE</div>
-        <h2 className="section-title">
-          <span className="lang-de">Discord Bots.<br />Ohne Boilerplate.</span>
-          <span className="lang-en">Discord Bots.<br />Without Boilerplate.</span>
-        </h2>
-        <p className="section-sub">
-          <span className="lang-de">Slash Commands, Events und UI-Komponenten visuell aufsetzen, powered by pycord v2.</span>
-          <span className="lang-en">Set up Slash Commands, events and UI components visually, powered by pycord v2.</span>
-        </p>
+        <h2 className="section-title">Discord Bots.<br />Ohne Boilerplate.</h2>
+        <p className="section-sub">Slash Commands, Events und UI-Komponenten visuell aufsetzen, powered by pycord v2.</p>
         <ul className="feature-list feature-list--centered">
-          <li>
-            <span className="lang-de">Visueller Command-Builder</span>
-            <span className="lang-en">Visual command builder</span>
-          </li>
-          <li>
-            <span className="lang-de">Slash Commands &amp; Events ohne Code</span>
-            <span className="lang-en">Slash Commands &amp; events without code</span>
-          </li>
+          <li>Visueller Command-Builder</li>
+          <li>Slash Commands &amp; Events ohne Code</li>
           <li>Powered by pycord v2</li>
         </ul>
         <a href="https://flowwave.app" className="btn-primary" target="_blank" rel="noopener" style={{ display: 'inline-flex', marginTop: '24px' }}>
-          <span className="lang-de">FlowWave öffnen →</span>
-          <span className="lang-en">Open FlowWave →</span>
+          FlowWave öffnen →
         </a>
       </div>
     </section>
@@ -539,14 +526,8 @@ function ChangelogSection() {
           CHANGELOG
         </div>
         <div className="section-intro">
-          <h2 className="section-title">
-            <span className="lang-de">Was wir shipped haben.</span>
-            <span className="lang-en">What we&apos;ve shipped.</span>
-          </h2>
-          <p className="section-sub">
-            <span className="lang-de">Letzte Updates aus dem Flux Network Ökosystem.</span>
-            <span className="lang-en">Latest updates from the Flux Network ecosystem.</span>
-          </p>
+          <h2 className="section-title">Was wir shipped haben.</h2>
+          <p className="section-sub">Letzte Updates aus dem Flux Network Ökosystem.</p>
         </div>
         <div className="changelog-list">
           {CHANGELOG_ITEMS.map((item) => (
@@ -562,8 +543,7 @@ function ChangelogSection() {
         </div>
         <div className="changelog-footer">
           <a href="/changelog" className="btn-ghost" style={{ display: 'inline-flex', fontSize: '0.85rem' }}>
-            <span className="lang-de">Alle Updates ansehen →</span>
-            <span className="lang-en">View all updates →</span>
+            Alle Updates ansehen →
           </a>
         </div>
       </div>

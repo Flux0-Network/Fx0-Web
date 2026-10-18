@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+import { useState, useEffect, useRef } from 'react';import Image from 'next/image';
 import Link from 'next/link';
 
 interface MeData {
@@ -11,30 +10,18 @@ interface MeData {
   global_name?: string;
 }
 
-const NAV_LINKS_DE = [
+const NAV_LINKS = [
   { href: '#produkte',                        label: 'Produkte'  },
   { href: '#roadmap',                         label: 'Roadmap'   },
   { href: '/docs',                            label: 'Docs'      },
   { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
 ];
-const NAV_LINKS_EN = [
-  { href: '#produkte',                        label: 'Products'  },
-  { href: '#roadmap',                         label: 'Roadmap'   },
-  { href: '/docs',                            label: 'Docs'      },
-  { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
-];
-
-function getAttr(attr: string, fallback: string) {
-  if (typeof document === 'undefined') return fallback;
-  return document.documentElement.getAttribute(attr) ?? fallback;
-}
 
 export default function Navbar() {
   const [user, setUser]         = useState<MeData | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
-  const [lang, setLang]         = useState<'de' | 'en'>('de');
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -67,18 +54,6 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', onOutside);
   }, [menuOpen]);
 
-  useEffect(() => {
-    setLang((getAttr('data-lang', 'de') as 'de' | 'en'));
-  }, []);
-
-  function toggleLang() {
-    const next = lang === 'de' ? 'en' : 'de';
-    setLang(next);
-    document.documentElement.setAttribute('data-lang', next);
-    localStorage.setItem('lang', next);
-  }
-
-  const NAV_LINKS = lang === 'de' ? NAV_LINKS_DE : NAV_LINKS_EN;
   const displayName = user ? (user.global_name || user.username) : null;
 
   const iconBtnStyle: React.CSSProperties = {
@@ -193,15 +168,6 @@ export default function Navbar() {
 
         {/* Right side */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0, marginLeft: 'auto' }}>
-
-          {/* Language toggle */}
-          <button
-            aria-label="Switch language"
-            onClick={toggleLang}
-            style={{ ...iconBtnStyle, fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.04em', padding: '5px 8px' }}
-          >
-            {lang === 'de' ? 'EN' : 'DE'}
-          </button>
 
           {user ? (
             <Link href="/dashboard" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', flexShrink: 0 }}>
@@ -318,21 +284,6 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-
-            {/* Mobile lang row */}
-            <div style={{ padding: '6px 14px 4px' }}>
-              <button
-                onClick={toggleLang}
-                style={{
-                  width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                  borderRadius: '8px', padding: '9px', cursor: 'pointer', color: 'rgba(255,255,255,0.7)',
-                  fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.04em',
-                }}
-              >
-                {lang === 'de' ? '🇬🇧 EN' : '🇩🇪 DE'}
-              </button>
-            </div>
 
             {user ? (
               <a

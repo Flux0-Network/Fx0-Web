@@ -23,10 +23,6 @@ html { overflow-x: hidden; overflow-x: clip; max-width: 100%; }
   --grün:   #22c55e;
 }
 
-/* ── LANGUAGE ── */
-html:not([data-lang="en"]) .lang-en { display: none !important; }
-html:not([data-lang="de"]) .lang-de { display: none !important; }
-
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-space, 'Manrope', system-ui, sans-serif);

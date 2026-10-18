@@ -1,51 +1,27 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const COPY = {
-  de: {
-    tw:   'Tools. Produkte. Indikatoren.',
-    sub:  'Software, die bleibt. Produkte, Frameworks und Indikatoren, gebaut von Entwicklern, für Entwickler.',
-    cta1: 'Produkte ansehen →',
-    cta2: 'Discord joinen',
-  },
-  en: {
-    tw:   'Tools. Products. Indicators.',
-    sub:  'Software that lasts. Products, frameworks and indicators, built by developers, for developers.',
-    cta1: 'View Products →',
-    cta2: 'Join Discord',
-  },
-} as const;
+const TW_TEXT = 'Tools. Produkte. Indikatoren.';
 
 export default function HeroSection() {
   const twRef = useRef<HTMLSpanElement>(null);
-  const [lang, setLang] = useState<'de' | 'en'>('de');
-
-  useEffect(() => {
-    const get = () =>
-      (document.documentElement.getAttribute('data-lang') as 'de' | 'en') ?? 'de';
-    setLang(get());
-    const obs = new MutationObserver(() => setLang(get()));
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-lang'] });
-    return () => obs.disconnect();
-  }, []);
 
   useEffect(() => {
     const el = twRef.current;
     if (!el) return;
-    const text = COPY[lang].tw;
     el.textContent = '';
     el.classList.remove('done');
     let i = 0;
     let timer: ReturnType<typeof setTimeout>;
     function type() {
       if (!el) return;
-      if (i < text.length) { el.textContent += text[i++]; timer = setTimeout(type, 55); }
+      if (i < TW_TEXT.length) { el.textContent += TW_TEXT[i++]; timer = setTimeout(type, 55); }
       else el.classList.add('done');
     }
     timer = setTimeout(type, 200);
     return () => clearTimeout(timer);
-  }, [lang]);
+  }, []);
 
   useEffect(() => {
     const stage = document.querySelector('.hero-scroll-stage') as HTMLElement | null;
@@ -67,8 +43,6 @@ export default function HeroSection() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const c = COPY[lang];
-
   return (
     <section className="hero" style={{ overflowX: 'hidden' }}>
       <div className="container hero-layout">
@@ -77,10 +51,10 @@ export default function HeroSection() {
             <a href="/" className="hero-name-link">Flux Network.</a><br />
             <span ref={twRef} className="typewriter" />
           </h1>
-          <p className="hero-sub">{c.sub}</p>
+          <p className="hero-sub">Software, die bleibt. Produkte, Frameworks und Indikatoren, gebaut von Entwicklern, für Entwickler.</p>
           <div className="hero-ctas">
-            <a href="#produkte" className="btn-primary">{c.cta1}</a>
-            <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener">{c.cta2}</a>
+            <a href="#produkte" className="btn-primary">Produkte ansehen →</a>
+            <a href="https://discord.gg/D9GwqWpwHT" className="btn-ghost" target="_blank" rel="noopener">Discord joinen</a>
           </div>
         </div>
       </div>

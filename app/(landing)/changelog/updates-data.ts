@@ -1,5 +1,23 @@
 export const UPDATES = [
   {
+    slug:    'flux0-dev-release-okt-2026',
+    date:    'Okt 2026',
+    product: 'Flux Network',
+    version: 'v1.0.0',
+    tagCls:  'cl-tag--flux',
+    title:   'Release.',
+    tagline: 'flux0.dev ist live.',
+    descDe:  'Die neue flux0.dev ist offiziell live. Gebaut mit Next.js, optimiert fur Speed und ein klares Nutzererlebnis – die zentrale Anlaufstelle fur alles rund um Flux Network.',
+    changes: [
+      'Neue Landing Page mit Hero, Produkte, Roadmap und FAQ',
+      'Changelog-System mit eigenen Update-Seiten und Discord-Embed',
+      '/community Seite mit Discord und Minecraft Server',
+      '/docs Seite mit vollstandiger Produktdokumentation',
+      'Dashboard mit Discord-Login',
+      'Early-Access-Anmeldung direkt auf der Seite',
+    ],
+  },
+  {
     slug:    'flux0-dev-okt-2026',
     date:    'Okt 2026',
     product: 'Flux Network',
