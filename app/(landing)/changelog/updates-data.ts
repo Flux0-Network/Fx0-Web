@@ -5,7 +5,7 @@ export const UPDATES = [
     product: 'Flux Network',
     version: 'v1.1.0',
     tagCls:  'cl-tag--flux',
-    title:   'Website Redesign',
+    title:   'Next Gen.',
     tagline: 'Schneller. Klarer. Besser.',
     descDe:  'flux0.dev hat ein komplett neues Fundament bekommen. Hero mit Scroll-Zoom-Effekt, vollstandige Updates-Seite mit Discord-Share, Datenschutzerklarung und viele weitere Verbesserungen.',
     changes: [
