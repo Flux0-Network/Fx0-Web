@@ -47,6 +47,26 @@ export default function HeroSection() {
     return () => clearTimeout(timer);
   }, [lang]);
 
+  useEffect(() => {
+    const stage = document.querySelector('.hero-scroll-stage') as HTMLElement | null;
+    const inner = document.querySelector('.hero-zoom-inner') as HTMLElement | null;
+    if (!stage || !inner) return;
+
+    function onScroll() {
+      if (!stage || !inner) return;
+      const scrolled = Math.max(0, window.scrollY - stage.offsetTop);
+      const vh = window.innerHeight;
+      const progress = Math.min(1, scrolled / vh);
+      const scale = 1 + progress * 0.18;
+      inner.style.transform = `scale(${scale})`;
+      inner.style.opacity = String(Math.max(0, 1 - progress * 1.6));
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const c = COPY[lang];
 
   return (
