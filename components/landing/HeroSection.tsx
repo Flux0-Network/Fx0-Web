@@ -74,7 +74,7 @@ export default function HeroSection() {
       <div className="container hero-layout">
         <div className="hero-text">
           <h1>
-            Flux Network.<br />
+            <a href="/" className="hero-name-link">Flux Network.</a><br />
             <span ref={twRef} className="typewriter" />
           </h1>
           <p className="hero-sub">{c.sub}</p>
