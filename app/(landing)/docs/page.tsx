@@ -131,7 +131,9 @@ export default function DocsPage() {
                   </div>
                 </a>
                 <a href="#vex0-intro" className="docs-quick-card">
-                  <span className="docs-quick-icon" style={{ background: 'rgba(139,92,246,0.15)', color: '#a78bfa', fontSize: '1.3rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>⬡</span>
+                  <span className="docs-quick-icon" docs-quick-icon--logo">
+                    <img src"/vex0-icon.png" alt="Vex0" className="product-logo-icon" />
+                  </span>
                   <div>
                     <strong>Vex0</strong>
                     <p>Open Source Component Framework</p>
