@@ -131,7 +131,7 @@ export default function DocsPage() {
                   </div>
                 </a>
                 <a href="#vex0-intro" className="docs-quick-card">
-                  <span className="docs-quick-icon" docs-quick-icon--logo">
+                  <span className="docs-quick-icon" docs-quick-icon--logo"
                     <img src"/vex0-icon.png" alt="Vex0" className="product-logo-icon" />
                   </span>
                   <div>
