@@ -310,7 +310,10 @@ export default function DocsPage() {
 
             {/* ─── VEX0 ─── */}
             <div className="docs-product-header" id="vex0-intro" style={{ borderLeft: '3px solid #a78bfa' }}>
-              <span className="docs-product-icon" style={{ background: 'rgba(139,92,246,0.15)', fontSize: '1.4rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>⬡</span>
+              <span className="docs-product-icon docs-product-icon--logo">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/vex0-icon.png" alt="Vex0" className="product-logo-icon" />
+              </span>
               <div>
                 <h2 className="docs-h1" style={{ margin: 0 }}>Vex0</h2>
                 <span className="docs-product-tag" style={{ background: 'rgba(139,92,246,0.15)', color: '#a78bfa' }}>In Entwicklung</span>
