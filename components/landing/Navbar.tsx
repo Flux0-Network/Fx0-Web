@@ -14,6 +14,7 @@ const NAV_LINKS = [
   { href: '#produkte',                        label: 'Produkte'  },
   { href: '#roadmap',                         label: 'Roadmap'   },
   { href: '/docs',                            label: 'Docs'      },
+  { href: '/changelog', label: 'Updates' },
   { href: 'https://discord.gg/D9GwqWpwHT',   label: 'Community', external: true },
 ];
 
